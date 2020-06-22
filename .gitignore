@@ -4,3 +4,4 @@ _other
 Backups
 /app/log/*.*
 composer.phar
+vendor
