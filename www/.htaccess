@@ -1,0 +1,12 @@
+Options +FollowSymLinks
+
+# mod_rewrite in use
+RewriteEngine On
+
+# RewriteBase /
+
+# Rewrite conditions configuration
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php?/=$1 [QSA,L]
+RewriteRule ^(.*)$ index.php?/$1/ [QSA,L]
