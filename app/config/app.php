@@ -73,28 +73,6 @@ return [
 		    'charset' => 'utf8'
 	    ],
 
-    	# DataReception Database
-	    'dataReception' => [
-		    'driver' => 'MySQLi',
-		    'host' => 'localhost',
-		    'port' => 3306,
-		    'username' => 'root',
-		    'password' => 'abc123',
-		    'database' => 'DuktigDataReception',
-		    'charset' => 'utf8'
-	    ],
-
-	    # TMP
-        'DefaultConnection' => [
-            'driver' => 'MySQLi',
-            'host' => 'localhost',
-            'port' => 3306,
-            'username' => 'root',
-            'password' => 'abc123',
-            'database' => 'Duktig',
-            'charset' => 'utf8'
-        ],
-
 	    # Authorization for Database backup user
 	    'BackupConn' => [
 		    'driver' => 'MySQLi',
@@ -114,7 +92,7 @@ return [
         'AuthKey' => 'X-Auth-Key',
 
         # The key value in headers
-        'AuthKeyValue' => 'abc123756%37*53f3trR3'
+        'AuthKeyValue' => 'aFrt$63^_tgrDlp-0Ar20-06G'
     ],
 
 	# Authentication by key for Developers
@@ -124,7 +102,7 @@ return [
 		'DevAuthKey' => 'X-Dev-Auth-Key',
 
 		# The key value in headers
-		'DevAuthKeyValue' => '8s79d#f798df9@78ds79f&8=79d'
+		'DevAuthKeyValue' => 'FRE-20%Dev-Gro@25464-'
 
 	],
 
@@ -160,7 +138,7 @@ return [
 		    'nbf' => '+0 minutes',
 
 		    # 256-bit-secret key
-		    'secretKey' => '~s!d8f7s#d9@f9d8%_sf9D3378Rds79#',
+		    'secretKey' => '_tSe7#K209wG@g1vroW~43985&c~edra',
 	    ],
 
 	    'refresh_token' => [
@@ -191,7 +169,7 @@ return [
 		    'secretKey' => '$563ty7G4X8#9(j1@3-=',
 
 		    # Special key to verify user account payload
-		    'account_key' => '!dFf78%6g8J9yd$fiu@ytvfj89__'
+		    'account_key' => '!D#_REYI-CRO-2323cd&Fro@Gdf98fg8d97'
 	    ]
 
     ],
@@ -218,74 +196,10 @@ return [
 		'mysqldump' => '/usr/local/mysql/bin/mysqldump'
 	],
 
-	# DataReception
-	'DataReception' => [
-		# Authentication to access this Data Reception
-		'Auth' => [
-
-			# The key name in headers
-			'DRAuthKey' => 'X-Dr-Auth-Key',
-
-			# The key value in headers
-			'DRAuthKeyValue' => 'ds786f8d987789gd786fd867768sad6sda687'
-		]
-	],
-
-	# DataReception Access data
-	'DataReceptionAccess' => [
-		# Send to
-		'url' => 'http://localhost/duktig.microservice.1./www/index.php/data-reception/',
-
-		# Authentication to access Data Reception
-		'Auth' => [
-
-			# The key name in headers
-			'DRAuthKey' => 'X-Dr-Auth-Key',
-
-			# The key value in headers
-			'DRAuthKeyValue' => 'ds786f8d987789gd786fd867768sad6sda687'
-		]
-	],
-
-    # Application setup configuration
-    'Setup' => [
-        # User accounts to generate and insert
-        'UserAccounts' => [
-
-            # How many User accounts should be created
-            'GenerationCount' => 100,
-
-            # Default Root Admin account
-            'RootAccount' => [
-                'firstName' => 'Root',
-                'lastName' => 'Administrator',
-                'email' => 'root@example.com',
-                'password' => 'root@example.com.p',
-                'phone' => '',
-                'comment' => 'Root administrator',
-                'pinCode' => '0001',
-                'dateRegistered' => date('Y-m-d H:i:s'),
-                'dateLastUpdate' => '',
-                'dateLastLogin' => '',
-                'roleId' => 1,
-                'status' => 1
-            ]
-        ],
-
-        # User Roles
-        'userRoles' => [],
-    ],
-
 	# Backup Configuration
 	'Backups' => [
 		# Databases to backup
 		'Databases' => [
-			[
-				# Database name
-				'database' => '2do',
-				# Database Tables which will be excluded from backup process.
-				'excluded_tables' => []
-			],
 			[
 				'database' => 'Duktig',
 				'excluded_tables' => []
@@ -293,39 +207,13 @@ return [
 			[
 				'database' => 'DuktigAuth',
 				'excluded_tables' => []
-			],
-			[
-				'database' => 'DuktigDataReception',
-				'excluded_tables' => []
-			],
-			[
-				'database' => 'Hippo',
-				'excluded_tables' => []
-			],
-			[
-				'database' => 'duktig.dev',
-				'excluded_tables' => []
-			],
-			[
-				'database' => 'jadore',
-				'excluded_tables' => []
-			],
-			[
-				'database' => 'jadore_reports',
-				'excluded_tables' => []
-			],
-			[
-				'database' => 'sirelli',
-				'excluded_tables' => []
-			],
-			[
-				'database' => 'todo',
-				'excluded_tables' => []
 			]
-
 		],
+
 		# ! The last slash in path is important
-		'DatabasesDir' => '/Users/david/Sites/duktig.microservice.1/backups/db/',
+		'DatabasesDir' => '~/duktig.microservice.1/backups/db/',
+
+		# How many steps (copies) will backup
 		'DatabasesBackupSteps' => 7
 	]
 
