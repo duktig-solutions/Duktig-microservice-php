@@ -1,10 +1,5 @@
 # Duktig.Microservice
-## Documentation 
 
-### About project
-
-#### What is Duktig.Microservice ?
-    
 **Fast and Lightweight RESTFul API Framework**
      
 > As Rasmus Lerdorf (PHP founder) says, **"Frameworks sucks!"**.
@@ -12,7 +7,7 @@
 > So, let's develop and run something very Lightweight depending on special needs,
 > instead of huge framework with a lot of unusable functionality.
 
-#### Features
+## Features
 
  - High performance Service
    - Run with Web Server such as Apache/Nginx with PHP-FPM   
@@ -34,13 +29,13 @@
     
  And many more.     
  
-#### Project Name definition
+## Project Name definition
 
 **Duktig** means skilled, capable, or hard-working - in Swedish. 
   
 In phrases like `Oj, vad duktig du är!` (Wow, how skilled you are!) it's a compliment.
 
-#### Description in short
+## Description in short
 
 The **Duktig** project developed as RESTFul API Microservice.
 
@@ -52,7 +47,7 @@ Each resource in project can have allowed roles to access. For instance: Resourc
 Very flexible configuration of routing and development approach can allow you to create:  
 `Request -> Route -> Middleware -> Controller -> Model -> Response` in a moment.  
 
-#### Version definition
+## Version definition
 
 The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. `1.3.8`
  
@@ -60,19 +55,17 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 |:----:|:----:|:----:|
 |Revolution|Evolution|Bug fix|
    
-#### References
+## References
 
 - [RESTFul API Documentation](documentation/api/Readme.md)
 - [Developer Documentation](documentation/development/Readme.md)  
 - [Installation](documentation/install/Readme.md)  
 - [Project Overview](documentation/project_overview/Readme.md) 
 
-#### Credits
+## Credits
    
 - Author: `David A.` [software@duktig.dev](mailto:software@duktig.dev)
 
 - Project Development Idea from 04 April 2019 by [Duktig Solutions](http://https://duktig.solutions/) 
 
 > **NOTICE:** This project still under development.
-
-End of document
