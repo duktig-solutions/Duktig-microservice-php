@@ -1,0 +1,48 @@
+{
+  "name": "duktig-solutions/duktig.microservice.1",
+  "type": "project",
+  "description": "Fast and Lightweight RESTFul API Framework",
+  "keywords": ["php", "framework", "restful api", "api", "cli", "microservice"],
+  "homepage": "https://github.com/duktig-solutions/duktig.microservice.1",
+  "time":"2019-04-04",
+  "license": "Proprietary",
+  "authors": [
+    {
+      "name": "David A.",
+      "email": "software@duktig.dev",
+      "homepage": "https://github.com/duktig-solutions/duktig.microservice.1",
+      "role": "Founder"
+    }
+  ],
+  "support": {
+    "email": "software@duktig.dev",
+    "issues": "https://github.com/duktig-solutions/duktig.microservice.1/issues",
+    "source": "https://github.com/duktig-solutions/duktig.microservice.1",
+    "docs": "https://github.com/duktig-solutions/duktig.microservice.1"
+  },
+  "require": {
+    "php": ">=7.1.0",
+    "ext-mbstring": "*",
+    "ext-mysqlnd": "*",
+    "ext-mysqli": "*"
+  },
+  "suggest": {
+    "ext-memcached": "*",
+    "ext-mysqli": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\":"app\\",
+      "System\\":"kernel\\system\\classes\\",
+      "Kernel\\":"kernel\\",
+      "Lib\\":"kernel\\lib\\"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
