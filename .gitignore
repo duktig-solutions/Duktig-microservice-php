@@ -3,3 +3,4 @@ _other
 *.log
 Backups
 /app/log/*.*
+composer.phar
