@@ -1,0 +1,5 @@
+.idea
+_other
+*.log
+Backups
+/app/log/*.*
