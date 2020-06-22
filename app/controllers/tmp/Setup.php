@@ -95,27 +95,6 @@ class Setup {
     }
 
 	/**
-	 * Test Setup Environment
-	 *
-	 * @access public
-	 * @param \System\Input $input
-	 * @param \System\Output $output
-	 * @param array $middlewareResult
-	 * @return bool
-	 */
-    public function envTest(Input $input, Output $output, array $middlewareResult) : bool {
-
-    	for($i = 0; $i <= 15; $i++) {
-    		sleep(1);
-    		$output->stdout($i);
-	    }
-	    $this->testDatabaseConnections($input, $output, $middlewareResult);
-
-	    return true;
-
-    }
-
-	/**
 	 * @param \System\Input $input
 	 * @param \System\Output $output
 	 * @param array $middlewareResult
