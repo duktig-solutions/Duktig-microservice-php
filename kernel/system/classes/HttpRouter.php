@@ -86,7 +86,7 @@ class HttpRouter {
 			# Compare route with request paths
 			$comparedResult = static::compareRoutes($routePaths, static::$request->paths());
 
-			// OK! Route match
+			// OK! Route matches
 			if($comparedResult !== false) {
 				static::$route = $route;
 				break;

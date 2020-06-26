@@ -9,6 +9,8 @@
  */
 return [
 
+	# Example: Template of Route configuration
+
     # Request method
     # Can be any HTTP Request method such as: GET, POST, PUT, PATCH, DELETE, etc...
     # Each Request method can contain one or more Request responses.
