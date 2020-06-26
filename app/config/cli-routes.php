@@ -27,7 +27,7 @@ return [
 		'controller' => 'AppLogs->generateLogStats',
 		'middleware' => [
 			# This middleware class method will insert into UserActions database table the action information
-			'UserActions->cliAction'
+			//'UserActions->cliAction'
 		],
 		'executeUniqueProcessLifeTime' => 10
 	],

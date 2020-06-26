@@ -5,3 +5,4 @@ Backups
 /app/log/*.*
 composer.phar
 vendor
+.sql.gz
