@@ -1,4 +1,4 @@
-# Duktig.Microservice
+![Image](documentation/Duktig_Microservice_logo.svg "Duktig.Microservice")
 
 **Fast and Lightweight RESTFul API Framework**
      
