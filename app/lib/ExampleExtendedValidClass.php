@@ -23,7 +23,7 @@ class ExampleExtendedValidClass extends \Lib\Valid {
      * @param int $b
      * @return bool
      */
-    public static function numLessThen(int $a, int $b) : bool {
+    public static function numLessThan(int $a, int $b) : bool {
         return $a < $b ? true : false;
     }
 

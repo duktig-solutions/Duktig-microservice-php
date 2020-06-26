@@ -210,9 +210,10 @@ return [
 			]
 		],
 
+		# Path where to save backup database files
 		# If this value is empty, the system will automatically backup into /backups/db/
 		# Notice: The last slash is important if you specify a path.
-		'BackupDatabasesDir' => '',
+		'DatabasesBackupDir' => '',
 
 		# How many copies will keep the backup.
 		# for instance, setting number 7 will assume the backup will remove oldest one after 7 copies.
