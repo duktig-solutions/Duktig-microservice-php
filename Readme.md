@@ -1,6 +1,6 @@
 ![Image](documentation/Duktig_Microservice_logo.svg "Duktig.Microservice")
 
-**Fast and Lightweight RESTFul API Framework**
+## Fast and Lightweight RESTFul API Framework
      
 > As Rasmus Lerdorf (PHP founder) says, **"Frameworks sucks!"**.
 >
