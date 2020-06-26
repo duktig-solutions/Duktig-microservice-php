@@ -35,18 +35,13 @@ return [
 	# Generate System Logs statistics in: app/log/stats.json
 	'generateLogStats' => [
 		'controller' => 'AppLogs->generateLogStats',
-		'middleware' => [
-			# This middleware class method will insert into UserActions database table the action information
-			//'UserActions->cliAction'
-		],
+		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
 	# Archive log files if size is larger than expected
 	'archiveLogFiles' => [
 		'controller' => 'General\AppLogsProcessor->archiveLogs',
-		'middleware' => [
-			//'UserActions->cliAction'
-		],
+		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
 

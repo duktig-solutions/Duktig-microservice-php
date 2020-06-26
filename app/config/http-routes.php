@@ -80,8 +80,7 @@ return [
 	    # + Test - response send file
 	    '/tests/get-file' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
-			    //'UserActions->httpAction'
+			    'Tests\Test->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Getter->downloadFile'
 	    ],
@@ -89,8 +88,7 @@ return [
 	    # + Test - Validate GET Request data
 	    '/tests/validate_get_request_data' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
-			    //'UserActions->httpAction'
+			    'Tests\Test->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateGetRequestData'
 	    ],
@@ -122,8 +120,7 @@ return [
         # + Get Logged in User account
         '/user' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\User->getAccount',
 	        'rolesAllowed' => [
@@ -133,8 +130,7 @@ return [
         # + Get Users
 	    '/users' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\Users->getAccounts',
 	        'rolesAllowed' => [
@@ -144,22 +140,9 @@ return [
 	    # + Get user by id
         '/users/{id}' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\Users->getAccount',
-	        'rolesAllowed' => [
-		        USER_ROLE_SUPER_ADMIN
-	        ]
-        ],
-	    # + Get user Actions by id and GET Parameters
-	    # This is not an {id} because we have user types: -2 Guest, -3 System.
-	    '/users/{any}/actions' => [
-            'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
-            ],
-            'controller' => 'Auth\Users->getUserActions',
 	        'rolesAllowed' => [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
@@ -168,22 +151,9 @@ return [
 	    # + Get System Logs Statistics
 	    'stats/app_logs' => [
 		    'middleware' => [
-			    'General\Auth->Authenticate',
-			    //'UserActions->httpAction'
+			    'General\Auth->Authenticate'
 		    ],
 		    'controller' => 'AppLogs->appLogs',
-		    'rolesAllowed' => [
-			    USER_ROLE_SUPER_ADMIN
-		    ]
-	    ],
-
-	    # + Get User actions Statistics
-	    'stats/user_actions' => [
-		    'middleware' => [
-			    'General\Auth->Authenticate',
-			    //'UserActions->httpAction'
-		    ],
-		    'controller' => 'UserActions->getUserActionsStats',
 		    'rolesAllowed' => [
 			    USER_ROLE_SUPER_ADMIN
 		    ]
@@ -193,11 +163,8 @@ return [
 	    # Will response plain text: Pong
 	    # For now this resource not requires authentication
 	    'system/ping' => [
-		    'middleware' => [
-			    // 'General\Auth->Authenticate',
-			    //'UserActions->httpAction'
-		    ],
-		    'controller' => 'General\SystemHealthCheck->ping',
+		    'middleware' => [],
+		    'controller' => 'System\SystemHealthCheck->ping',
 		    'rolesAllowed' => []
 	    ]
     ],
@@ -205,8 +172,7 @@ return [
         # + Test - validate Request Json as array
 	    '/tests/validate_array_from_json' => [
 		    'middleware' => [
-		    	'Tests\Test->AuthByDeveloperKey',
-			    //'UserActions->httpAction'
+		    	'Tests\Test->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateRequestArrayFromJson'
 	    ],
@@ -214,8 +180,7 @@ return [
 	    # + Test - validate Request Multidimensional Json as array
 	    '/tests/validate_multidimensional_array_from_json' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
-			    //'UserActions->httpAction'
+			    'Tests\Test->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateRequestMultiDimensionalArrayFromJson'
 	    ],
@@ -223,8 +188,7 @@ return [
 	    # + Test - validate Request Form data
 	    '/tests/validate_form_data' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
-			    //'UserActions->httpAction'
+			    'Tests\Test->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateFormRequest'
 	    ],
@@ -233,8 +197,7 @@ return [
 	    '/tests/response_all_request_data' => [
 		    'middleware' => [
 			    'Tests\Test->AuthByDeveloperKey',
-			    'Tests\Test->injectMiddlewareData',
-			    //'UserActions->httpAction'
+			    'Tests\Test->injectMiddlewareData'
 		    ],
 		    'controller' => 'Tests\Getter->responseAllRequestData'
 	    ],
@@ -242,8 +205,7 @@ return [
     	# + Authorize user and get token
     	'/auth/token' => [
             'middleware' => [
-                'General\Auth->AuthByKey',
-	            //'UserActions->httpAction'
+                'General\Auth->AuthByKey'
             ],
             'controller' => 'Auth\Auth->Authorize'
         ],
@@ -257,16 +219,14 @@ return [
 	    # + Sign up
 	    '/user' => [
             'middleware' => [
-                'General\Auth->AuthByKey',
-	            //'UserActions->httpAction'
+                'General\Auth->AuthByKey'
             ],
             'controller' => 'Auth\User->registerAccount'
         ],
 	    # + Register user account
         '/users' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\Users->registerAccount',
 	        'rolesAllowed' => [
@@ -298,8 +258,7 @@ return [
 	    # + Update User account (All data)
     	'/user' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\User->updateAccount',
 		    'rolesAllowed' => [
@@ -309,8 +268,7 @@ return [
         # + Update user account
 	    '/users/{id}' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\Users->updateAccount',
 	        'rolesAllowed' => [
@@ -322,8 +280,7 @@ return [
 	    # + Update User account (parts)
     	'/user' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\User->patchAccount',
 		    'rolesAllowed' => [
@@ -333,8 +290,7 @@ return [
 	    # + Patch user account
 	    '/users/{id}' => [
 		    'middleware' => [
-			    'General\Auth->Authenticate',
-			    //'UserActions->httpAction'
+			    'General\Auth->Authenticate'
 		    ],
 		    'controller' => 'Auth\Users->patchAccount',
 		    'rolesAllowed' => [
@@ -346,8 +302,7 @@ return [
     	# + Terminate user account
         '/users/{id}' => [
             'middleware' => [
-                'General\Auth->Authenticate',
-	            //'UserActions->httpAction'
+                'General\Auth->Authenticate'
             ],
             'controller' => 'Auth\Users->terminateAccount',
 	        'rolesAllowed' => [

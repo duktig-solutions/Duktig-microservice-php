@@ -1,6 +1,6 @@
 <?php
 /**
- * System Health Check Controller
+ * System Health Check
  *
  * - Just Ping and get response plain text: pong
  *
@@ -8,7 +8,7 @@
  * @license see License.md
  * @version 1.0.0
  */
-namespace App\Controllers\General;
+namespace App\Controllers\System;
 
 use System\Request;
 use System\Response;
