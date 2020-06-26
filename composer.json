@@ -1,8 +1,8 @@
 {
   "name": "duktig-solutions/duktig.microservice.1",
   "type": "project",
-  "description": "Fast and Lightweight RESTFul API Framework",
-  "keywords": ["php", "framework", "restful api", "api", "cli", "microservice"],
+  "description": "Fast and Lightweight RESTFul API Microservice",
+  "keywords": ["php", "restful api", "api", "cli", "microservice", "docker"],
   "homepage": "https://github.com/duktig-solutions/duktig.microservice.1",
   "time":"2019-04-04",
   "license": "Proprietary",

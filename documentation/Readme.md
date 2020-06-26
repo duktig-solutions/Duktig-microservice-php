@@ -3,7 +3,6 @@
 
 ### Table of content
 
-- [About project](About.md)
 - [License](License.md)
 - [Installation](install/Readme.md)
 - [Project overview](project_overview/Readme.md)
