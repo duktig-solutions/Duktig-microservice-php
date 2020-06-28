@@ -92,6 +92,7 @@ class Logger  {
 
 	    $result = [
 		    'date' => '',
+		    'systemId' => '',
 		    'type' => static::INFO,
 		    'message' => $line,
 		    'file' => '',
@@ -106,22 +107,26 @@ class Logger  {
 
 	    $splitLine = explode('_|', $line);
 
-	    $result['date'] = $splitLine[0];
+	    $result['date'] = trim($splitLine[0]);
 
 	    if(isset($splitLine[1])) {
-		    $result['type'] = $splitLine[1];
+		    $result['systemId'] = trim($splitLine[1]);
 	    }
 
 	    if(isset($splitLine[2])) {
-		    $result['message'] = $splitLine[2];
+		    $result['type'] = trim($splitLine[2]);
 	    }
 
 	    if(isset($splitLine[3])) {
-		    $result['file'] = $splitLine[3];
+		    $result['message'] = trim($splitLine[3]);
 	    }
 
 	    if(isset($splitLine[4])) {
-		    $result['line'] = $splitLine[4];
+		    $result['file'] = trim($splitLine[4]);
+	    }
+
+	    if(isset($splitLine[5])) {
+		    $result['line'] = trim($splitLine[5]);
 	    }
 
 	    return $result;

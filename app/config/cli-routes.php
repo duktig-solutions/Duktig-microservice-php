@@ -32,15 +32,16 @@ return [
 		# Unlike Restful API interface the Command line interface doesn't support authorization/permission checking and caching functionality.
 	],
 
-	# Generate System Logs statistics in: app/log/stats.json
-	'generateLogStats' => [
-		'controller' => 'AppLogs->generateLogStats',
+	# Archive log files if size is larger than expected
+	'archiveLogFiles' => [
+		'controller' => 'System\AppLogsProcessor->archiveLogs',
 		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
-	# Archive log files if size is larger than expected
-	'archiveLogFiles' => [
-		'controller' => 'General\AppLogsProcessor->archiveLogs',
+
+	# Make logs stats: app/log/stats.json
+	'makeLogStats' => [
+		'controller' => 'System\AppLogsProcessor->makeStats',
 		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],

@@ -15,6 +15,7 @@ return [
     'ProjectVersion' => '1.0.0',
 
 	# System Id for each instance of Duktig.Microservice
+	# i.e. Auth | Reports | AbcData, etc...
 	'SystemId' => 'Dev',
 
     # Log errors. All type of error logs located in: /app/log
@@ -80,7 +81,7 @@ return [
 		    'port' => 3306,
 		    'username' => 'root',
 		    'password' => 'abc123',
-		    'database' => '2do',
+		    'database' => 'Duktig',
 		    'charset' => 'utf8'
 	    ]
     ],
