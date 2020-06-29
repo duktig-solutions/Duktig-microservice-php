@@ -194,12 +194,12 @@ return [
 	    ],
 
 	    # + Test - Response All possible request Data
-	    '/tests/response_all_request_data' => [
+	    '/examples/response_all_request_data' => [
 		    'middleware' => [
 			    'Tests\Test->AuthByDeveloperKey',
 			    'Tests\Test->injectMiddlewareData'
 		    ],
-		    'controller' => 'Tests\Getter->responseAllRequestData'
+		    'controller' => 'Examples\Getter->responseAllRequestData'
 	    ],
 
     	# + Authorize user and get token

@@ -58,9 +58,9 @@ return [
 		'controller' => 'Examples\Benchmarking->presentInCli'
 	],
 
-	# TEST HTTP Request in CLI mode
-	'http-request' => [
-		'controller' => 'Tests\Getter->cliSendRequest'
+	# Send HTTP Request in CLI mode
+	'http-request-cli' => [
+		'controller' => 'Examples\Getter->cliSendHttpRequest'
 	],
 
 ];
