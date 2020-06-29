@@ -51,15 +51,16 @@ return [
 		'controller' => 'Backups\DB->cliBackupDB'
 	],
 
-	//////////////////////////////////////
+	# Development examples
+
+	# Benchmarking
+	'benchmarking-example-cli' => [
+		'controller' => 'Examples\Benchmarking->presentInCli'
+	],
 
 	# TEST HTTP Request in CLI mode
 	'http-request' => [
 		'controller' => 'Tests\Getter->cliSendRequest'
 	],
 
-	# TEST Benchmarking
-	'benchmark-test-1' => [
-		'controller' => 'Tests\Benchmarking->test1'
-	]
 ];
