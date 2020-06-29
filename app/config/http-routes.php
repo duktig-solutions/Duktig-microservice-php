@@ -77,12 +77,14 @@ return [
 
         ],
 
-	    # + Test - response send file
-	    '/tests/get-file' => [
+	    # Development Examples
+
+	    # Example - response send file (Download a file)
+	    '/examples/get-file' => [
 		    'middleware' => [
 			    'Tests\Test->AuthByDeveloperKey'
 		    ],
-		    'controller' => 'Tests\Getter->downloadFile'
+		    'controller' => 'Examples\Getter->downloadFile'
 	    ],
 
 	    # + Test - Validate GET Request data
@@ -169,7 +171,19 @@ return [
 	    ]
     ],
     'POST' => [
-        # + Test - validate Request Json as array
+
+    	# Development Examples
+
+    	# Example - Response All possible request Data
+	    '/examples/response_all_request_data' => [
+		    'middleware' => [
+			    'Tests\Test->AuthByDeveloperKey',
+			    'Tests\Test->injectMiddlewareData'
+		    ],
+		    'controller' => 'Examples\Getter->responseAllRequestData'
+	    ],
+
+    	# + Test - validate Request Json as array
 	    '/tests/validate_array_from_json' => [
 		    'middleware' => [
 		    	'Tests\Test->AuthByDeveloperKey'
@@ -191,15 +205,6 @@ return [
 			    'Tests\Test->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateFormRequest'
-	    ],
-
-	    # + Test - Response All possible request Data
-	    '/examples/response_all_request_data' => [
-		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
-			    'Tests\Test->injectMiddlewareData'
-		    ],
-		    'controller' => 'Examples\Getter->responseAllRequestData'
 	    ],
 
     	# + Authorize user and get token
