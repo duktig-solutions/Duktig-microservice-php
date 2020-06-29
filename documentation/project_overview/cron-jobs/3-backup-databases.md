@@ -63,25 +63,28 @@ Each array is a database name to backup and list of tables to exclude from backu
 
 ##### Configure Backup Destination directory
 
-The `'Backups'` / `'DatabasesDir'` section we are able to configure the databases backup destination path.
 
-If the directory not exists, it will create automatically. 
+By default you can leave empty the `DatabasesBackupDir` backup destination path in configuration.
+
+In case if the destination path not specified, the system will backup into `/app/backups/db` 
+
+If the destination directory configured and not exists, the system will try to create it. 
 
 ```php
 # Backup Configuration
 'Backups' => [
     # ! The last slash in path is important
-    'DatabasesDir' => '/var/Backups/Db/',
+    'DatabasesBackupDir' => '/var/backups/db',
 ]
 ```
 
 ##### Configure the days to keep backups
 
-The `'Backups'` / `'DatabasesBackupSteps'` section allows to define, how many days a backup files will keep.
+The `DatabasesBackupSteps` section allows to define, how many days a backup files will keep.
 
 > NOTE: The 1st number file is newest. So, every time the backup tool will move oldest backups step back.
 
-i.w. `1 (latest)`, `2 (second)`, `3 (3th backup)`, and so on until limitation number.  
+i.w. `1 (latest)`, `2 (second)`, `3 (3th backup)`, and so on until limited amount of copies.  
 
 ```php
 # Backup Configuration

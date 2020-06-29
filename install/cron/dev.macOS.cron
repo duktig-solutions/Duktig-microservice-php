@@ -3,8 +3,8 @@ PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/loc
 MAILTO=""
 
 # Application logs
-0 */6 * * * php /Users/david/sites/duktig.microservice.1/cli/exec.php generateLogStats
-5 */6 * * * php /Users/david/sites/duktig.microservice.1/cli/exec.php archiveLogFiles
+0 */6 * * * php /Users/david/Sites/duktig.microservice.1/cli/exec.php archiveLogFiles
+5 */6 * * * php /Users/david/Sites/duktig.microservice.1/cli/exec.php makeLogStats
 
 # Databases Backup
-0 0 * * * php /Users/david/sites/duktig.microservice.1/cli/exec.php db-backup
+0 0 * * * php /Users/david/Sites/duktig.microservice.1/cli/exec.php db-backup

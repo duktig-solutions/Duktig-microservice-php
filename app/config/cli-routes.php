@@ -46,6 +46,13 @@ return [
 		'executeUniqueProcessLifeTime' => 10
 	],
 
+	# Backup Databases
+	'db-backup' => [
+		'controller' => 'Backups\DB->cliBackupDB'
+	],
+
+	//////////////////////////////////////
+
 	# TEST HTTP Request in CLI mode
 	'http-request' => [
 		'controller' => 'Tests\Getter->cliSendRequest'
@@ -54,17 +61,5 @@ return [
 	# TEST Benchmarking
 	'benchmark-test-1' => [
 		'controller' => 'Tests\Benchmarking->test1'
-	],
-
-	# DataCollector - Collect Exchange rate
-	'dataCollectors/ExchangeRate' => [
-		'middleware' => [],
-		'controller' => 'dataCollector\ExchangeRate->cliCollect',
-		'rolesAllowed' => []
-	],
-
-	# Backup Databases
-	'db-backup' => [
-		'controller' => 'Backups\DB->cliBackupDB'
 	]
 ];
