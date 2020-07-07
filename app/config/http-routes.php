@@ -36,7 +36,8 @@ return [
             # The format of middleware configuration is: ClassName->methodName where the middleware classes located in /app/middleware directory.
             # Note: If you not have any middleware functionality for this route, you can just pass this section as empty.
             'middleware' => [
-                '___ExampleMiddlewareClass->exampleMiddlewareMethod'
+                '___ExampleMiddlewareClass->exampleMiddlewareMethod',
+	            '___AnotherExampleMiddlewareClass->anotherExampleMiddlewareMethod'
             ],
 
             # Controller
@@ -79,47 +80,47 @@ return [
 
 	    # Development Examples
 
-	    # Example - response send file (Download a file)
+	    # Example - Response send file (Download a file)
 	    '/examples/get-file' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey'
+			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Examples\Getter->downloadFile'
 	    ],
 
-	    # + Test - Validate GET Request data
-	    '/tests/validate_get_request_data' => [
+	    # Example - Validate GET Request data
+	    '/examples/validate_get_request_data' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey'
+			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
-		    'controller' => 'Tests\Validation->validateGetRequestData'
+		    'controller' => 'Examples\Validation->validateGetRequestData'
 	    ],
 
-	    # + Test - Get Cached data by system with only configured in route
-	    '/tests/get_cached' => [
+	    # Example - Get Cached data by system with only configured in route
+	    '/examples/get_cached' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
+			    'Auth\Developer->AuthByDeveloperKey',
 		    ],
-		    'controller' => 'Tests\DataCaching->getCached',
+		    'controller' => 'Examples\DataCaching->getCached',
 
 		    # This Route configured to cache response data by system
 		    # Just putting the configuration name here and all will work automatically.
 		    'cacheConfig' => 'ResponseDataCaching'
 	    ],
 
-	    # + Test - Get Custom Cached data using middleware
-	    '/tests/get_custom_cached' => [
+	    # Example - Get Custom Cached data using middleware
+	    '/examples/get_custom_cached' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
-		    	'General\Memcached->cachedResponse',
+			    'Auth\Developer->AuthByDeveloperKey',
+		    	'Examples\Memcached->cachedResponse',
 		    ],
-		    'controller' => 'Tests\DataCaching->getCustomCached'
+		    'controller' => 'Examples\DataCaching->getCustomCached'
 		    # As you see, this Route not have configured caching.
 		    # The caching will work programmatically by Middleware and Controller.
 
 	    ],
 
-        # + Get Logged in User account
+        # - Get Logged in User account
         '/user' => [
             'middleware' => [
                 'General\Auth->Authenticate'
@@ -129,7 +130,7 @@ return [
 		        USER_ROLE_ANY
 	        ]
         ],
-        # + Get Users
+        # - Get Users
 	    '/users' => [
             'middleware' => [
                 'General\Auth->Authenticate'
@@ -139,7 +140,7 @@ return [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ],
-	    # + Get user by id
+	    # - Get user by id
         '/users/{id}' => [
             'middleware' => [
                 'General\Auth->Authenticate'
@@ -150,18 +151,18 @@ return [
 	        ]
         ],
 
-	    # + Get System Logs Statistics
-	    'stats/app_logs' => [
+	    # Get System Logs Statistics
+	    'system/app_log_stats' => [
 		    'middleware' => [
-			    'General\Auth->Authenticate'
+			    'Auth\Auth->Authenticate'
 		    ],
-		    'controller' => 'AppLogs->appLogs',
+		    'controller' => 'System\AppLogsProcessor->getLogStats',
 		    'rolesAllowed' => [
 			    USER_ROLE_SUPER_ADMIN
 		    ]
 	    ],
 
-	    # + Just Ping The system.
+	    # Ping The system.
 	    # Will response plain text: Pong
 	    # For now this resource not requires authentication
 	    'system/ping' => [
@@ -177,7 +178,7 @@ return [
     	# Example - Response All possible request Data
 	    '/examples/response_all_request_data' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey',
+			    'Auth\Developer->AuthByDeveloperKey',
 			    'Tests\Test->injectMiddlewareData'
 		    ],
 		    'controller' => 'Examples\Getter->responseAllRequestData'
@@ -186,7 +187,7 @@ return [
     	# + Test - validate Request Json as array
 	    '/tests/validate_array_from_json' => [
 		    'middleware' => [
-		    	'Tests\Test->AuthByDeveloperKey'
+			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateRequestArrayFromJson'
 	    ],
@@ -194,7 +195,7 @@ return [
 	    # + Test - validate Request Multidimensional Json as array
 	    '/tests/validate_multidimensional_array_from_json' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey'
+			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateRequestMultiDimensionalArrayFromJson'
 	    ],
@@ -202,7 +203,7 @@ return [
 	    # + Test - validate Request Form data
 	    '/tests/validate_form_data' => [
 		    'middleware' => [
-			    'Tests\Test->AuthByDeveloperKey'
+			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
 		    'controller' => 'Tests\Validation->validateFormRequest'
 	    ],
@@ -210,7 +211,7 @@ return [
     	# + Authorize user and get token
     	'/auth/token' => [
             'middleware' => [
-                'General\Auth->AuthByKey'
+                'Auth\Auth->AuthByKey'
             ],
             'controller' => 'Auth\Auth->Authorize'
         ],
@@ -224,7 +225,7 @@ return [
 	    # + Sign up
 	    '/user' => [
             'middleware' => [
-                'General\Auth->AuthByKey'
+	            'Auth\Auth->AuthByKey'
             ],
             'controller' => 'Auth\User->registerAccount'
         ],

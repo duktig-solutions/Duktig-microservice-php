@@ -11,7 +11,7 @@
  * @license see License.md
  * @version 1.1.0
  */
-namespace App\Controllers\Tests;
+namespace App\Controllers\Examples;
 
 use Lib\Validator;
 use System\Request;

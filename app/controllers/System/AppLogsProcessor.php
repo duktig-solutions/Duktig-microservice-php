@@ -15,6 +15,8 @@ namespace App\Controllers\system;
 use System\Logger;
 use System\Input;
 use System\Output;
+use System\Request;
+use System\Response;
 
 /**
  * Class AppLogsProcessor
@@ -67,7 +69,7 @@ class AppLogsProcessor {
 	 * @param array $middlewareResult
 	 * @return bool
 	 */
-	public function archiveLogs(\System\Input $input, \System\Output $output, array $middlewareResult) : bool {
+	public function archiveLogs(Input $input, Output $output, array $middlewareResult) : bool {
 
 		$files = glob($this->logFilesPathPattern);
 
@@ -103,7 +105,14 @@ class AppLogsProcessor {
 
 	}
 
-	// Collect logs stats
+	/**
+	 * CLI - Make Application log statistics
+	 *
+	 * @param \System\Input $input
+	 * @param \System\Output $output
+	 * @param array $middlewareResult
+	 * @return bool
+	 */
 	public function makeStats(Input $input, Output $output, array $middlewareResult) : bool {
 
 		$result = [
@@ -150,6 +159,36 @@ class AppLogsProcessor {
 		}
 
 		file_put_contents($this->logFilesPath.'stats.json', json_encode($result, JSON_PRETTY_PRINT));
+
+		return true;
+
+	}
+
+	/**
+	 * HTTP Request to get Application logs statistics
+	 *
+	 * @param \System\Request $request
+	 * @param \System\Response $response
+	 * @param array $middlewareResult
+	 * @return bool
+	 */
+	public function getLogStats(Request $request, Response $response, array $middlewareResult) : bool {
+
+		# Logs statistics file
+		$file = DUKTIG_APP_PATH . 'log/stats.json';
+
+		# Let's check if the file exists
+		if(!is_file($file)) {
+
+			$response->sendJson([
+				'status' => 'error',
+				'message' => 'File `'.$file.'` not found'
+			], 204);
+
+			return False;
+		}
+
+		$response->sendJsonString(file_get_contents($file));
 
 		return true;
 

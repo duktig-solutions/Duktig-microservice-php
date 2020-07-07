@@ -1,9 +1,10 @@
 <?php
 /**
- * Testing Data caching by middleware class via Memcached.
+ * Example of Data caching by middleware class via Memcached.
  */
-namespace App\Controllers\Tests;
+namespace App\Controllers\Examples;
 
+use Lib\Validator;
 use System\Request;
 use System\Response;
 
@@ -17,7 +18,29 @@ class DataCaching {
 		$this->cacheLib = new \Lib\Cache\Memcached(\System\Config::get()['ResponseDataCaching']);
 	}
 
+	/**
+	 * System cached functionality
+	 *
+	 * @param \System\Request $request
+	 * @param \System\Response $response
+	 * @param array $middlewareData
+	 * @return bool
+	 * @throws \Exception
+	 */
 	public function getCached(Request $request, Response $response, array $middlewareData) : bool {
+
+		# Let's Validate the GET Request data
+		$validation = Validator::validateDataStructure(
+			$request->get(),
+			[
+				'offset' => 'int_range:0:1000'
+			]
+		);
+
+		if(!empty($validation)) {
+			$response->sendJson($validation, 422);
+			return False;
+		}
 
 		# Let's wait one second to demo delay.
 		sleep(1);
@@ -28,7 +51,8 @@ class DataCaching {
 			'status' => 'ok',
 			'message' => 'If this request responded in more than 1 second, it not comes from cache.',
 			'offset' => $request->get('offset'),
-			'data' => $content
+			'data' => $content,
+			'cache_configuration_from_app_config' => \System\Config::get()['ResponseDataCaching']
 		];
 
 		# The response object will care about data caching.
@@ -39,7 +63,29 @@ class DataCaching {
 		return True;
 	}
 
+	/**
+	 * Custom cached functionality
+	 *
+	 * @param \System\Request $request
+	 * @param \System\Response $response
+	 * @param array $middlewareData
+	 * @return bool
+	 * @throws \Exception
+	 */
 	public function getCustomCached(Request $request, Response $response, array $middlewareData) : bool {
+
+		# Let's Validate the GET Request data
+		$validation = Validator::validateDataStructure(
+			$request->get(),
+			[
+				'offset' => 'int_range:0:1000'
+			]
+		);
+
+		if(!empty($validation)) {
+			$response->sendJson($validation, 422);
+			return False;
+		}
 
 		# Let's wait one second to demo delay.
 		sleep(1);
@@ -51,7 +97,8 @@ class DataCaching {
 			'type' => 'not cached',
 			'message' => 'This data comes directly from controller and this is not cached. The caching functionality works in Middleware and Controller.',
 			'offset' => $request->get('offset'),
-			'data' => $content
+			'data' => $content,
+			'cache_configuration_from_app_config' => \System\Config::get()['ResponseDataCaching']
 		];
 
 		# The response object will care about data caching.

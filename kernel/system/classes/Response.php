@@ -267,7 +267,8 @@ class Response {
 			}
 		}
 
-		if($this->cachingEnabled) {
+		# Will set cache data if enabled and the status is not error.
+		if($this->cachingEnabled and $this->responseData['status'] < 400) {
 			$this->cacheLib->set($this->cacheKey, $this->responseData);
 		}
 

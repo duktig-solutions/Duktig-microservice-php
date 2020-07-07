@@ -1,22 +1,22 @@
 <?php
 /**
- * Test Middleware for Development
+ * Example Auth Middleware for Development
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
  * @version 1.0.0
  */
-namespace App\Middleware\Tests;
+namespace App\Middleware\Auth;
 
 use System\Request;
 use System\Response;
 
 /**
- * Class Test
+ * Class Developer
  *
  * @package App\Middleware
  */
-class Test {
+class Developer {
 
 	/**
 	 * Authentication for Developer access by key

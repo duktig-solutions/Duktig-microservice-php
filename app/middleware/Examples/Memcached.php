@@ -6,7 +6,7 @@
  * @license see License.md
  * @version 1.0.0
  */
-namespace App\Middleware\General;
+namespace App\Middleware\Examples;
 
 use System\Request;
 use System\Response;
