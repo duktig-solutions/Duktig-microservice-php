@@ -7,7 +7,7 @@
  * @license see License.md
  * @version 1.0.0
  */
-namespace App\Controllers\Auth;
+namespace App\Controllers\Users;
 
 use Lib\Validator;
 use System\Request;

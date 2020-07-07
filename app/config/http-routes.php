@@ -120,32 +120,33 @@ return [
 
 	    ],
 
-        # - Get Logged in User account
+        # Get Authorized User account
         '/user' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\User->getAccount',
+            'controller' => 'User\User->getAccount',
 	        'rolesAllowed' => [
 		        USER_ROLE_ANY
 	        ]
         ],
-        # - Get Users
+
+	    # Get Users
 	    '/users' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\Users->getAccounts',
+            'controller' => 'Users\Users->getAccounts',
 	        'rolesAllowed' => [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ],
-	    # - Get user by id
+	    # Get user by id
         '/users/{id}' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+	            'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\Users->getAccount',
+            'controller' => 'Users\Users->getAccount',
 	        'rolesAllowed' => [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
