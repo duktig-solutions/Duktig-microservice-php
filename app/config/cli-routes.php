@@ -32,14 +32,14 @@ return [
 		# Unlike Restful API interface the Command line interface doesn't support authorization/permission checking and caching functionality.
 	],
 
-	# Archive log files if size is larger than expected
+	# System - Archive log files if size is larger than expected
 	'archiveLogFiles' => [
 		'controller' => 'System\AppLogsProcessor->archiveLogs',
 		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
 
-	# Make logs stats: app/log/stats.json
+	# System - Make logs stats: app/log/stats.json
 	'makeLogStats' => [
 		'controller' => 'System\AppLogsProcessor->makeStats',
 		'middleware' => [],
@@ -53,12 +53,12 @@ return [
 
 	# Development examples
 
-	# Benchmarking
+	# Example - Benchmarking
 	'benchmarking-example-cli' => [
 		'controller' => 'Examples\Benchmarking->presentInCli'
 	],
 
-	# Send HTTP Request in CLI mode
+	# Example - Send HTTP Request in CLI mode
 	'http-request-cli' => [
 		'controller' => 'Examples\Getter->cliSendHttpRequest'
 	],

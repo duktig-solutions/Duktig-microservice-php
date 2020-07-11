@@ -6,6 +6,7 @@
 Version 1.0.0
 
  - [Getting started](2-getting-started.md)
+ - [Import Postman Collection](Duktig.Microservice.1.postman_collection.json)
  - [General Error responses](3-general-error-responses.md)
  - [Response status codes](4-response-status-codes.md)
  - Test Requests (for Developers) `/tests`

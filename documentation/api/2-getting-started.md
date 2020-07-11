@@ -21,6 +21,12 @@ Assume you have received test account for Duktig.Microservice before, as a separ
 ![Postman Screen example](./images/postman-screenshot-1.png)
 ***Example of Postman application***  
 
+#### Import Collection
+ 
+After successful install of Postman you can import Duktig.Microservice Collection.
+    
+[Import Postman Collection](Duktig.Microservice.1.postman_collection.json)
+
 #### Authorization
 
 Many resources in Duktig.Microservice service requires to access only for authorized uses.
