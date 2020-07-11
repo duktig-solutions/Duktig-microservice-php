@@ -120,6 +120,30 @@ return [
 
 	    ],
 
+	    # Example - Using System Libraries
+	    '/examples/use_system_libraries' => [
+		    'middleware' => [
+			    'Auth\Developer->AuthByDeveloperKey'
+		    ],
+		    'controller' => 'Examples\LibrariesUsage->useSystemLibrary'
+	    ],
+
+	    # Example - Using Application custom Library
+	    '/examples/use_application_libraries' => [
+		    'middleware' => [
+			    'Auth\Developer->AuthByDeveloperKey'
+		    ],
+		    'controller' => 'Examples\LibrariesUsage->useApplicationLibrary'
+	    ],
+
+	    # Example - Using Application custom Library extended from system Library
+	    '/examples/use_application_extended_libraries' => [
+		    'middleware' => [
+			    'Auth\Developer->AuthByDeveloperKey'
+		    ],
+		    'controller' => 'Examples\LibrariesUsage->useApplicationExtendedLibrary'
+	    ],
+
         # User - Get Authorized User account
         '/user' => [
             'middleware' => [

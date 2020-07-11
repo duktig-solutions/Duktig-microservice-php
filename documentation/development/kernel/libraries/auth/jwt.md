@@ -182,6 +182,6 @@ Array
 )
 ```
 
-***This class library contains other methods which are protected and allowed to use only in inherited class.***  
+***This class library contains other methods which are protected and allowed to use only in extended class.***  
 
 End of document

@@ -15,8 +15,20 @@ namespace App\Lib;
  */
 class ExampleExtendedValidClass extends \Lib\Valid {
 
+	/**
+	 * Example method for extended library
+	 *
+	 * @access public
+	 * @param int $a
+	 * @param int $b
+	 * @return bool
+	 */
+	public function numGreaterThen(int $a, int $b) : bool {
+		return $a > $b ? true : false;
+	}
+
     /**
-     * Example method for extended library
+     * Example static method for extended library
      *
      * @access public
      * @param int $a

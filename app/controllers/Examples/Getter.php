@@ -21,7 +21,7 @@ use Lib\Benchmarking as bm;
 /**
  * Class Getter
  *
- * @package App\Controllers\Tests
+ * @package App\Controllers\Examples
  */
 class Getter {
 

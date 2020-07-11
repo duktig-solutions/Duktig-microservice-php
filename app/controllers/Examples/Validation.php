@@ -20,7 +20,7 @@ use System\Response;
 /**
  * Class Validation
  *
- * @package App\Controllers\Tests
+ * @package App\Controllers\Examples
  */
 class Validation {
 
