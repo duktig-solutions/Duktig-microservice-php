@@ -416,9 +416,13 @@ class Validation {
 
 		$response->sendJson([
 			'status' => 'ok',
-			'data' => [
+			'data_get_by_name' => [
+				'name' => $request->input('name'),
+				'email' => $request->input('email'),
+				'comment' => $request->input('comment'),
 				'test_array' => $request->input('test_array')
-			]
+			],
+			'total_request_input' => $request->input()
 		], 200);
 
 		return true;

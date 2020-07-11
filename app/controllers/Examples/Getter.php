@@ -55,6 +55,7 @@ class Getter {
 				'MIDDLEWARE_DATA' => $middlewareData,
 				'POST_FORM_DATA' => $request->input(),
 				'POST_RAW_DATA' => $request->rawInput(),
+				'URL_PATHS' => $request->paths(),
 				'GET_DATA' => $request->get(),
 				'HEADERS' => $request->headers()
 			]

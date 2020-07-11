@@ -23,13 +23,15 @@ use App\Models\Auth\User as UserModel;
 class Auth {
 
     /**
+     * Authorize User by email/password and response with token
+     *
      * @param Request $request
      * @param Response $response
      * @param array $middlewareData
      * @return bool
      * @throws \Exception
      */
-    public function Authorize(Request $request, Response $response, array $middlewareData) : bool {
+    public function Login(Request $request, Response $response, array $middlewareData) : bool {
 
         // Validate User Data
         $validation = Validator::validateJson(
@@ -115,6 +117,15 @@ class Auth {
 
     }
 
+	/**
+	 * Refresh authorized token (get new)
+	 *
+	 * @param \System\Request $request
+	 * @param \System\Response $response
+	 * @param array $middlewareData
+	 * @return bool
+	 * @throws \Exception
+	 */
     public function RefreshToken(Request $request, Response $response, array $middlewareData) : bool {
 
 	    # Before Continue, let's fetch this user again from Database

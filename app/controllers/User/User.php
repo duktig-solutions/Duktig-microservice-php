@@ -41,7 +41,7 @@ class User {
                 'email' => 'email',
                 'password' => 'password:6:256',
                 'phone' => 'string_length:6:20',
-	            'roleId' => 'one_of:'.USER_ROLE_SERVICE_PROVIDER.':'.USER_ROLE_CLIENT
+	            //'roleId' => 'one_of:'.USER_ROLE_SERVICE_PROVIDER.':'.USER_ROLE_CLIENT
             ],
             [
                 'general' => 'exact_keys_values'
@@ -74,7 +74,7 @@ class User {
             'password' => $request->input('password'),
             'phone' => $request->input('phone'),
 	        'status' => USER_STATUS_NOT_VERIFIED,
-	        'roleId' => $request->input('roleId'),
+	        'roleId' => USER_ROLE_CLIENT // $request->input('roleId'),
         ]);
 
         $response->sendJson([

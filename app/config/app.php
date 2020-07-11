@@ -94,6 +94,7 @@ return [
 
         # The key value in headers
         'AuthKeyValue' => 'aFrt$63^_tgrDlp-0Ar20-06G'
+
     ],
 
 	# Authentication by key for Developers
@@ -143,6 +144,9 @@ return [
 	    ],
 
 	    'refresh_token' => [
+
+	    	# Key name in header
+		    'RefreshTokenKey' => 'X-Refresh-Token',
 
 		    # Issuer
 		    'iss' => 'Duktig.dev.iss',

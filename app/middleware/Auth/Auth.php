@@ -48,6 +48,8 @@ class Auth {
     }
 
     /**
+     * Authenticate
+     *
      * @param Request $request
      * @param Response $response
      * @param array $middlewareData
@@ -133,10 +135,19 @@ class Auth {
 
     }
 
+	/**
+	 * Authenticate refresh token
+	 *
+	 * @param \System\Request $request
+	 * @param \System\Response $response
+	 * @param array $middlewareData
+	 * @return array|bool
+	 * @throws \Exception
+	 */
 	public function AuthenticateRefreshToken(Request $request, Response $response, array $middlewareData) {
 
-		# Get jwt from Headers
-		$jwt = $request->headers('Refresh-Token');
+		# Get jwt from Headers with Token key name from config
+		$jwt = $request->headers(\System\Config::get()['JWT']['refresh_token']['RefreshTokenKey']);
 
 		# Check if jwt is empty
 		if(!$jwt) {

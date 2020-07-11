@@ -120,7 +120,7 @@ return [
 
 	    ],
 
-        # Get Authorized User account
+        # User - Get Authorized User account
         '/user' => [
             'middleware' => [
                 'Auth\Auth->Authenticate'
@@ -131,7 +131,7 @@ return [
 	        ]
         ],
 
-	    # Get Users
+	    # Users - Get Users list
 	    '/users' => [
             'middleware' => [
                 'Auth\Auth->Authenticate'
@@ -141,7 +141,7 @@ return [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ],
-	    # Get user by id
+	    # Users - Get user by id
         '/users/{id}' => [
             'middleware' => [
 	            'Auth\Auth->Authenticate'
@@ -152,7 +152,7 @@ return [
 	        ]
         ],
 
-	    # Get System Logs Statistics
+	    # System - Get System Logs Statistics
 	    'system/app_log_stats' => [
 		    'middleware' => [
 			    'Auth\Auth->Authenticate'
@@ -163,7 +163,7 @@ return [
 		    ]
 	    ],
 
-	    # Ping The system.
+	    # System - Ping The system.
 	    # Will response plain text: Pong
 	    # For now this resource not requires authentication
 	    'system/ping' => [
@@ -174,144 +174,131 @@ return [
     ],
     'POST' => [
 
-    	# Development Examples
-
     	# Example - Response All possible request Data
-	    '/examples/response_all_request_data' => [
+	    '/examples/response_all_request_data/{id}/{num}/{any}' => [
 		    'middleware' => [
 			    'Auth\Developer->AuthByDeveloperKey',
-			    'Tests\Test->injectMiddlewareData'
+			    'Examples\Injection->injectMiddlewareData'
 		    ],
 		    'controller' => 'Examples\Getter->responseAllRequestData'
 	    ],
 
-    	# + Test - validate Request Json as array
-	    '/tests/validate_array_from_json' => [
+    	# Example - Validate Request Json as array
+	    '/examples/validate_array_from_json' => [
 		    'middleware' => [
 			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
-		    'controller' => 'Tests\Validation->validateRequestArrayFromJson'
+		    'controller' => 'Examples\Validation->validateRequestArrayFromJson'
 	    ],
 
-	    # + Test - validate Request Multidimensional Json as array
-	    '/tests/validate_multidimensional_array_from_json' => [
+	    # Example - Validate Request Multidimensional Json as array
+	    '/examples/validate_multidimensional_array_from_json' => [
 		    'middleware' => [
 			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
-		    'controller' => 'Tests\Validation->validateRequestMultiDimensionalArrayFromJson'
+		    'controller' => 'Examples\Validation->validateRequestMultiDimensionalArrayFromJson'
 	    ],
 
-	    # + Test - validate Request Form data
-	    '/tests/validate_form_data' => [
+	    # Example - Validate Request Form data
+	    '/examples/validate_form_data' => [
 		    'middleware' => [
 			    'Auth\Developer->AuthByDeveloperKey'
 		    ],
-		    'controller' => 'Tests\Validation->validateFormRequest'
+		    'controller' => 'Examples\Validation->validateFormRequest'
 	    ],
 
-    	# + Authorize user and get token
-    	'/auth/token' => [
+    	# Auth - Authorize user by email/password and get token
+    	'/auth/login' => [
             'middleware' => [
                 'Auth\Auth->AuthByKey'
             ],
-            'controller' => 'Auth\Auth->Authorize'
+            'controller' => 'Auth\Auth->Login'
         ],
-	    # + Refresh authorization token
+
+	    # Auth - Refresh authorization token
 	    '/auth/refresh_token' => [
 		    'middleware' => [
-			    'General\Auth->AuthenticateRefreshToken'
+			    'Auth\Auth->AuthenticateRefreshToken'
 		    ],
 		    'controller' => 'Auth\Auth->RefreshToken'
 	    ],
-	    # + Sign up
+
+	    # User - Register an account / Simple Sign up
 	    '/user' => [
             'middleware' => [
 	            'Auth\Auth->AuthByKey'
             ],
-            'controller' => 'Auth\User->registerAccount'
+            'controller' => 'User\User->registerAccount'
         ],
-	    # + Register user account
+
+	    # Users - Create/Register a user account
         '/users' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\Users->registerAccount',
+            'controller' => 'Users\Users->registerAccount',
 	        'rolesAllowed' => [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
-        ],
+        ]
 
-	    # =-=-=-=-=-=-=-=-=
-	    # DataReception
-	    # =-=-=-=-=-=-=-=-=
-
-	    '/data-reception/{any}' => [
-		    'middleware' => [
-			    'DataReception\Auth->AuthByKey',
-			    'DataReception\SystemDetector->detectByPaths'
-		    ],
-		    'controller' => 'DataReception\DataReceiverGeneral->receive',
-		    'rolesAllowed' => [],
-		    'allowedSystemIds' => [
-		    	'ExchangeRate.py',
-			    'ExchangeRate.php',
-			    'Hotel.py',
-			    'MicroservicesLookup',
-			    'WebsitesLookupForScraping'
-		    ]
-	    ]
     ],
     'PUT' => [
-	    # + Update User account (All data)
+
+    	# User - Update Authorized User account (All data)
     	'/user' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\User->updateAccount',
+            'controller' => 'User\User->updateAccount',
 		    'rolesAllowed' => [
 			    USER_ROLE_ANY
 		    ]
         ],
-        # + Update user account
+
+        # Users - Update a user account
 	    '/users/{id}' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\Users->updateAccount',
+            'controller' => 'Users\Users->updateAccount',
 	        'rolesAllowed' => [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ]
     ],
     'PATCH' => [
-	    # + Update User account (parts)
+
+    	# User - Update User account (parts)
     	'/user' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\User->patchAccount',
+            'controller' => 'User\User->patchAccount',
 		    'rolesAllowed' => [
 			    USER_ROLE_ANY
 		    ]
         ],
-	    # + Patch user account
+
+	    # Users - Update a user account (parts)
 	    '/users/{id}' => [
 		    'middleware' => [
-			    'General\Auth->Authenticate'
+			    'Auth\Auth->Authenticate'
 		    ],
-		    'controller' => 'Auth\Users->patchAccount',
+		    'controller' => 'Users\Users->patchAccount',
 		    'rolesAllowed' => [
 			    USER_ROLE_SUPER_ADMIN
 		    ]
 	    ]
     ],
     'DELETE' => [
-    	# + Terminate user account
+
+    	# Users - Terminate user account
         '/users/{id}' => [
             'middleware' => [
-                'General\Auth->Authenticate'
+                'Auth\Auth->Authenticate'
             ],
-            'controller' => 'Auth\Users->terminateAccount',
+            'controller' => 'Users\Users->terminateAccount',
 	        'rolesAllowed' => [
 		        USER_ROLE_SUPER_ADMIN
 	        ]

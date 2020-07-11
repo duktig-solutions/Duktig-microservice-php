@@ -225,6 +225,17 @@ class Users {
 			return false;
 		}
 
+		# Let's check the user Status if Terminated
+		if($userRecord['status'] == USER_STATUS_TERMINATED) {
+
+			$response->sendJson([
+				'status' => 'error',
+				'message' => 'Account terminated'
+			], 404);
+
+			return false;
+		}
+
 		# Validate User Data
 		$validation = Validator::validateJson(
 			$request->rawInput(),
@@ -328,6 +339,17 @@ class Users {
 			return false;
 		}
 
+		# Let's check the user Status if Terminated
+		if($userRecord['status'] == USER_STATUS_TERMINATED) {
+
+			$response->sendJson([
+				'status' => 'error',
+				'message' => 'Account terminated'
+			], 404);
+
+			return false;
+		}
+
 		# Validate User Data
 		$validation = Validator::validateJson(
 			$request->rawInput(),
@@ -339,7 +361,7 @@ class Users {
 				'phone' => 'string_length:6:20:!required',
 				'comment' => 'string_length:0:255:!required',
 				'roleId' => 'one_of:'.USER_ROLE_SERVICE_PROVIDER.':'.USER_ROLE_CLIENT.':'.USER_ROLE_ADMIN.':'.USER_ROLE_SUPER_ADMIN.':'.USER_ROLE_DEVELOPER.':!required',
-				'status' => 'one_of:'.USER_STATUS_ACTIVE.':'.USER_STATUS_NOT_VERIFIED.':!required'
+				'status' => 'one_of:'.USER_STATUS_ACTIVE.':'.USER_STATUS_NOT_VERIFIED.':'.USER_STATUS_SUSPENDED.':!required'
 			],
 			[
 				'general' => 'at_least_one_value|no_extra_values'
@@ -372,9 +394,9 @@ class Users {
 
 		$updateFields = [];
 
-		foreach ($allowedFields as $field) {
-			if($request->input($field)) {
-				$updateFields[$field] = $request->input($field);
+		foreach ($request->input() as $field => $value) {
+			if(in_array($field, $allowedFields)) {
+				$updateFields[$field] = $value;
 			}
 		}
 
@@ -386,7 +408,7 @@ class Users {
 
 		$response->sendJson([
 			'status' => 'OK',
-			'message' => 'Account Patched successfully',
+			'message' => 'Account Patched successfully'
 		], 200);
 
 		return true;
