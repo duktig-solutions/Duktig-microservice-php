@@ -328,6 +328,87 @@
 						"description": "/examples/validate_form_data"
 					},
 					"response": []
+				},
+				{
+					"name": "Using System Libraries",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Dev-Auth-Key",
+								"value": "FRE-20%Dev-Gro@25464-",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://duktig.microservice/examples/use_system_libraries",
+							"protocol": "http",
+							"host": [
+								"duktig",
+								"microservice"
+							],
+							"path": [
+								"examples",
+								"use_system_libraries"
+							]
+						},
+						"description": "/examples/use_system_libraries"
+					},
+					"response": []
+				},
+				{
+					"name": "Using Application custom Library",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Dev-Auth-Key",
+								"value": "FRE-20%Dev-Gro@25464-",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://duktig.microservice/examples/use_application_libraries",
+							"protocol": "http",
+							"host": [
+								"duktig",
+								"microservice"
+							],
+							"path": [
+								"examples",
+								"use_application_libraries"
+							]
+						},
+						"description": "/examples/use_application_libraries"
+					},
+					"response": []
+				},
+				{
+					"name": "Using Application custom Library extended from system Library",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Dev-Auth-Key",
+								"value": "FRE-20%Dev-Gro@25464-",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://duktig.microservice/examples/use_application_extended_libraries",
+							"protocol": "http",
+							"host": [
+								"duktig",
+								"microservice"
+							],
+							"path": [
+								"examples",
+								"use_application_extended_libraries"
+							]
+						},
+						"description": "/examples/use_application_extended_libraries"
+					},
+					"response": []
 				}
 			],
 			"description": "Duktig Microservice Example requests",
@@ -841,7 +922,7 @@
 	],
 	"variable": [
 		{
-			"id": "0b92dc60-296e-4f1e-baed-0c4644d72183",
+			"id": "edcd64e9-f94e-425f-b0ff-be33923f4342",
 			"key": "{host}",
 			"value": "http://duktig.microservice/",
 			"type": "string"
