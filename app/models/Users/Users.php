@@ -5,7 +5,7 @@
  * @version 1.0.0
  *
  */
-namespace App\Models\Auth;
+namespace App\Models\Users;
 
 /**
  * Class Users
@@ -25,11 +25,17 @@ class Users extends \Lib\Db\MySQLi
 
 	public function __construct() {
 
-		$config = \System\Config::get()['Databases']['Auth'];
+		$config = \System\Config::get()['Databases']['Users'];
 
 		parent::__construct($config);
 	}
 
+	/**
+	 * Fetch row but with more details for admin
+	 *
+	 * @param array $where
+	 * @return array
+	 */
 	public function fetchRow(array $where) : array {
 
 		$result = $this->fetchAssocByWhere($this->table, $where);
@@ -42,10 +48,22 @@ class Users extends \Lib\Db\MySQLi
 
 	}
 
+	/**
+	 * Fetch Users
+	 *
+	 * @param $offset
+	 * @param $limit
+	 * @return array
+	 * @throws \Exception
+	 */
 	public function fetchRows($offset, $limit) {
+
 		return $this->fetchAllAssoc(
-			"select userId, firstName, lastName, email, phone, comment, dateRegistered, dateLastUpdate, dateLastLogin, roleId, status
-	    	           from " . $this->table . " limit " .$offset . ", ". $limit);
+			"select 
+			userId, firstName, lastName, email, phone, comment, dateRegistered, dateLastUpdate, dateLastLogin, roleId, status
+	    	from ".$this->table." limit ?, ?",
+			[$offset, $limit]
+		);
 	}
 
 }

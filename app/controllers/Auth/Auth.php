@@ -9,11 +9,10 @@
  */
 namespace App\Controllers\Auth;
 
-use System\Logger;
 use Lib\Validator;
 use System\Request;
 use System\Response;
-use App\Models\Auth\User as UserModel;
+use App\Models\User\User as UserAuthModel;
 
 /**
  * Class Auth
@@ -54,11 +53,11 @@ class Auth {
         }
 
         # Try to get account
-        $userModel = new UserModel();
+        $authModel = new UserAuthModel();
 
-        $account = $userModel->fetchRow([
-            'email' => $request->input('email')
-        ]);
+	    $account = $authModel->fetchRow([
+		    'email' => $request->input('email')
+	    ]);
 
         # Account with requested email not exists
         if(!$account) {
@@ -94,12 +93,7 @@ class Auth {
         }
 
         # Let's update User login date
-        $userModel->updateRow([
-            'dateLastLogin' => date('Y-m-d H:i:s')
-        ],[
-            'userId' => $account['userId'],
-            'email' => $account['email']
-        ]);
+        $authModel->updateLastAuthById(date('Y-m-d H:i:s'), $account['userId']);
 
         # Generate the token
 	    $access = \App\Lib\Auth\Jwt::generate($account);
@@ -130,9 +124,9 @@ class Auth {
 
 	    # Before Continue, let's fetch this user again from Database
 	    # We have to check the status and other information
-	    $userModel = new UserModel();
+	    $authModel = new UserAuthModel();
 
-	    $account = $userModel->fetchRow([
+	    $account = $authModel->fetchRow([
 		    'userId' => $middlewareData['account']['userId']
 	    ]);
 

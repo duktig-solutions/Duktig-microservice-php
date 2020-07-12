@@ -63,14 +63,14 @@ return [
 		    'charset' => 'utf8'
 	    ],
 
-	    # Authorization Database
-	    'Auth' => [
+	    # Users Database
+	    'Users' => [
 		    'driver' => 'MySQLi',
 		    'host' => 'localhost',
 		    'port' => 3306,
 		    'username' => 'root',
 		    'password' => 'abc123',
-		    'database' => 'DuktigAuth',
+		    'database' => 'DuktigUsers',
 		    'charset' => 'utf8'
 	    ],
 
@@ -205,12 +205,14 @@ return [
 	'Backups' => [
 		# Databases to backup
 		'Databases' => [
+			/*
 			[
 				'database' => 'Duktig',
 				'excluded_tables' => []
 			],
+			*/
 			[
-				'database' => 'DuktigAuth',
+				'database' => 'DuktigUsers',
 				'excluded_tables' => []
 			]
 		],

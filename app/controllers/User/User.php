@@ -11,7 +11,7 @@ namespace App\Controllers\User;
 use Lib\Validator;
 use System\Request;
 use System\Response;
-use App\Models\Auth\User as UserModel;
+use App\Models\User\User as UserModel;
 
 /**
  * Class User

@@ -5,7 +5,7 @@
  * @version 1.0.0
  *
  */
-namespace App\Models\Auth;
+namespace App\Models\User;
 
 /**
  * Class User
@@ -25,7 +25,7 @@ class User extends \Lib\Db\MySQLi
 
     public function __construct() {
 
-        $config = \System\Config::get()['Databases']['Auth'];
+        $config = \System\Config::get()['Databases']['Users'];
 
         parent::__construct($config);
     }
@@ -84,7 +84,9 @@ class User extends \Lib\Db\MySQLi
         ];
 
         // Let's encrypt the password
-        $data['password'] = \Lib\Auth\Password::encrypt($data['password']);
+	    if(empty($data['password'])) {
+		    $data['password'] = \Lib\Auth\Password::encrypt($data['password']);
+	    }
 
         // Merge Default values with request values
         $record = array_merge($default, $data);
@@ -110,5 +112,22 @@ class User extends \Lib\Db\MySQLi
         return $this->update($this->table, $record, $where);
 
     }
+
+	/**
+	 * Update User last authorization date
+	 *
+	 * @param string $date
+	 * @param int $userId
+	 * @return int
+	 */
+	public function updateLastAuthById(string $date, int $userId) : int {
+
+		return $this->update(
+			$this->table,
+			['dateLastLogin' => $date],
+			['userId' => $userId]
+		);
+
+	}
 
 }
