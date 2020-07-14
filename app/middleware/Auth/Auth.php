@@ -220,8 +220,8 @@ class Auth {
 		# The verification algorithm in this case works as follows:
 		# The payload contains password encrypted ( string as: user id + config [ account_key ] + user email)
 		# In the payload of account we also have user id and email
-		# The token comes with payload containing the encrypted key and we compare with local, just created kay.
-		# if encrypted_key_in_payload != key_verified_just_now then the key is wrong
+		# The token comes with payload containing the encrypted key and we compare with local, just created key.
+		# if encrypted_key_in_payload != key_verified_just_now then the key is invalid
 		# However, listen music: Omni Trio - The Haunted Science
 		if(!\Lib\Auth\Password::verify($accountLocalBuildKey, $accountPayloadKey)) {
 

@@ -20,8 +20,8 @@ use Lib\Valid;
 use Lib\Generator;
 
 # Using Application custom created Libraries
-use App\Lib\ExampleLibClass;
-use App\Lib\ExampleExtendedValidClass;
+use App\Lib\Examples\ExampleLibClass;
+use App\Lib\Examples\ExampleExtendedValidClass;
 
 /**
  * Class LibrariesUsage

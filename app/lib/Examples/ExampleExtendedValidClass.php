@@ -6,7 +6,7 @@
  * @license see License.md
  * @version 1.0.0
  */
-namespace App\Lib;
+namespace App\Lib\Examples;
 
 /**
  * Class ExampleExtendedValidClass
