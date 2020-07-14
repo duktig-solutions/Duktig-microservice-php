@@ -424,7 +424,7 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDE2MDQwOSwiaWF0IjoxNTk0MTYwNDA5LCJleHAiOjE1OTQyNDY4MDksImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Aq0il1GdDFWFzT-QjAXdK-MkMSllJp21WqWbSvt7NC8",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
@@ -485,7 +485,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"super.admin@duktig.io\",\n\t\"password\":\"super.admin@duktig.io\"\n}",
+							"raw": "{\n\t\"email\":\"super.admin@duktig.io\",\n\t\"password\":\"super.admin@duktig.io.p\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -552,7 +552,7 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
@@ -583,7 +583,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Jon\",\n    \"lastName\": \"Smidth\",\n    \"email\": \"jon@example.com\",\n    \"password\": \"jon@example.com.p\",\n    \"phone\": \"+37495563242\"\n}",
+							"raw": "{\n    \"firstName\": \"Jon2\",\n    \"lastName\": \"Smidth2\",\n    \"email\": \"jon2@example.com\",\n    \"password\": \"jon2@example.com.p\",\n    \"phone\": \"+37495563243\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -619,7 +619,7 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
@@ -654,7 +654,7 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
@@ -718,7 +718,7 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
@@ -754,12 +754,12 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQwNDMxMCwiaWF0IjoxNTk0NDA0MzEwLCJleHAiOjE1OTQ0OTA3MTAsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.zI5emlRerO5JIcusV_njB-C27X5fM53xRAI_cX1jUx4",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://duktig.microservice/users/7",
+							"raw": "http://duktig.microservice/users/14",
 							"protocol": "http",
 							"host": [
 								"duktig",
@@ -767,7 +767,7 @@
 							],
 							"path": [
 								"users",
-								"7"
+								"14"
 							]
 						},
 						"description": "/users/{id}"
@@ -781,13 +781,13 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"User\",\n    \"lastName\": \"Developer\",\n    \"email\": \"devops@duktig.solutions\",\n    \"password\": \"devops@duktig.solutions.p\",\n    \"phone\": \"+37495259875\",\n    \"roleId\":\"5\",\n    \"status\":0,\n    \"comment\":\"This (developer) user created by Super admin\"\n}",
+							"raw": "{\n    \"firstName\": \"User2\",\n    \"lastName\": \"Developer2\",\n    \"email\": \"devops2@duktig.solutions\",\n    \"password\": \"devops2@duktig.solutions.p\",\n    \"phone\": \"+37495259873\",\n    \"roleId\":\"5\",\n    \"status\":0,\n    \"comment\":\"This 2 (developer) user created by Super admin\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -816,7 +816,7 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
@@ -852,13 +852,13 @@
 						"header": [
 							{
 								"key": "Access-Token",
-								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDQxNDMyMiwiaWF0IjoxNTk0NDE0MzIyLCJleHAiOjE1OTQ1MDA3MjIsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.mwENon3i4xtSexSH-OAr__mHw3RfHUoiwqyfPIqoSkw",
+								"value": "eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuZGV2LmlzcyIsImF1ZCI6IkR1a3RpZy5kZXYuZ2VuZXJhbC5hdWQiLCJzdWIiOiJEdWt0aWcuZGV2LmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmRldi5nZW5lcmFsLmp0aSIsIm5iZiI6MTU5NDU1MTkwNiwiaWF0IjoxNTk0NTUxOTA2LCJleHAiOjE1OTQ2MzgzMDYsImFjY291bnQiOnsidXNlcklkIjoxLCJmaXJzdE5hbWUiOiJTdXBlciIsImxhc3ROYW1lIjoiQWRtaW4iLCJlbWFpbCI6InN1cGVyLmFkbWluQGR1a3RpZy5pbyIsInJvbGVJZCI6MX19.Q9XkfeFXNdWQ6bVtJQFF-89ggQ9b_of73TUk4aojgNQ",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Test1\",\n    \"lastName\": \"Test2\",\n    \"email\": \"testupdate@example.com\",\n    \"phone\": \"+374856951\",\n    \"comment\": \"Just updated for testing by admin\",\n    \"roleId\": 4,\n    \"status\": 0\n}",
+							"raw": "{\n    \"firstName\": \"User2\",\n    \"lastName\": \"Developer2\",\n    \"email\": \"devops2@duktig.solutions\",\n    \"phone\": \"+37495259873\",\n    \"comment\": \"Just Patched for testing by admin\",\n    \"roleId\": 5,\n    \"status\": 1\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -866,7 +866,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://duktig.microservice/users/7",
+							"raw": "http://duktig.microservice/users/14",
 							"protocol": "http",
 							"host": [
 								"duktig",
@@ -874,7 +874,7 @@
 							],
 							"path": [
 								"users",
-								"7"
+								"14"
 							]
 						},
 						"description": "/users"
@@ -922,10 +922,9 @@
 	],
 	"variable": [
 		{
-			"id": "edcd64e9-f94e-425f-b0ff-be33923f4342",
+			"id": "6a00933c-95a7-4c6a-9caf-e2a3908ee255",
 			"key": "{host}",
-			"value": "http://duktig.microservice/",
-			"type": "string"
+			"value": "http://duktig.microservice/"
 		}
 	],
 	"protocolProfileBehavior": {}

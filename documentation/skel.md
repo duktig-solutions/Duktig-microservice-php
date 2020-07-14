@@ -24,7 +24,7 @@ This is `Block` text
 
 ## Image
 
-![Image](skel-image.png "This is an image.")
+![Image](duktig.microservice.logo.png "This is an image.")
 
 ## List
 

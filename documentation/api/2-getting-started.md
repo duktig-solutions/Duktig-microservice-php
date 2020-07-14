@@ -14,7 +14,7 @@ In this case, the **Postman** application comes to help.
 
 You can download and install the application and start to test the Duktig.Microservice functionality.
 
-https://www.getpostman.com/downloads/
+[Download Postman](https://www.getpostman.com/downloads/)
 
 Assume you have received test account for Duktig.Microservice before, as a separated document.  
 
@@ -23,7 +23,7 @@ Assume you have received test account for Duktig.Microservice before, as a separ
 
 #### Duktig Postman Collection
  
-After successful installation of Postman you can import Duktig.Microservice Collection to use and test the backend functionality.
+After successful installation of Postman you can import Duktig.Microservice requests collection to use and test the backend functionality.
     
 [Postman Collection](Duktig.Microservice.1.postman_collection.json)
 
@@ -40,7 +40,7 @@ Example Headers:
 
 Authorization steps listed bellow:
 
-- Access to [/auth/token](user/2-authorize.md) resource
+- Access to [/auth/token](auth/authorize.md) resource
 - Process authorization and get Access-Token, Token Expiration time and Refresh-Token
 - Refresh the Access-Token with given Refresh-Token when access token expires. 
 - Access to other resources using Access-Token  
