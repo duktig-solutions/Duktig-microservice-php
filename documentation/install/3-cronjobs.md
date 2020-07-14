@@ -1,5 +1,5 @@
 # Duktig.Microservice
-## Application Installation documentation
+## Installation
 
 Version 1.0.0
 

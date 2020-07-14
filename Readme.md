@@ -57,10 +57,10 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
    
 ## References
 
-- [RESTFul API Documentation](documentation/api/Readme.md)
-- [Developer Documentation](documentation/development/Readme.md)  
-- [Installation](documentation/install/Readme.md)  
-- [Project Overview](documentation/project_overview/Readme.md) 
+- [Installation](documentation/install/Readme.md)
+- [Project Overview](documentation/project_overview/Readme.md)
+- [Development](documentation/development/Readme.md)
+- [RESTFul API](documentation/api/Readme.md)
 
 ## Credits
    
