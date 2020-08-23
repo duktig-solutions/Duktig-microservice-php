@@ -891,7 +891,7 @@ See all rules listed bellow
 
 - `array`
     - Requirement: Array
-    - Pattern: ***array:{min-elements}:{max-elements}:{not-required}*** 
+    - Pattern: ***array:{min-elements}:{max-elements}:{unique-data}:{id-numbers}:{not-required}*** 
     - Pattern examples:
         - `array` Requires an array
         - `array:!required` Requires an array or empty (not required)
@@ -900,6 +900,9 @@ See all rules listed bellow
         - `array:4` Requires an array with minimum 4 elements
         - `array::40` Requires an array with maximum 40 elements
         - `array:10::!required` Requires an array with minimum 10 elements or empty (not required)
+        - `array:10:20:{unique}` Requires an array containing only unique values.
+        - `array:10:20:{ids}` Requires an array containing only Id numbers.
+        - `array:10:20:{unique}:{ids}` Requires an array containing only Unique Id numbers.
 
 - `ids_array`
     - Requirement: Array containing only Ids. i.e. `[1, 3, 8]`

@@ -1,6 +1,6 @@
 <?php
 /**
- * Base Router class for systems
+ * HTTP Router Class
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md

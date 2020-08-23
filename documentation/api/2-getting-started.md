@@ -16,7 +16,7 @@ You can download and install the application and start to test the Duktig.Micros
 
 [Download Postman](https://www.getpostman.com/downloads/)
 
-Assume you have received test account for Duktig.Microservice before, as a separated document.  
+Assume you have received a test account for Duktig.Microservice before, as a separated document.  
 
 ![Postman Screen example](./images/postman-screenshot-1.png)
 ***Example of Postman application***  
@@ -29,18 +29,23 @@ After successful installation of Postman you can import Duktig.Microservice requ
 
 #### Authorization
 
-Many resources in Duktig.Microservice service requires to access only for authorized uses.
+All resources in Duktig.Microservice excepts `/system/ping` requires to access by:
 
-Before get Authorized, you have to access authorization resource by special auth key in header.
+- Auth key in headers (for many resources)
 
-Example Headers:
+    Example Headers:
 
-    X-Auth-Key:abc123756%37*53f3trR3
-    Content-Type:application/json 
+        X-Auth-Key:abc123756%37*53f3trR3
+        
+- JWT Access token (for user specified resource) 
 
-Authorization steps listed bellow:
+    Example Headers:
+        
+        Access-Token:eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9... 
 
-- Access to [/auth/token](auth/authorize.md) resource
+Authorization steps to get Access token listed bellow:
+
+- Request to [Authorization resource](auth/authorize.md)
 - Process authorization and get Access-Token, Token Expiration time and Refresh-Token
 - Refresh the Access-Token with given Refresh-Token when access token expires. 
 - Access to other resources using Access-Token  
@@ -55,5 +60,4 @@ Example headers:
     Content-Type:application/json
     Access-Token:eyJ0eXAiOiJKV1QiLCJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEdWt0aWcuaW8uaXNzIiwiYXVkIjoiRHVrdGlnLmlvLmdlbmVyYWwuYXVkIiwic3ViIjoiRHVrdGlnLmlvLmdlbmVyYWwuc3ViIiwianRpIjoiRHVrdGlnLmlvLmdlbmVyYWwuanRpIiwibmJmIjoxNTYxOTIxNzMwLCJpYXQiOjE1NjE5MjE3MzAsImV4cCI6MTU2MjAwODEzMCwiYWNjb3VudCI6eyJ1c2VySWQiOjEwOSwiZmlyc3ROYW1lIjoiRGF2aWQiLCJsYXN0TmFtZSI6IkF5dmF6eWFuIiwiZW1haWwiOiJ0b2tlcm5lbEBnbWFpbC5jb20iLCJpZFJvbGUiOjF9fQ.rjbkAijCx2i09dfDmpfip7mRRfRWvQo8qtREUCPX2Bg
  
-
 End of document

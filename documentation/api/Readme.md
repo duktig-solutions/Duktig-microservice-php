@@ -9,22 +9,22 @@ Version 1.0.0
  - [Import Postman Collection](Duktig.Microservice.1.postman_collection.json)
  - [General Error responses](3-general-error-responses.md)
  - [Response status codes](4-response-status-codes.md)
- - Test Requests (for Developers) `/tests`
+ - Example Requests (for Developers) `/examples`
      - Data Validation 
-        - [TEST - Validate Array from Json](tests/data_validation/1-validate_array_from_json.md)
-        - [TEST - Validate Multidimensional Array from Json](tests/data_validation/2-validate_multidimensional_array_from_json.md)
-        - [TEST - Validate form data](tests/data_validation/3-validate_form_data.md)
-        - [TEST - Validate GET Request Data](tests/data_validation/4-validate_get_request_data.md)
+        - [Validate Array from Json](tests/data_validation/1-validate_array_from_json.md)
+        - [Validate Multidimensional Array from Json](tests/data_validation/2-validate_multidimensional_array_from_json.md)
+        - [Validate form data](tests/data_validation/3-validate_form_data.md)
+        - [Validate GET Request Data](tests/data_validation/4-validate_get_request_data.md)
      - Getting Data 
-        - [TEST - Get/Download a file](tests/getting_data/1-get_download_file.md)
-        - [TEST - Response all Request data](tests/getting_data/2-response_all_request_data.md)
+        - [Get/Download a file](tests/getting_data/1-get_download_file.md)
+        - [Response all Request data](tests/getting_data/2-response_all_request_data.md)
      - Response data Caching
-        - [TEST - Cache response data by system](tests/caching/1-cache_response_data_by_system.md)
-        - [TEST - Cache response data manually](tests/caching/2-cache_response_data_manually.md)
+        - [Cache response data by system](tests/caching/1-cache_response_data_by_system.md)
+        - [Cache response data manually](tests/caching/2-cache_response_data_manually.md)
      - Library usage
-        - [TEST - Using System Libraries](#)
-        - [TEST - Using Custom Application library](#)
-        - [TEST - Using Custom Application library extended from system library](#)
+        - [Using System Libraries](#)
+        - [Using Custom Application library](#)
+        - [Using Custom Application library extended from system library](#)
  - Resources
      - Authorization 
         - [Get access and refresh tokens](auth/authorize.md) `/auth/token`

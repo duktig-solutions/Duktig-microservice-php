@@ -4,7 +4,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.2.0
+ * @version 1.3.0
  */
 namespace Lib;
 
@@ -498,63 +498,24 @@ class Validator {
 					}
 				}
 
-				break;
+	            # Validate ids if required
+                if(in_array('ids', $ruleOptions)) {
+	                foreach ($value as $id) {
+		                if (!Valid::id($id)) {
+			                $errorMessage = 'Required an Array containing Id numbers';
+			                break;
+		                }
+	                }
+                }
 
-			case 'ids_array':
-
-				# Initializing possible Error messages
-				$initialErrorMessage = 'Required an Array containing Ids';
-
-				if(in_array('!required', $ruleOptions)) {
-					$errorMessageSuffix = ' or empty';
-				} else {
-					$errorMessageSuffix = '';
-				}
-
-				# Check, the array size for minimum elements
-				if(isset($ruleOptions[0]) and (int) $ruleOptions[0] > 0) {
-					$initialErrorMessage .= ', min elements ' . $ruleOptions[0];
-				}
-
-				# Check, the array size for maximum elements
-				if(isset($ruleOptions[1]) and (int) $ruleOptions[1] > 0) {
-					$initialErrorMessage .= ', max elements ' . $ruleOptions[1];
-				}
-
-				# Validation
-
-				# Just check, if it is an array
-				if(!is_array($value)) {
-					$errorMessage = $initialErrorMessage . $errorMessageSuffix;
-					break;
-				}
-
-				# Validate ids
-				foreach($value as $id) {
-					if(!Valid::id($id)) {
-						$errorMessage = $initialErrorMessage . $errorMessageSuffix;
-						break;
-					}
-				}
-
-				# Check, the array size for minimum elements
-				if(isset($ruleOptions[0]) and (int) $ruleOptions[0] > 0) {
-					if(count($value) < $ruleOptions[0]) {
-						$errorMessage = $initialErrorMessage . $errorMessageSuffix;
-						break;
-					}
-				}
-
-				# Check, the array size for maximum elements
-				if(isset($ruleOptions[1]) and (int) $ruleOptions[1] > 0) {
-					if(count($value) > $ruleOptions[1]) {
-						$errorMessage = $initialErrorMessage . $errorMessageSuffix;
-						break;
-					}
-				}
+				# Check, if required an array with unique values
+	            if(in_array('unique', $ruleOptions) and $value != array_unique($value)) {
+		            $errorMessage = 'Required an Array containing unique values';
+		            break;
+	            }
 
 				break;
-				
+
 			default:
 				throw new \Exception('Unknown Validation rule: ' . $ruleName);
 				break;	
