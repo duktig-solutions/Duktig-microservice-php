@@ -55,7 +55,7 @@ class Validator {
 		}
 
 		# !empty
-		# Check id rule has !empty (Not set or Not empty) flag.
+		# Check if rule has !empty (Not set or Not empty) flag.
 		$allowEmpty = true;
 		if(in_array('!empty', $ruleOptions)) {
 			$errorMessageSuffix = ' or not set';

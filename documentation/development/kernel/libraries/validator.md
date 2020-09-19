@@ -903,19 +903,6 @@ See all rules listed bellow
         - `array:10:20:{unique}` Requires an array containing only unique values.
         - `array:10:20:{ids}` Requires an array containing only Id numbers.
         - `array:10:20:{unique}:{ids}` Requires an array containing only Unique Id numbers.
-
-- `ids_array`
-    - Requirement: Array containing only Ids. i.e. `[1, 3, 8]`
-    - Pattern: ***ids_array:{min-elements}:{max-elements}:{not-required}:{not_empty}***       
-    - Pattern examples:
-        - `ids_array` Requires an array containing Ids
-        - `ids_array:!required` Requires an array containing Ids or empty (not required)
-        - `ids_array:0:10` Requires an array containing Ids with elements count 0-10
-        - `ids_array:5:15:!required` Requires an array containing Ids with elements count 5-15 or empty (not required)
-        - `ids_array:4` Requires an array containing Ids with minimum 4 elements
-        - `ids_array::40` Requires an array containing Ids with maximum 40 elements
-        - `ids_array:10::!required` Requires an array containing IDs with minimum 10 elements or empty (not required)
-        - `ids_array:1:5:!required:!empty` Requires an array containing IDs with min 1, max 10 elements or not set (not required)
                 
 Return value:
 

@@ -269,28 +269,37 @@ class Validation {
 				'array7' => 'array::3:!required',
 
 				# Array containing ids
-				'ids_array' => 'ids_array',
+				'ids_array' => 'array:ids',
 
 				# Array containing ids with specified length, min, max
-				'ids_array1' => 'ids_array:1:5',
+				'ids_array1' => 'array:1:5:ids',
 
 				# Array containing ids with specified length min
-				'ids_array2' => 'ids_array:2',
+				'ids_array2' => 'array:2:ids',
 
 				# Array containing ids with specified length max
-				'ids_array3' => 'ids_array::3',
+				'ids_array3' => 'array::3:ids',
 
 				# Array containing ids with specified length min not required
-				'ids_array4' => 'ids_array:3::!required',
+				'ids_array4' => 'array:3::ids:!required',
 
 				# Array containing ids with specified length max not required
-				'ids_array5' => 'ids_array::4:!required',
+				'ids_array5' => 'array::4:ids:!required',
 
 				# Array containing ids not required but cannot be empty
-				'ids_array6' => 'ids_array:::!required:!empty',
+				'ids_array6' => 'array:::ids:!required:!empty',
 
 				# Array containing ids with specified length min, max, not required but cannot be empty
-				'ids_array7' => 'ids_array:1:5:!required:!empty',
+				'ids_array7' => 'array:1:5:ids:!required:!empty',
+
+				# Array containing unique ids
+                'unique_ids_array' => 'array:::ids:unique',
+
+				# Array containing min, max values and unique ids
+                'unique_ids_array2' => 'array:5:20:ids:unique',
+
+                # Array containing min, max values, unique ids, not required
+                'unique_ids_array3' => 'array:5:20:ids:unique:!required',
 
 				####### Mixed Rules to test ########
 
