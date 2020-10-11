@@ -64,7 +64,7 @@ try {
 
 } catch(\Throwable $e) {
 
-    \System\Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
+    Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
 
 	# In some cases, the process can be locked.
 	# Let's try to unlock

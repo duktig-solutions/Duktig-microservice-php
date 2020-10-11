@@ -40,6 +40,20 @@ return [
     # Set this to "0" to stop Cli route parsing and functionality.
     'DisableCLI' => 0,
 
+    # Redis Connection configuration
+    'Redis' => [
+        'MessageQueue' => [
+            'scheme' => 'tcp',
+            'host' => '10.211.55.3',
+            'port' => 6380,
+            'database' => 0,
+            'read_write_timeout' => 0,
+            'password' => 're2020Duk_psGw',
+            'queueName' => 'MQ_d876g66886gfd',
+            'task_execution_attempts' => 5
+        ]
+    ],
+
     # Database Connection Configuration
     # Each model in /app/models is able to use/start with one connection section.
     'Databases' => [
@@ -225,6 +239,15 @@ return [
 		# How many copies will keep the backup.
 		# for instance, setting number 7 will assume the backup will remove oldest one after 7 copies.
 		'DatabasesBackupSteps' => 7
+	],
+
+	# Web Socket Server Configuration values
+	'WebSocketServer' => [
+		'Chat' => [
+			'hostname' => 'localhost',
+			'port' => '8090',
+			'client_auth_key_prefix' => 'f8789734jk3c89c87d87d89hjdiejbkn'
+		]
 	]
 
 ];

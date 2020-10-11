@@ -63,4 +63,23 @@ return [
 		'controller' => 'Examples\Getter->cliSendHttpRequest'
 	],
 
+    # == Message/Queue functionality ==
+
+    # Message/Queue Producer for Testing
+    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-producer-test --redis-config MessageQueue
+    'mq-producer-test' => [
+        'controller' => 'MessageQueue\TestProducer->produce'
+    ],
+
+    # Message/Queue Consumer
+    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-consumer --redis-config MessageQueue
+    'mq-consumer' => [
+        'controller' => 'MessageQueue\Consumer->consume'
+    ],
+
+    # Message/Queue Consumers health inspector
+    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-consumer-health-inspector --redis-config MessageQueue
+    'mq-consumer-health-inspector' => [
+        'controller' => 'MessageQueue\HealthInspector->inspect'
+    ]
 ];
