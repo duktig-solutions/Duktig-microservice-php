@@ -51,7 +51,6 @@ class HealthInspector {
             Logger::Log($e->getMessage(), Logger::ERROR, null, null, 'mq-producer.log');
         }
 
-
     }
 
 }

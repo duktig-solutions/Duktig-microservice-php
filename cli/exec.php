@@ -29,7 +29,7 @@ set_time_limit(0);
 # Set Configuration
 ini_set('log_errors', (string) Config::get()['LogErrors']);
 ini_set('display_errors', (string) Config::get()['DisplayErrors']);
-ini_set('date.timezone', (string) Config::get()['DateTimezone']);
+date_default_timezone_set((string) Config::get()['DateTimezone']);
 
 # Initialize Input/Output
 $input = new Input($argv);

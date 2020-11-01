@@ -152,6 +152,8 @@ class Consumer {
                         static::$redis->lRem(static::$taskQueue . ':worker:' . static::$workerId, $message, 1);
                         Logger::Log('Unable to execute worker task. Message: '.$result['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message will be deleted.', Logger::ERROR, null, null, static::$logFile);
 
+                        Logger::Log($result['taskId'], Logger::ERROR, null, null, 'mq-error-tasks.log');
+
                     # fail status: task will attempt again until reach the attempts limit.
                     } elseif($result['status'] == 'fail') {
 
@@ -159,12 +161,12 @@ class Consumer {
                         if($result['attempts'] >= static::$config['task_execution_attempts']) {
 
                             static::$redis->lRem(static::$taskQueue . ':worker:' . static::$workerId, $message, 1);
-                            Logger::Log('Worker task reached attempts limit. Message: '.$result['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message will be deleted.', Logger::WARNING, null, null, static::$logFile);
+                            Logger::Log('Worker task reached attempts limit : TaskId: '.$result['taskId'].'. Message: '.$result['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message will be deleted.', Logger::WARNING, null, null, static::$logFile);
 
                         # Let's move this task again to main queue
                         } else {
 
-                            # We have to take lest attempted message with attempts count
+                            # We have to take last attempted message with attempts count
                             unset($result['status']);
                             $attempted_message = json_encode($result);
 
@@ -176,6 +178,8 @@ class Consumer {
 
                             Logger::Log($result['message'] .'. Worker task moved to main Queue. Message: '.$attempted_message, Logger::WARNING, null, null, static::$logFile);
                         }
+
+                        Logger::Log($result['taskId'], Logger::ERROR, null, null, 'mq-fail-tasks.log');
 
                     # ok status: The task is complete, we can remove this task.
                     } elseif($result['status'] == 'ok') {

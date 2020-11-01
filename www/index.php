@@ -50,7 +50,7 @@ try {
 	# Set Configuration
 	ini_set('log_errors', (string) Config::get()['LogErrors']);
 	ini_set('display_errors', (string) Config::get()['DisplayErrors']);
-	ini_set('date.timezone', (string) Config::get()['DateTimezone']);
+    date_default_timezone_set((string) Config::get()['DateTimezone']);
 
 	# Check if the service is under maintenance
 	if(Config::get()['UnderMaintenance'] == 1) {

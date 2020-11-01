@@ -60,7 +60,7 @@ Class TestWorker {
 
         $result = array_sum($parameters['numbers']);
 
-        $resultStr = $parameters['taskNumber'].':'.$parameters['expecting'].':'.$result.':'.$this->pid.':'.__FUNCTION__;
+        $resultStr = $parameters['taskId'].':'.$parameters['taskNumber'].':'.$parameters['expecting'].':'.$result.':'.$this->pid.':'.__FUNCTION__;
 
         $this->log($resultStr);
 
@@ -75,7 +75,7 @@ Class TestWorker {
 
         $result = array_sum($parameters['numbers']) - 10 - $parameters['taskNumber'];
 
-        $resultStr = $parameters['taskNumber'].':'.$parameters['expecting'].':'.$result.':'.$this->pid.':'.__FUNCTION__;
+        $resultStr = $parameters['taskId'].':'.$parameters['taskNumber'].':'.$parameters['expecting'].':'.$result.':'.$this->pid.':'.__FUNCTION__;
 
         $this->log($resultStr);
 
@@ -99,7 +99,7 @@ Class TestWorker {
 
         $result = $parameters['numbers'][0] + $parameters['taskNumber'] + $parameters['numbers'][1] - $parameters['numbers'][2];
 
-        $resultStr = $parameters['taskNumber'].':'.$parameters['expecting'].':'.$result.':'.$this->pid.':'.__FUNCTION__;
+        $resultStr = $parameters['taskId'].':'.$parameters['taskNumber'].':'.$parameters['expecting'].':'.$result.':'.$this->pid.':'.__FUNCTION__;
 
         echo $resultStr . "\n";
 

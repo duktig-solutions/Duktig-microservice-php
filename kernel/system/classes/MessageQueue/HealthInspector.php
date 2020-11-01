@@ -12,6 +12,7 @@
 namespace System\MessageQueue;
 
 use \Redis;
+use System\Logger;
 
 class HealthInspector {
 
@@ -73,7 +74,8 @@ class HealthInspector {
 
         while(True) {
 
-            static::inspectHeartBeatAndWorkersQueueMatch();
+            // This is not required, because not always workers amount matches with heartbeat check list.
+            // static::inspectHeartBeatAndWorkersQueueMatch();
             static::inspectHeartBeat();
             static::inspectWorkersQueue();
 
@@ -126,8 +128,12 @@ class HealthInspector {
         return static::$redis->keys(static::$taskQueue . ':worker:*');
     }
 
-    private static function getWorkerTasksQueueCountFromWorkersQueueList($workerId) {
+    private static function getWorkerTasksFromWorkersQueueList($workerId) {
         return static::$redis->lRange(static::$taskQueue.':worker:'.$workerId, 0, -1);
+    }
+
+    private static function getWorkerTasksQueueCountFromWorkersQueueList($workerId) {
+        return static::$redis->lLen(static::$taskQueue.':worker:'.$workerId);
     }
 
     private static function getDbSize() {
@@ -170,7 +176,8 @@ class HealthInspector {
         $workers = static::getWorkersFromWorkersQueueList();
 
         if(empty($workers)) {
-            static::log('No workers in Workers queue list.');
+            // This can be empty, because of no new tasks.
+            // static::log('No workers in Workers queue list.');
             return false;
         }
 
@@ -214,11 +221,16 @@ class HealthInspector {
 
     private static function moveWorkerQueueTasksToMainQueue($workerId) {
 
-        if(static::getWorkerTasksQueueCountFromWorkersQueueList($workerId) < 1) {
+        $workerTasksCount = static::getWorkerTasksQueueCountFromWorkersQueueList($workerId);
+
+        if($workerTasksCount < 1) {
             return false;
         }
 
+        static::log('Moving '.$workerTasksCount.' tasks of worker '.$workerId.' to main queue');
+
         $task = True;
+
         while($task) {
             $task = static::$redis->rPopLPush(static::$taskQueue . ':worker:' . $workerId, static::$taskQueue);
         }
@@ -259,6 +271,7 @@ class HealthInspector {
     }
 
     private static function log($message) {
+        Logger::Log($message, Logger::WARNING);
         echo "LOG: " . $message . "\n";
     }
 

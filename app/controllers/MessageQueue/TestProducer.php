@@ -25,6 +25,7 @@ class TestProducer {
      * @var string
      */
     private $logFile = DUKTIG_APP_PATH . 'log/mq-analyze.txt';
+    private $logFileFailTasks = DUKTIG_APP_PATH . 'log/mq-fail-tasks.log';
 
     /**
      * Main producing method
@@ -39,6 +40,7 @@ class TestProducer {
 
         # Reset Log File
         file_put_contents($this->logFile, '');
+        file_put_contents($this->logFileFailTasks, '');
 
         try {
             $redisConfigName = $input->parsed('redis-config');
@@ -94,16 +96,20 @@ class TestProducer {
                 $expectingResult = $numbers[0] + $i + $numbers[1] - $numbers[2];
             }
 
+            $taskId = mt_rand(10, 99).uniqid().mt_rand(10, 99).str_pad($i, 8, '0', STR_PAD_LEFT);
+
             $message = json_encode([
                 'workerTask' => $workerTask,
                 'parameters' => [
                     'taskNumber' => $taskNumber,
                     'numbers' => $numbers,
-                    'expecting' => $expectingResult
-                ]
+                    'expecting' => $expectingResult,
+                    'taskId' => $taskId
+                ],
+                'taskId' => $taskId
             ]);
 
-            echo $i . ' : '  . $expectingResult . "\n";
+            echo $taskId . ' : ' . $i . ' : '  . $expectingResult . "\n";
 
             $redis->lPush($config['queueName'], $message);
             $i++;
