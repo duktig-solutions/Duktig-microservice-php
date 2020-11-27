@@ -83,6 +83,8 @@ return [
         'controller' => 'MessageQueue\HealthInspector->inspect'
     ],
 
+	# == Web Socket Server functionality ==
+
 	# WebSocket server
 	# Usage: php ~/Sites/duktig.microservice.1/cli/exec.php web-socket-server --server-config Chat
 	'web-socket-server' => [
