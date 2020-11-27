@@ -81,5 +81,10 @@ return [
     # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-consumer-health-inspector --redis-config MessageQueue
     'mq-consumer-health-inspector' => [
         'controller' => 'MessageQueue\HealthInspector->inspect'
-    ]
+    ],
+
+	# WebSocket server
+	'web-socket-server' => [
+		'controller' => 'WebSocket\WebSocketServer->serve'
+	]
 ];
