@@ -1,6 +1,8 @@
 <?php
 /**
  * Web Socket Server
+ *
+ * @todo Finalize this
  */
 namespace System;
 

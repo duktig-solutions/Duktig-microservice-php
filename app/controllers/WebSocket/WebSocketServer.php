@@ -13,7 +13,6 @@ namespace App\Controllers\WebSocket;
 
 use System\Input;
 use System\Output;
-use System\MessageQueue\Consumer as ConsumerProcess;
 use System\Config;
 use System\Logger;
 
@@ -41,7 +40,8 @@ class WebSocketServer {
 			throw new \Exception('Cannot find WebSocket serve configuration by ' . $serverConfigName);
 		}
 
-		$output->stdout('Initializing WebSocket Server - '.$config['hostname'].':'.$config['port']);
+		$output->stdout('Initializing WebSocket Server instance `'.$serverConfigName.'`` - '.$config['hostname'].':'.$config['port']);
+		Logger::Log('Initializing WebSocket Server instance `'.$serverConfigName.'`` - '.$config['hostname'].':'.$config['port'], Logger::INFO);
 
 		$server = new \System\WebSocketServer($config);
 		$server->listen();
