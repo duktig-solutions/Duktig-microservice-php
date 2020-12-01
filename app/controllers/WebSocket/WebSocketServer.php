@@ -2,6 +2,8 @@
 /**
  * WebSocket Server controller
  * This controller will receive a request from Command line and start the web socket server.
+ * As a Testing server we running a chat instance.
+ * It is possible to create as many socket servers as you want.
  *
  * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php web-socket-server --server-config Chat
  *
