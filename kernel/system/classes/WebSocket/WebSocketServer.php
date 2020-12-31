@@ -1,13 +1,19 @@
 <?php
 /**
  * Web Socket Server
- *
+ * 
+ * Usage Example: app/controllers/WebSocket/WebSocketServer.php
+ * 
+ * @author David A. <software@duktig.dev>
+ * @license see License.md
+ * @version 1.0.0 
  * @todo Finalize this
  */
-namespace System;
+namespace System\WebSocket;
 
-use \System\WebSocketRouter as Router;
-
+/**
+ * Class WebSocketServer
+ */
 class WebSocketServer {
 
 	# Instance Name
@@ -28,14 +34,19 @@ class WebSocketServer {
 	 * @param array $config
 	 * @throws \Exception
 	 */
-	public function __construct($config) {
+	public function __construct(array $config) {
 
 		# Initialize WebSocket Server Instance Configuration
 		$this->config = $config;
 
 	}
 
-	public function listen() {
+	/**
+	 * Initialize the WebSocket server and start to listed
+	 *
+	 * @return void
+	 */
+	public function listen() : void {
 
 		$this->socketResource = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
@@ -49,6 +60,7 @@ class WebSocketServer {
 		$this->run();
 
 	}
+
 
 	private function run() {
 
@@ -223,6 +235,13 @@ class WebSocketServer {
 
 	}
 
+	/**
+	 * WebSocket server handshake action
+	 *
+	 * @param [type] $received_header
+	 * @param [type] $client_socket_resource
+	 * @return void
+	 */
 	private function handshake($received_header, $client_socket_resource) {
 
 		$headers = array();
@@ -232,11 +251,11 @@ class WebSocketServer {
 
 			$line = chop($line);
 
-			if(preg_match('/\A(\S+): (.*)\z/', $line, $matches)) 	{
+			if(preg_match('/\A(\S+): (.*)\z/', $line, $matches)) {
 				$headers[$matches[1]] = $matches[2];
 			}
 		}
-
+		
 		$secKey = $headers['Sec-WebSocket-Key'];
 		$secAccept = base64_encode(pack('H*', sha1($secKey . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
 

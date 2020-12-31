@@ -1,6 +1,7 @@
 <?php
 /**
  * Message/Queue Testing Producer
+ * A Producer pushes a tasks to Redis
  *
  * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-producer-test --redis-config MessageQueue
  *
@@ -59,6 +60,7 @@ class TestProducer {
 
         } catch (\Throwable $e) {
             Logger::Log($e->getMessage(), Logger::ERROR, null, null, 'mq-producer.log');
+            $output->stderr($e->getMessage());
         }
     }
 

@@ -8,6 +8,7 @@
  * @license see License.md
  * @version 1.0.0
  * @requires phpredis extension
+ * @todo finalize with function argument types, comments...
  */
 namespace System\MessageQueue;
 

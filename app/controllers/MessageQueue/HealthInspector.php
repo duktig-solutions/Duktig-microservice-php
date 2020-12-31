@@ -49,6 +49,7 @@ class HealthInspector {
 
         } catch (\Throwable $e) {
             Logger::Log($e->getMessage(), Logger::ERROR, null, null, 'mq-producer.log');
+            $output->stderr($e->getMessage());
         }
 
     }

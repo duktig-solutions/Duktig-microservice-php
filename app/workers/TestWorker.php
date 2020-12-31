@@ -1,18 +1,20 @@
 <?php
 /**
  * TestWorker For Message/Queue Consumer.
- *
+ * A Consumer receives tasks from Redis and calls workers
+ * 
  * Functionality steps explained.
  *
  * 1. A producer pushes a message to Redis Server.
- * 2. Consumer: cli/mq/consumer.php process
- *      loaded the consumer class: kernel/system/classes/MessageQueueConsumer.php
+ * 2. Consumer: 
+ *      The controller: app/controllers/MessageQueue/Consumer.php 
+ *      loaded the consumer class: kernel/system/classes/MessageQueue/Consumer.php
  *      which will catch messages/tasks from Redis and call this Worker class.
  *
  *      Final Results will report to Consumer class method.
  *
  * Difference between Events and Message Queue is not only the unique task workers.
- * Each messages comes to message queue already formatted as a task/action.
+ * Each message comes to message queue already formatted as a task/action.
  * So, the message in Message/Queue should be formatted as:
  *
  * {

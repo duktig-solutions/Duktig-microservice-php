@@ -65,13 +65,15 @@ return [
 
     # == Message/Queue functionality ==
 
-    # Message/Queue Producer for Testing
+	# Message/Queue Producer for Testing
+	# A Producer pushes a tasks to Redis
     # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-producer-test --redis-config MessageQueue
     'mq-producer-test' => [
         'controller' => 'MessageQueue\TestProducer->produce'
     ],
 
-    # Message/Queue Consumer
+	# Message/Queue Consumer
+	# A Consumer receives tasks from Redis and calls workers
     # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-consumer --redis-config MessageQueue
     'mq-consumer' => [
         'controller' => 'MessageQueue\Consumer->consume'

@@ -23,7 +23,7 @@
 
             $('#Connect').click(function() {
 
-                websocket = new WebSocket("ws://localhost:8080/", 'echo-protocol');
+                websocket = new WebSocket("ws://192.168.64.3:8090/"); // 'echo-protocol'
 
                 console.log(websocket);
 
@@ -146,7 +146,7 @@
 <button type="submit">Send</button>
 </form>
 Your name: <input type="text" id="chat-user" value="Davs"><span id="userIdStr"></span><br>
-To Prrson: <input type="text" id="toPerson" value=""><br>
+To Person: <input type="text" id="toPerson" value=""><br>
 <div id="chat-box">
 
 </div>

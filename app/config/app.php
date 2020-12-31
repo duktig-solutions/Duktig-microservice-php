@@ -44,7 +44,7 @@ return [
     'Redis' => [
         'MessageQueue' => [
             'scheme' => 'tcp',
-            'host' => '10.211.55.3',
+            'host' => 'localhost',
             'port' => 6380,
             'database' => 0,
             'read_write_timeout' => 0,

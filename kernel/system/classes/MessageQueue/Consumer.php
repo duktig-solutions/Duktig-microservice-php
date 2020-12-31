@@ -1,6 +1,7 @@
 <?php
 /**
  * Message/Queue Consumer Class
+ * A Consumer receives tasks from Redis and calls workers
  *
  * Works with Redis Database List.
  *

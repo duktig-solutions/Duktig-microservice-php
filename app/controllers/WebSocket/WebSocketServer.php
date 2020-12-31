@@ -5,7 +5,7 @@
  * As a Testing server we running a chat instance.
  * It is possible to create as many socket servers as you want.
  *
- * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php web-socket-server --server-config Chat
+ * Usage: php ~/www/duktig.microservice.1/cli/exec.php web-socket-server --server-config Chat
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
@@ -33,19 +33,19 @@ class WebSocketServer {
 		$serverConfigName = $input->parsed('server-config');
 
 		if (!$serverConfigName) {
-			throw new \Exception('server-config required!');
+			throw new \Exception('--server-config cli argument required!');
 		}
 
 		$config = Config::get()['WebSocketServer'][$serverConfigName];
 
 		if (!$config) {
-			throw new \Exception('Cannot find WebSocket serve configuration by ' . $serverConfigName);
+			throw new \Exception('Cannot find WebSocket server configuration by ' . $serverConfigName);
 		}
 
 		$output->stdout('Initializing WebSocket Server instance `'.$serverConfigName.'`` - '.$config['hostname'].':'.$config['port']);
 		Logger::Log('Initializing WebSocket Server instance `'.$serverConfigName.'`` - '.$config['hostname'].':'.$config['port'], Logger::INFO);
 
-		$server = new \System\WebSocketServer($config);
+		$server = new \System\WebSocket\WebSocketServer($config);
 		$server->listen();
 
 		exit();
