@@ -261,7 +261,7 @@ class MySQLi {
     	try {
 		    $stmt = $this->mysqli->prepare($queryString);
 	    } catch(\Exception $e) {
-    		throw new \Exception('Unable to prepare MySQL statement. Query: ' . str_replace(["\n","\r","\t", "  "], '', $queryString));
+    		throw new \Exception('Unable to prepare MySQL statement. Query: ' . str_replace(["\n","\r","\t", "  "], ' ', $queryString) . ' | Error: ' . $e->getMessage());
 	    }
 
         if(!empty($params)) {
