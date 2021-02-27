@@ -2,7 +2,7 @@
 declare(strict_types=1); 
 /**
  * HTTP entrypoint for Web Servers such as Apache, Nginx.
- * To setup environment with web server you have to set entrypoints/http/ as web public directory.
+ * To setup environment with web server you have to set ./www as web public directory.
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md

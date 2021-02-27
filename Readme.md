@@ -4,30 +4,39 @@
      
 > As Rasmus Lerdorf (PHP founder) says, **"Frameworks sucks!"**.
 >
-> So, let's develop and run something very Lightweight depending on special needs,
-> instead of huge framework with a lot of unusable functionality.
+> So, let's develop and deploy a code as Lightweight as it's possible, 
+> depending on your application special needs, instead of huge framework 
+> with a thousands and thousands lines of code.
 
 ## Features
 
  - High performance Service
-   - Run with Web Server such as Apache/Nginx with PHP-FPM   
-   - Run as Command line interface Tool
+   - Run under Web Server such as Apache/Nginx with PHP-FPM
+   - Run as a Command line interface Tool
  - Simple functionality
-   - Developed for specific purposes only. 
+   - Developed for specific purposes only.
  - Flexible configuration
  - Docker container friendly
- - Supports CLI functionality for common tools development
  - Security
-    - Auth by header key (configurable)
-    - Auth by JWT
+    - JWT Based Authorization 
+    - More security restrictions planned to do
  - Accounting
     - User Accounts functionality
-    - User Roles functionality   
- - Database access
+    - User Roles functionality
+ - Database access (MySQL)
     - Lightweight CRUD Library
     - Asynchronous queries
-    
- And many more.     
+ - Redis
+    - Redis Message/Queue ready
+ - Caching
+    - Redis
+    - Memcached
+ - Super Data Validation
+    - Ready to handle Request Json data and more
+ - Database Backup (automatic)
+ - Nice HTTP Routing with middleware
+         
+And many more.
  
 ## Project Name definition
 
@@ -45,7 +54,7 @@ Duktig project includes User authorization functionality with Roles/Permissions.
 Each resource in project can have allowed roles to access. For instance: Resource `/users` can be accessed only by **Super Admin** Role.
 
 Very flexible configuration of routing and development approach can allow you to create:  
-`Request -> Route -> Middleware -> Controller -> Model -> Response` in a moment.  
+`Request -> Route -> Middleware -> Controller -> Model -> Response` in a moment.
 
 ## Version definition
 
@@ -68,4 +77,6 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 
 - Project Development Idea from 04 April 2019 by [Duktig Solutions](http://https://duktig.solutions/) 
 
-> **NOTICE:** This project still under development.
+> **NOTICE:** Even if this project application is under strong stress and performance testing inside docker containers, 
+> We would recommend to look it as a "still under development" project.
+ 

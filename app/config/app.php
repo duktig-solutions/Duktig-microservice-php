@@ -239,15 +239,6 @@ return [
 		# How many copies will keep the backup.
 		# for instance, setting number 7 will assume the backup will remove oldest one after 7 copies.
 		'DatabasesBackupSteps' => 7
-	],
-
-	# Web Socket Server Configuration values
-	'WebSocketServer' => [
-		'Chat' => [
-			'hostname' => 'localhost',
-			'port' => '8090',
-			'client_auth_key_prefix' => 'f8789734jk3c89c87d87d89hjdiejbkn'
-		]
 	]
 
 ];
