@@ -7,7 +7,10 @@ declare(strict_types=1);
  * @license see License.md
  * @version 1.0.0
  */
-namespace System;
+namespace System\CLI;
+
+use \System\Logger;
+use \System\Config;
 
 # Define project root path
 define('DUKTIG_ENV', 'cli');
@@ -40,7 +43,7 @@ set_error_handler(function($code, $message, $file, $line) use ($output) {
 
     # This will return true, if not notice
     # In case if this is not a notice, we throwing Exception
-    if(Ehandler::processError($message, $code, $file, $line)) {
+    if(\System\Ehandler::processError($message, $code, $file, $line)) {
         $output->stderr("\nError! " . $message);
     }
 
@@ -60,15 +63,15 @@ try {
 
     # Initialize Route
     # If no route match/found to run, Routing will automatically exit with error
-    CliRouter::init($input, $output);
+    \System\CLI\Router::init($input, $output);
 
 } catch(\Throwable $e) {
 
-    Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
+    \System\Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
 
 	# In some cases, the process can be locked.
 	# Let's try to unlock
-	CliRouter::unlockProcess();
+	\System\CLI\Router::unlockProcess();
 
     $output->stderr($e->getMessage());
 

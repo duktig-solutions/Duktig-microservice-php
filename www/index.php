@@ -8,7 +8,9 @@ declare(strict_types=1);
  * @license see License.md
  * @version 1.0.0
  */
-namespace System;
+namespace System\HTTP;
+
+use System\Config;
 
 # Define project root path
 define('DUKTIG_ENV', 'http');
@@ -27,15 +29,15 @@ $response = new Response();
 
 # Set error handler
 set_error_handler(function($code, $message, $file, $line) use($response) {
-
+    
     # This will return true, if not notice
     # In case if this is not a notice, we throwing Exception
-    if(Ehandler::processError($message, $code, $file, $line)) {
-
+    if(\System\Ehandler::processError($message, $code, $file, $line)) {
+        
         # Reset Response data, Set new data and output.
         $response->reset();
         $response->sendJson(
-            Ehandler::getDetailed($message, $code),
+            \System\Ehandler::getDetailed($message, $code),
             500
         );
         $response->sendFinal();
@@ -64,19 +66,19 @@ try {
 
 	# Initialize Route
 	# If no route match/found to run, Routing will automatically send Error 404
-	HttpRouter::init($request, $response);
+	Router::init($request, $response);
 
 	# Finally send response to client.
     $response->sendFinal();
 
 } catch(\Throwable $e) {
-
-    Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
+    
+    \System\Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
 
     # Reset Response data, Set new data and output.
     $response->reset();
     $response->sendJson(
-        Ehandler::getDetailed($e->getMessage(), $e->getCode()),
+        \System\Ehandler::getDetailed($e->getMessage(), $e->getCode()),
         500
     );
     $response->sendFinal();

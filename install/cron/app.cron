@@ -1,8 +1,0 @@
-MAILTO=""
-
-# Application logs
-5 */6 * * * root php /duktig.microservice.1/cli/exec.php archiveLogFiles
-0 */6 * * * root php /duktig.microservice.1/cli/exec.php makeLogStats
-
-# Databases Backup
-0 0 * * * root php /duktig.microservice.1/cli/exec.php db-backup

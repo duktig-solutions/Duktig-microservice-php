@@ -383,7 +383,7 @@ class MySQLi {
         return array_values($results);
 
     }
-
+    
     /**
      * Fetch records and return Assoc array
      *
@@ -425,7 +425,7 @@ class MySQLi {
         return $row;
 
     }
-
+    
     /**
      * Fetch Records as assoc array by Where conditions
      *
@@ -456,6 +456,41 @@ class MySQLi {
         return $record;
     }
 
+    /**
+     * Fetch Records with specified fields as assoc array by Where conditions
+     *
+     * @final
+     * @access public
+     * @param string $table
+     * @param array $fields
+     * @param array $where
+     * @return array
+     */
+    final public function fetchAllFieldsAssocByWhere(string $table, array $fields, array $where) : array {
+
+        foreach($fields as $index => $field) {
+            $fields[$index] = $this->escape($field);
+        }
+
+        $sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";
+        $sql .= ' WHERE ';
+        $sql .= $this->prepareFields(array_keys($where), '=? and ', '=?');
+        $stmt = $this->mysqli->prepare($sql);
+        $types = $this->prepareBindParamTypes(array_values($where));
+        $stmt->bind_param($types, ...array_values($where));
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $record = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        if(!$record) {
+            return [];
+        }
+
+        return $record;
+    }
+
 	/**
 	 * Fetch Record as assoc array by Where conditions
 	 *
@@ -468,6 +503,43 @@ class MySQLi {
 	final public function fetchAssocByWhere(string $table, array $where) : array {
 
 		$sql = "SELECT * FROM ".$this->escape($table)." ";
+		$sql .= ' WHERE ';
+		$sql .= $this->prepareFields(array_keys($where), '=? and ', '=?');
+		$stmt = $this->mysqli->prepare($sql);
+		$types = $this->prepareBindParamTypes(array_values($where));
+		$stmt->bind_param($types, ...array_values($where));
+
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$record = $result->fetch_assoc();
+		$stmt->close();
+
+		if(!$record) {
+			return [];
+		}
+
+		return $record;
+
+	}
+
+    /**
+	 * Fetch Record specified fields as assoc array by Where conditions
+	 *
+	 * @final
+	 * @access public
+	 * @param string $table
+     * @param array $fields
+	 * @param array $where
+	 * @return array
+	 */
+	final public function fetchFieldsAssocByWhere(string $table, array $fields, array $where) : array {
+
+        foreach($fields as $index => $field) {
+            $fields[$index] = $this->escape($field);
+        }
+
+		$sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";
 		$sql .= ' WHERE ';
 		$sql .= $this->prepareFields(array_keys($where), '=? and ', '=?');
 		$stmt = $this->mysqli->prepare($sql);

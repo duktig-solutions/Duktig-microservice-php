@@ -8,6 +8,8 @@
  */
 namespace System;
 
+use System\Config;
+
 class Logger  {
 
 	/**
@@ -61,8 +63,8 @@ class Logger  {
     public static function Log(string $message, string $type = 'INFO', ?string $file = NULL, ?int $line = NULL, $logFile = 'app.log') : void {
 
         $message = date('Y-m-d H:i:s,v') . " _| " .
-	          \System\Config::get()['SystemId'] . " _| " .
-	                                      $type . " _| " .
+	          Config::get()['Microservice'] . " _| " .
+	          $type . " _| " .
 	          $message;
 
         if(!is_null($file)) {
@@ -92,7 +94,7 @@ class Logger  {
 
 	    $result = [
 		    'date' => '',
-		    'systemId' => '',
+		    'microservice' => '',
 		    'type' => static::INFO,
 		    'message' => $line,
 		    'file' => '',
@@ -110,7 +112,7 @@ class Logger  {
 	    $result['date'] = trim($splitLine[0]);
 
 	    if(isset($splitLine[1])) {
-		    $result['systemId'] = trim($splitLine[1]);
+		    $result['microservice'] = trim($splitLine[1]);
 	    }
 
 	    if(isset($splitLine[2])) {

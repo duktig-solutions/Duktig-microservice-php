@@ -3,3 +3,5 @@
 
 # Installation Script
 echo "Installation ..."
+
+apt install nginx-extras

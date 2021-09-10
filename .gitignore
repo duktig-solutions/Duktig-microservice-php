@@ -6,3 +6,4 @@ Backups
 composer.phar
 vendor
 .sql.gz
+.smbdelete*

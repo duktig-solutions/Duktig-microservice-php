@@ -4,6 +4,8 @@
  */
 namespace Lib;
 
+use System\Config;
+
 /**
  * Class HttpClient
  *
@@ -102,7 +104,7 @@ class HttpClient {
 	public static function sendRequestAsync(string $url, string $method = 'GET', $data = '', ?array $headers) : void {
 
 		# Command to execute
-		$cmd = \System\Config::get('app')['Executables']['curl'];
+		$cmd = Config::get('app')['Executables']['curl'];
 
 		# Request method
 		$cmd .= " -X ".$method;

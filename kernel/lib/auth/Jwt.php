@@ -215,7 +215,7 @@ class Jwt {
 
         # Check payload items by app configuration
         $validatePayloadConfig = [
-            'iss', 'aud', 'sub', 'jti'
+            'iss', 'aud', 'sub'
         ];
 
         foreach ($validatePayloadConfig as $plItem) {
@@ -263,8 +263,8 @@ class Jwt {
         if ($timestamp >= $payload['exp']) {
 
             $result['status'] = 'error';
-            $result['message'] = 'Access-Token Expired';
-
+            $result['message'] = 'Token expired';
+                        
             return $result;
         }
 

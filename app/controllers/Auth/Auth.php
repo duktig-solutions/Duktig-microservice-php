@@ -1,165 +1,186 @@
 <?php
 /**
- * Authorization Controller
- * Authorize and get token
- *
- * @author David A. <software@duktig.dev>
- * @license see License.md
- * @version 1.0.0
+ * Duktig Microservices Authorization service.
  */
 namespace App\Controllers\Auth;
 
+use System\HTTP\Request;
+use System\HTTP\Response;
 use Lib\Validator;
-use System\Request;
-use System\Response;
-use App\Models\User\User as UserAuthModel;
+use System\Logger;
+use System\Config;
 
-/**
- * Class Auth
- *
- * @package App\Controllers
- */
 class Auth {
 
-    /**
-     * Authorize User by email/password and response with token
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param array $middlewareData
-     * @return bool
-     * @throws \Exception
-     */
-    public function Login(Request $request, Response $response, array $middlewareData) : bool {
+    public function perform(Request $request, Response $response, array $middlewareData) : bool {
+        
+        // # set to headers and finish        
+        // $response->header('X-Account-Info', base64_encode('abc1223').'__'.mt_rand(1,10));
+        // $response->header('X-Micro-Host-Info', 'http://duktig.microservice');
 
-        // Validate User Data
-        $validation = Validator::validateJson(
-            $request->rawInput(),
-            [
-                'email' => 'required|email',
-                'password' => 'required|password:6:256',
+        // $response->sendJson([
+        //     'status' => 'ok',
+        //     'message' => 'Authorized'
+        // ], 200);
 
-            ],
-            # Extra validation for all fields
+        // return True;
+
+        # Validate the Token 
+        $validation = Validator::validateDataStructure(
+            $request->headers(),
             [
-                'account' => 'exact_keys_values'
+                'Access-Token' => 'required|string_length:400:1000'
             ]
         );
-
-        # There are errors in validation
+        
         if(!empty($validation)) {
-            $response->sendJson($validation, 422);
+            
+            $response->sendJson([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 401);
+
+            # Exit the application
+            $response->sendFinal();
+
             return false;
         }
+        
+        $jwt = $request->headers('Access-Token');
 
-        # Try to get account
-        $authModel = new UserAuthModel();
-
-	    $account = $authModel->fetchRow([
-		    'email' => $request->input('email')
-	    ]);
-
-        # Account with requested email not exists
-        if(!$account) {
+        # Decode JWT
+        # This should decode and return an array with payload containing user account information
+        $decodedJWT = \Lib\Auth\Jwt::decode($jwt, Config::get()['JWT']['access_token']);
+        
+        # If decoding status is not ok
+        if($decodedJWT['status'] != 'ok') {
 
             $response->sendJson([
                 'status' => 'error',
-                'message' => 'Incorrect credentials'
+                'message' => $decodedJWT['message']
             ], 401);
 
+            # Exit the application
+            $response->sendFinal();
+
             return false;
+
         }
 
-        # Verify the password hash
-        if(!\Lib\Auth\Password::verify($request->input('password'), $account['password'])) {
+        # Verify payload account details
+        # userId example: J34x1iXqyqWkIh60zxwGxzWiyYHKFw
+        # deviceId example: R4tF38GryB4V-QefTMa
+		if(empty($decodedJWT['payload']['account']['userId']) or 
+            empty($decodedJWT['payload']['account']['deviceId'])) {
 
             $response->sendJson([
                 'status' => 'error',
-                'message' => 'Incorrect credentials'
+                'message' => 'Invalid Payload'
             ], 401);
+
+            # Exit the application
+            $response->sendFinal();
+
+            return false;
+
+        }
+
+        # Verify the token jti - Unique Id
+        # Encrypted as: \Lib\Auth\Password::encrypt($account['userId'].'__'.$config['payload_secure_encryption_key'] . $deviceId),
+        $builtJti = $decodedJWT['payload']['account']['userId'].'__'.Config::get()['JWT']['access_token']['payload_secure_encryption_key'] . $decodedJWT['payload']['account']['deviceId'];
+        
+        if(!\Lib\Auth\Password::verify($builtJti, $decodedJWT['payload']['jti'])) {
+            
+            $response->sendJson([
+                'status' => 'error',
+                'message' => 'Invalid jti'
+            ], 401);
+
+            # Exit the application
+            $response->sendFinal();
 
             return false;
         }
 
-	    # Check the account status
-        if($account['status'] != USER_STATUS_ACTIVE) {
+        # Just started to play "Pink Floyd - Hey You" in Radio Italia Anni 60
 
-	        $response->sendJson([
-		        'status' => 'error',
-		        'message' => 'Due to the status of your account, you are not able to access this resource'
-	        ], 403);
+        # Now try to get a token data from TokenStorage
+        # Notice! This token data expiration is the same as refreshToken expiration.
+        # In case of Admin removes this token, a user cannot access to verify or refresh the token even if it wasn't expired.
+        # This will return array like this:
+        /*
+        Array
+        (
+            [dateLogin] => 2021-03-14 15:21:17
+            [loginIp] => 192.168.2.152
+            [deviceId] => ZenTestSessionsRoleTest
+            [userAgent] => PostmanRuntime/7.26.8
+            [status] => 1
+            [roleId] => a45rzo01f3
+            [displayName] => JerrSer99
+            [firstName] => Jerryk
+            [lastName] => Serontoko
+            [lastActive] => 2021-03-14 15:21:17
+        )
+        */
+        $storedToken = \Lib\Auth\TokenStorage::get(
+            $decodedJWT['payload']['account']['userId'], 
+            $decodedJWT['payload']['account']['userId'].'_'.sha1($decodedJWT['payload']['account']['deviceId'])
+        );
+        
+        //Logger::log(print_r($jwt, true), Logger::INFO,null, null,'auth.log');      
+                
+        # The storage not contains a token with this userId and device
+        if(!$storedToken) {
 
-	        return false;
+            $response->sendJson([
+                'status' => 'error',
+                'message' => 'Token expired'
+            ], 401);
+
+            # Exit the application
+            $response->sendFinal();
+
+            return false;
+
         }
 
-        # Let's update User login date
-        $authModel->updateLastAuthById(date('Y-m-d H:i:s'), $account['userId']);
+        // @todo REQUIRE LIKE THIS !
+        // Authorization "bearer SecretForOAuthServer";
+        
+        Logger::log(print_r($request->headers(), true), Logger::INFO,null, null,'auth.log');
+        
+        // # set to headers and finish        
+        // $response->header('X-Account-Info', base64_encode('abc1223').'__'.mt_rand(1,10));
+        // $response->header('X-Micro-Host-Info', 'http://duktig.microservice');
 
-        # Generate the token
-	    $access = \App\Lib\Auth\Jwt::generate($account);
+        // $response->sendJson([
+        //     'status' => 'ok',
+        //     'message' => 'Authorized'
+        // ], 200);
 
+        // return True;
+
+        # @todo check permissions
+        
+        # set to headers and finish        
+        $response->header('X-Account-Info', json_encode($storedToken));
+
+        //$response->header('X-Account-Info', base64_encode('abc1223').'__'.mt_rand(1,10));
+        $response->header('X-Micro-Host-Info', 'http://duktig.microservice'); // $request->headers('X-Original-Uri')
+
+        // $response->header('X-Account-Info', base64_encode(json_encode([
+        //     'userId' => $storedToken['userId'],
+        //     'roleId' => $storedToken['roleId'],
+        // ])));
+        
         $response->sendJson([
-            'status' => 'OK',
-            'message' => 'Signed in successfully',
-            'lastLogin' => $account['dateLastLogin'],
-            'access_token' => $access['access_token'],
-	        'expires_in' => $access['expires_in'],
-	        'refresh_token' => $access['refresh_token']
-        ]);
+            'status' => 'ok',
+            'message' => 'Authorized'
+        ], 200);
+        
+        return True;
 
-        return true;
-
-    }
-
-	/**
-	 * Refresh authorized token (get new)
-	 *
-	 * @param \System\Request $request
-	 * @param \System\Response $response
-	 * @param array $middlewareData
-	 * @return bool
-	 * @throws \Exception
-	 */
-    public function RefreshToken(Request $request, Response $response, array $middlewareData) : bool {
-
-	    # Before Continue, let's fetch this user again from Database
-	    # We have to check the status and other information
-	    $authModel = new UserAuthModel();
-
-	    $account = $authModel->fetchRow([
-		    'userId' => $middlewareData['account']['userId']
-	    ]);
-
-	    # Account with requested Id doesn't exists
-	    if(!$account) {
-
-		    $response->sendJson([
-			    'status' => 'error',
-			    'message' => 'Account not exists'
-		    ], 401);
-
-		    return false;
-	    }
-
-	    # Check the account status
-	    if($account['status'] != USER_STATUS_ACTIVE) {
-
-		    $response->sendJson([
-			    'status' => 'error',
-			    'message' => 'Due to the status of your account, you are not able to access this resource'
-		    ], 403);
-
-		    return false;
-	    }
-
-	    $response->sendJson([
-		    'status' => 'OK',
-		    'message' => 'Access token regenerated successfully',
-		    'access_token' => \App\Lib\Auth\Jwt::AccessToken($account),
-		    'expires_in' => \App\Lib\Auth\Jwt::AccessTokenExpiresIn()
-	    ]);
-
-	    return true;
     }
 
 }

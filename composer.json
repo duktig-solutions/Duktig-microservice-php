@@ -1,24 +1,24 @@
 {
-  "name": "duktig-solutions/duktig.microservice.1",
+  "name": "duktig-solutions/duktig.microservice.php.1",
   "type": "project",
   "description": "Fast and Lightweight RESTFul API Microservice",
   "keywords": ["php", "restful api", "api", "cli", "microservice", "docker"],
-  "homepage": "https://github.com/duktig-solutions/duktig.microservice.1",
+  "homepage": "https://github.com/duktig-solutions/duktig.microservice.php.1",
   "time":"2019-04-04",
   "license": "Proprietary",
   "authors": [
     {
       "name": "David A.",
       "email": "software@duktig.dev",
-      "homepage": "https://github.com/duktig-solutions/duktig.microservice.1",
+      "homepage": "https://github.com/duktig-solutions/duktig.microservice.php.1",
       "role": "Founder"
     }
   ],
   "support": {
     "email": "software@duktig.dev",
-    "issues": "https://github.com/duktig-solutions/duktig.microservice.1/issues",
-    "source": "https://github.com/duktig-solutions/duktig.microservice.1",
-    "docs": "https://github.com/duktig-solutions/duktig.microservice.1"
+    "issues": "https://github.com/duktig-solutions/duktig.microservice.php.1/issues",
+    "source": "https://github.com/duktig-solutions/duktig.microservice.php.1",
+    "docs": "https://github.com/duktig-solutions/duktig.microservice.php.1"
   },
   "require": {
     "php": ">=7.1.0",

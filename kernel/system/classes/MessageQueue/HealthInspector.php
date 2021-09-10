@@ -49,7 +49,7 @@ class HealthInspector {
      * @access private
      * @var string
      */
-    private static $logFile = 'mq-consumer.log';
+    private static $logFile = 'development-mq-consumer.log';
 
     public static function inspect($config) {
 
@@ -66,6 +66,9 @@ class HealthInspector {
             static::$redis->auth($config['password']);
         }
 
+        # Select the database
+        static::$redis->select($config['database']);
+
         // Possible cases to clean up.
 
         // 1. Worker queue exists by worker id, but worker doesn't exists in heartbeat list.
@@ -79,6 +82,7 @@ class HealthInspector {
             // static::inspectHeartBeatAndWorkersQueueMatch();
             static::inspectHeartBeat();
             static::inspectWorkersQueue();
+            static::inspectTasksQueue();
 
             sleep(5);
         }
@@ -168,6 +172,16 @@ class HealthInspector {
                 static::moveWorkerQueueTasksToMainQueue($workerId);
                 static::$redis->lRem(static::$taskQueue . ':workers-heartbeat', $worker, 1);
             }
+        }
+
+    }
+
+    private static function inspectTasksQueue() {
+        
+        $tasksCount = static::$redis->lLen(static::$taskQueue);
+
+        if($tasksCount > 10) {
+            static::log('Queue count: '.$tasksCount.' > 10');
         }
 
     }

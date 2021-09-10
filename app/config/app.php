@@ -14,9 +14,9 @@ return [
     # Your project version
     'ProjectVersion' => '1.0.0',
 
-	# System Id for each instance of Duktig.Microservice
-	# i.e. Auth | Reports | AbcData, etc...
-	'SystemId' => 'Dev',
+	# Microservice ID (Aka System Id) for each instance. 
+	# i.e. Accounts | Reports | DataReception | Notes, etc ...
+	'Microservice' => 'Accounts',
 
     # Log errors. All type of error logs located in: /app/log
     'LogErrors' => 1,
@@ -25,7 +25,8 @@ return [
     'DisplayErrors' => 1,
 
     # Default date time zone for application
-    'DateTimezone' => 'Asia/Yerevan', // 'America/Los_Angeles',
+	# America/Los_Angeles
+    'DateTimezone' => 'Asia/Yerevan',
 
     # Application mode can be: production | development and others
     # If it is production mode, detailed error messages will not be displayed in Response json.
@@ -39,20 +40,6 @@ return [
     # In some cases you can temporary disable CLI functionality.
     # Set this to "0" to stop Cli route parsing and functionality.
     'DisableCLI' => 0,
-
-    # Redis Connection configuration
-    'Redis' => [
-        'MessageQueue' => [
-            'scheme' => 'tcp',
-            'host' => 'localhost',
-            'port' => 6380,
-            'database' => 0,
-            'read_write_timeout' => 0,
-            'password' => 're2020Duk_psGw',
-            'queueName' => 'MQ_d876g66886gfd',
-            'task_execution_attempts' => 5
-        ]
-    ],
 
     # Database Connection Configuration
     # Each model in /app/models is able to use/start with one connection section.
@@ -77,14 +64,14 @@ return [
 		    'charset' => 'utf8'
 	    ],
 
-	    # Users Database
-	    'Users' => [
+	    # Accounts Database
+	    'Accounts' => [
 		    'driver' => 'MySQLi',
 		    'host' => 'localhost',
 		    'port' => 3306,
 		    'username' => 'root',
 		    'password' => 'abc123',
-		    'database' => 'DuktigUsers',
+		    'database' => 'DuktigAccounts',
 		    'charset' => 'utf8'
 	    ],
 
@@ -98,6 +85,55 @@ return [
 		    'database' => 'Duktig',
 		    'charset' => 'utf8'
 	    ]
+    ],
+
+	# Redis Connection configuration
+    'Redis' => [
+        
+		# Intermediate Data Center for Microservices (misc)
+		'IntermediateDataCenter' => [
+			'scheme' => 'tcp',
+            'host' => 'localhost',
+            'port' => 6380,
+            'database' => 0,
+            'read_write_timeout' => 0,
+            'password' => 're2020Duk_psGw',
+            'queueName' => 'MQ_d876g66886gfd'
+		],
+
+		# Intermediate Data Center for Microservices (Auth)
+		# The server is the same intermediate data center, but auth database.
+		'IntermediateDataCenterAuth' => [
+			'scheme' => 'tcp',
+            'host' => 'localhost',
+            'port' => 6380,
+            'database' => 1,
+            'read_write_timeout' => 0,
+            'password' => 're2020Duk_psGw'
+		],
+		
+		# Message/Queue For development purposes
+		'MessageQueue' => [
+            'scheme' => 'tcp',
+            'host' => 'localhost',
+            'port' => 6380,
+            'database' => 2,
+            'read_write_timeout' => 0,
+            'password' => 're2020Duk_psGw',
+            'queueName' => 'MQ_d876g66886gfd',
+            'task_execution_attempts' => 5
+        ],
+
+		# System Data Caching for development purposes
+		'DevelopmentTestSystemCaching' => [
+			'scheme' => 'tcp',
+            'host' => 'localhost',
+            'port' => 6380,
+            'database' => 3,
+            'read_write_timeout' => 0,
+            'password' => 're2020Duk_psGw',
+            'cache_expiration_seconds' => 3 // (5 minute = 300 seconds)
+		]
     ],
 
     # Authentication by key
@@ -124,8 +160,8 @@ return [
 
     # JWT Authorization Configuration
     'JWT' => [
-
-    	'access_token' => [
+		
+		'access_token' => [
 
     		# Issuer
 		    'iss' => 'Duktig.dev.iss',
@@ -139,22 +175,22 @@ return [
 		    'sub' => 'Duktig.dev.general.sub',
 
 		    # JWT ID. Case sensitive unique identifier of the token even among different issuers.
+			# This id will rebuild in Token creation time
 		    'jti' => 'Duktig.dev.general.jti',
 
 		    # Access token Expiration time
 		    # Warning! This string will be used in method strtotime(exp)
-		    'exp' => '+1 day',
-
-		    # Refresh token Expiration time
-		    # Warning! This string will be used in method strtotime(exp)
-		    'refresh_token_exp' => '+1 month',
+		    'exp' => '+120 minute',// '+1 day',
 
 		    # Token can start after given time
 		    # Warning! This string will be used in method strtotime(exp)
 		    'nbf' => '+0 minutes',
 
-		    # 256-bit-secret key
+		    # 256-bit-secret key for token encryption
 		    'secretKey' => '_tSe7#K209wG@g1vroW~43985&c~edra',
+
+			# Special key to verify user account payload and jti
+		    'payload_secure_encryption_key' => '_A#_*EYI-CFO-2523cd&Jro_Gdp99ff8i90'
 	    ],
 
 	    'refresh_token' => [
@@ -174,57 +210,42 @@ return [
 		    'sub' => 'Duktig.dev.auth.sub',
 
 		    # JWT ID. Case sensitive unique identifier of the token even among different issuers.
+			# This id will rebuild in Token creation time
 		    'jti' => 'Duktig.dev.auth.jti',
 
 		    # Refresh token Expiration time
 		    # Warning! This string will be used in method strtotime(exp)
-		    'exp' => '+1 month',
+		    'exp' => '+200 minute',// '+1 month',
 
 		    # Token can start after given time
 		    # Warning! This string will be used in method strtotime(exp)
 		    'nbf' => '+0 minutes',
 
-		    # 256-bit-secret key
+		    # 256-bit-secret key for token encryption
 		    'secretKey' => '$563ty7G4X8#9(j1@3-=',
 
-		    # Special key to verify user account payload
-		    'account_key' => '!D#_REYI-CRO-2323cd&Fro@Gdf98fg8d97'
+		    # Special key to verify user account payload and jti
+		    'payload_secure_encryption_key' => '!D#_REYI-CRO-2323cd&Fro@Gdf98fg8d97'
 	    ]
 
     ],
 
-	# Memcached - Caching configuration.
-	# This can be used by caching middleware for API request Data.
-	'ResponseDataCaching' => [
-
-		# Servers can be more than one.
-		'connections' => [
-			[
-				'host' => 'localhost',
-				'port' => 11211,
-			]
-		],
-
-		# Cached Data expiration time in seconds.
-		'expiration_seconds' => 300 # 5 minute
-	],
-
 	# System binary executables
 	'Executables' => [
 		'curl' => '/usr/bin/curl',
-		'mysqldump' => '/usr/local/mysql/bin/mysqldump'
+		'mysqldump' => '/usr/bin/mysqldump'
 	],
 
 	# Backup Configuration
 	'Backups' => [
 		# Databases to backup
 		'Databases' => [
-			/*
+			
 			[
-				'database' => 'Duktig',
+				'database' => 'duktig.dev',
 				'excluded_tables' => []
 			],
-			*/
+			
 			[
 				'database' => 'DuktigUsers',
 				'excluded_tables' => []
@@ -238,6 +259,7 @@ return [
 
 		# How many copies will keep the backup.
 		# for instance, setting number 7 will assume the backup will remove oldest one after 7 copies.
+		# And the 7 means keep backed up databases for 7 days and remove oldest 8th.
 		'DatabasesBackupSteps' => 7
 	]
 

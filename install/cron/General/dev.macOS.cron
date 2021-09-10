@@ -1,0 +1,10 @@
+#!/bin/sh
+PATH=/usr/local/bin:/usr/local/sbin:~/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/Cellar/php/7.3.6_1/bin
+MAILTO=""
+
+# Application logs
+0 */6 * * * php /Users/david/Sites/duktig.microservice.1/cli/exec.php archive-log-files
+5 */6 * * * php /Users/david/Sites/duktig.microservice.1/cli/exec.php make-log-stats
+
+# Databases Backup
+0 0 * * * php /Users/david/Sites/duktig.microservice.1/cli/exec.php db-backup

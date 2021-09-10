@@ -33,63 +33,61 @@ return [
 	],
 
 	# System - Archive log files if size is larger than expected
-	'archiveLogFiles' => [
-		'controller' => 'System\AppLogsProcessor->archiveLogs',
+	'archive-log-files' => [
+		'controller' => 'System\Logs\Archiver->process',
 		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
 
 	# System - Make logs stats: app/log/stats.json
-	'makeLogStats' => [
-		'controller' => 'System\AppLogsProcessor->makeStats',
+	'make-log-stats' => [
+		'controller' => 'System\Logs\StatsMaker->process',
 		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
 
 	# Backup Databases
 	'db-backup' => [
-		'controller' => 'Backups\DB->cliBackupDB'
+		'controller' => 'System\Backups\DB->cliBackupDB'
 	],
 
 	# Development examples
 
 	# Example - Benchmarking
 	'benchmarking-example-cli' => [
-		'controller' => 'Examples\Benchmarking->presentInCli'
+		'controller' => 'Development\Examples\Benchmarking->presentInCli'
 	],
 
 	# Example - Send HTTP Request in CLI mode
 	'http-request-cli' => [
-		'controller' => 'Examples\Getter->cliSendHttpRequest'
+		'controller' => 'Development\Examples\Getter->cliSendHttpRequest'
+	],
+
+	# Example of Data Caching with Redis in command line
+	'development-test-redis-caching' => [
+		'controller' => 'Development\Examples\DataCaching->cliTestCaching'
 	],
 
     # == Message/Queue functionality ==
 
 	# Message/Queue Producer for Testing
 	# A Producer pushes a tasks to Redis
-    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-producer-test --redis-config MessageQueue
-    'mq-producer-test' => [
-        'controller' => 'MessageQueue\TestProducer->produce'
+    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-producer-test --redis-config MessageQueue
+    'development-mq-producer-test' => [
+        'controller' => 'Development\MessageQueue\TestProducer->produce'
     ],
 
 	# Message/Queue Consumer
 	# A Consumer receives tasks from Redis and calls workers
-    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-consumer --redis-config MessageQueue
-    'mq-consumer' => [
-        'controller' => 'MessageQueue\Consumer->consume'
+    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer --redis-config MessageQueue
+    'development-mq-consumer' => [
+        'controller' => 'Development\MessageQueue\Consumer->consume'
     ],
 
     # Message/Queue Consumers health inspector
-    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php mq-consumer-health-inspector --redis-config MessageQueue
-    'mq-consumer-health-inspector' => [
-        'controller' => 'MessageQueue\HealthInspector->inspect'
-    ],
-
-	# == Web Socket Server functionality ==
-
-	# WebSocket server
-	# Usage: php ~/Sites/duktig.microservice.1/cli/exec.php web-socket-server --server-config Chat
-	'web-socket-server' => [
-		'controller' => 'WebSocket\WebSocketServer->serve'
-	]
+    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer-health-inspector --redis-config MessageQueue
+    'development-mq-consumer-health-inspector' => [
+        'controller' => 'Development\MessageQueue\HealthInspector->inspect'
+	]	
+	
 ];

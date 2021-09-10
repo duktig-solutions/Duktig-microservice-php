@@ -7,6 +7,7 @@
  * @license see License.md
  * @version 1.0.0
  */
+//echo $_SERVER['REQUEST_URI']; exit();
 return [
 
 	# Example: Template of Route configuration
@@ -27,7 +28,7 @@ return [
         #
         # For example, this route path accepts only ID integer for second item: /example/123 (correct). /example/something (not correct).
         # If the route path not matches, the system will response with Error 404 (Resource not found).
-        '/example/{id}/posts/{any}' => [
+        '/__example/{id}/posts/{any}' => [
 
             # Middleware
             # With The middleware option you can set any number of middleware methods before the controller starts.
@@ -46,30 +47,27 @@ return [
             # Note: You can put authorization, caching, data validation functionality inside a controller method instead of creating a dedicated middleware for it.
             'controller' => '___ExampleControllerClass->exampleControllerMethod',
 
-	        # List of User Roles Allowed to access to this resource.
-	        # NOTICE: If this item in array is missed, this will assume any type of User can access to this resource.
-	        'rolesAllowed' => [
-		        # Access granted to any type of User.
-	        	USER_ROLE_ANY,
+			# Required permission(s) to access this resource. 
+			# Listed as "Microservice->Perm1, Perm2
+			# NOTICE: If this item in array is missed, this will assume any type of User can access to this resource.
 
-		        # Super Admin
-		        USER_ROLE_SUPER_ADMIN,
-
-		        # Admin
-		        USER_ROLE_ADMIN,
-
-		        # Service Provider
-		        USER_ROLE_SERVICE_PROVIDER,
-
-		        # Client
-		        USER_ROLE_CLIENT,
-
-		        # Developers to access this resource for some purposes.
-		        USER_ROLE_DEVELOPER
-	        ],
-
-	        # WARNING !!! The array "rolesAllowed" works paired with middleware you're specified.
-	        # In other words, you have to check permissions by yourself as it does middleware: Auth->Authenticate
+			# WARNING !!! The array "permissionsRequired" works paired with middleware you're specified.
+	        # So you have to check permissions by yourself as it does middleware: Auth->Authenticate			
+			// @todo
+			// Make permissions functionality
+			'permissionsRequired' => [
+				
+				# Microservice name => Permission Ids
+				'Accounts' => [
+					
+					# Permissions defined in app/config/constants.php
+				//	PERMISSIONS['Accounts']['Account']['patch'],
+					
+					# It is also possible to add more than one permission to requirement list
+					# So the system will check more than one permission to allow access a resource
+				//	PERMISSIONS['Accounts']['Account']['delete']
+				]
+			],
 
 	        # This Route configured to cache response data by system
 	        # Just putting the configuration name here and all will work automatically.
@@ -78,74 +76,178 @@ return [
 
         ],
 
-	    # Development Examples
+		# ------------------------------------------------- #
+	    # ---------- Development Examples ----------------- #
+		# ------------------------------------------------- #
 
 	    # Example - Response send file (Download a file)
 	    '/examples/get-file' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\Getter->downloadFile'
+		    'controller' => 'Development\Examples\Getter->downloadFile'
 	    ],
 
 	    # Example - Validate GET Request data
 	    '/examples/validate_get_request_data' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\Validation->validateGetRequestData'
+		    'controller' => 'Development\Examples\Validation->validateGetRequestData'
 	    ],
 
 	    # Example - Get Cached data by system with only configured in route
 	    '/examples/get_cached' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey',
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\DataCaching->getCached',
+		    'controller' => 'Development\Examples\DataCaching->httpTestSystemCaching',
 
 		    # This Route configured to cache response data by system
 		    # Just putting the configuration name here and all will work automatically.
-		    'cacheConfig' => 'ResponseDataCaching'
+			# In the application configuration this directive defined in "Redis" section.
+		    'cacheConfig' => 'DevelopmentTestSystemCaching'
 	    ],
 
 	    # Example - Get Custom Cached data using middleware
 	    '/examples/get_custom_cached' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey',
-		    	'Examples\Memcached->cachedResponse',
+			    'Development\Auth\AuthByDeveloperKey->check',
+		    	'Development\Examples\DataCaching->responseFromCache',
 		    ],
-		    'controller' => 'Examples\DataCaching->getCustomCached'
+		    'controller' => 'Development\Examples\DataCaching->httpTestManualCaching'
 		    # As you see, this Route not have configured caching.
 		    # The caching will work programmatically by Middleware and Controller.
-
 	    ],
 
 	    # Example - Using System Libraries
 	    '/examples/use_system_libraries' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\LibrariesUsage->useSystemLibrary'
+		    'controller' => 'Development\Examples\LibrariesUsage->useSystemLibrary'
 	    ],
 
 	    # Example - Using Application custom Library
 	    '/examples/use_application_libraries' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\LibrariesUsage->useApplicationLibrary'
+		    'controller' => 'Development\Examples\LibrariesUsage->useApplicationLibrary'
 	    ],
 
 	    # Example - Using Application custom Library extended from system Library
 	    '/examples/use_application_extended_libraries' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\LibrariesUsage->useApplicationExtendedLibrary'
+		    'controller' => 'Development\Examples\LibrariesUsage->useApplicationExtendedLibrary'
 	    ],
 
+		# Example - Get Client Information
+		'/examples/client_info' => [
+		    'middleware' => [
+			    //'Development\Auth\AuthByDeveloperKey->check'
+		    ],
+		    'controller' => 'Development\Examples\ClientInfo->dump'
+	    ],
+
+		# ------------------------------------------------- #
+	    # ---------- Authorization service----------------- #
+		# ------------------------------------------------- #
+		
+		'/auth' => [
+			'middleware' => [],
+		    'controller' => 'Auth\Auth->perform'
+		],
+
+		# ------------------------------------------------- #
+	    # ---------- Account microservice ----------------- #
+		# ------------------------------------------------- #
+
+		# User Account Get profile data
+		'/account' => [
+		    'middleware' => [
+			    'Accounts\Account\InjectHeaderAccountInfo->injectFromHeaders'
+		    ],
+		    'controller' => 'Accounts\Account\Account->get'
+	    ],
+
+		# Get Account active Logins
+		'/account/sessions' => [
+			'middleware' => [
+			    'Accounts\Account\InjectHeaderAccountInfo->injectFromHeaders'
+		    ],
+		    'controller' => 'Accounts\Account\Account->getLoginSessions'
+		],
+
+		# AccountsManagement Get List of accounts
+		'/accounts' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Accounts->getAll'
+		],
+
+		# AccountsManagement Get specified account
+		'/accounts/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Accounts->getByIdStr'
+		],
+
+		# Get Accounts data as Profiles list.
+		# The case when loading comments from "Comments" microservice and need to get users information by userIds
+		'/profiles' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\Profiles\Profiles->getAllByIds',			
+			# This resource uses System caching
+			'cacheConfig' => 'DevelopmentTestSystemCaching'
+		],
+		
+		# Get Account data as Profile details.
+		# The case when visiting to a user page/profile and have to see more info.
+		'/profiles/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\Profiles\Profiles->getById',	
+			# This resource uses System caching
+			'cacheConfig' => 'DevelopmentTestSystemCaching'
+		],
+
+		# Get Permissions tree with Microservice->Permissions
+		'/permissions' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Permissions->getAll'
+		],
+
+		# Get all Roles
+		'/roles' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Roles->getAll'
+		],
+
+		# Get specified Role
+		'/roles/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Roles->getById'
+		],
+
+		/* ========================= OLD VERSION ================================ */
+
         # User - Get Authorized User account
-        '/user' => [
+        /*
+		'/user' => [
             'middleware' => [
                 'Auth\Auth->Authenticate'
             ],
@@ -175,62 +277,135 @@ return [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ],
+		*/
 
 	    # System - Get System Logs Statistics
 	    'system/app_log_stats' => [
 		    'middleware' => [
-			    'Auth\Auth->Authenticate'
+			    'General\Auth\AuthByToken->check'
 		    ],
-		    'controller' => 'System\AppLogsProcessor->getLogStats',
-		    'rolesAllowed' => [
-			    USER_ROLE_SUPER_ADMIN
-		    ]
+		    'controller' => 'System\Logs\StatsMaker->get'
 	    ],
-
+		
 	    # System - Ping The system.
 	    # Will response plain text: Pong
 	    # For now this resource not requires authentication
 	    'system/ping' => [
 		    'middleware' => [],
-		    'controller' => 'System\SystemHealthCheck->ping',
-		    'rolesAllowed' => []
+		    'controller' => 'System\HealthCheck\SystemHealthCheck->ping'
 	    ]
+		
     ],
     'POST' => [
-
+		
     	# Example - Response All possible request Data
 	    '/examples/response_all_request_data/{id}/{num}/{any}' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey',
-			    'Examples\Injection->injectMiddlewareData'
+			    'Development\Auth\AuthByDeveloperKey->check',
+			    'Development\Examples\Injection->injectMiddlewareData'
 		    ],
-		    'controller' => 'Examples\Getter->responseAllRequestData'
+		    'controller' => 'Development\Examples\Getter->responseAllRequestData'
 	    ],
 
     	# Example - Validate Request Json as array
 	    '/examples/validate_array_from_json' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\Validation->validateRequestArrayFromJson'
+		    'controller' => 'Development\Examples\Validation->validateRequestArrayFromJson'
 	    ],
 
 	    # Example - Validate Request Multidimensional Json as array
 	    '/examples/validate_multidimensional_array_from_json' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\Validation->validateRequestMultiDimensionalArrayFromJson'
+		    'controller' => 'Development\Examples\Validation->validateRequestMultiDimensionalArrayFromJson'
 	    ],
 
 	    # Example - Validate Request Form data
 	    '/examples/validate_form_data' => [
 		    'middleware' => [
-			    'Auth\Developer->AuthByDeveloperKey'
+			    'Development\Auth\AuthByDeveloperKey->check'
 		    ],
-		    'controller' => 'Examples\Validation->validateFormRequest'
+		    'controller' => 'Development\Examples\Validation->validateFormRequest'
 	    ],
 
+		# Account signup (with Email and Password)
+		'/signup' => [
+			'middleware' => [
+                'General\Auth\AuthByKey->check'
+            ],
+            'controller' => 'Accounts\Account\Signup->process'
+		],
+
+		# Signup by FireBase Token
+		'/signup_firebase' => [
+			'middleware' => [
+                'General\Auth\AuthByKey->check'
+            ],
+            'controller' => 'Accounts\Account\SignupFireBase->process'
+		],
+
+		# Signup by Facebook
+		'/signup_facebook' => [
+			'middleware' => [
+                'General\Auth\AuthByKey->check'
+            ],
+            'controller' => 'Accounts\Account\SignupFacebook->process'
+		],
+
+		# Signup by Facebook
+		'/signup_google' => [
+			'middleware' => [
+                'General\Auth\AuthByKey->check'
+            ],
+            'controller' => 'Accounts\Account\SignupGoogle->process'
+		],
+
+		# Signup by Facebook
+		'/signup_apple' => [
+			'middleware' => [
+                'General\Auth\AuthByKey->check'
+            ],
+            'controller' => 'Accounts\Account\SignupApple->process'
+		],
+		
+		# Account signin (with Email and Password)
+		'/signin' => [
+			'middleware' => [
+                'General\Auth\AuthByKey->check'
+            ],
+            'controller' => 'Accounts\Account\Signin->process'
+		],
+
+		# Account Refresh token
+		'/refresh_token' => [
+			'middleware' => [
+                'Accounts\Account\AuthByRefreshToken->check'
+            ],
+            'controller' => 'Accounts\Account\RefreshToken->process'
+		],
+
+		# Create Account by Admin
+		'/accounts' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+			'controller' => 'Accounts\AccountsManagement\Accounts->create'
+		],
+
+		# Create a role
+		'/roles' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Roles->create'
+		],
+
+		/* ========================= OLD VERSION ============================== */
+
+		/*
     	# Auth - Authorize user by email/password and get token
     	'/auth/login' => [
             'middleware' => [
@@ -265,10 +440,14 @@ return [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ]
+		*/
 
     ],
     'PUT' => [
 
+		/* ========================= OLD VERSION ============================== */
+
+		/*
     	# User - Update Authorized User account (All data)
     	'/user' => [
             'middleware' => [
@@ -290,9 +469,42 @@ return [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ]
+
+		*/
+
     ],
     'PATCH' => [
 
+		# Logged in user - Patch profile data
+		'/account' => [
+		    'middleware' => [
+			    // 'General\Auth\AuthByToken->check',
+				// 'Accounts\Account\VerifyAccountDbStatus->getVerify'
+				'Accounts\Account\InjectHeaderAccountInfo->injectFromHeaders',
+				'Accounts\Account\VerifyAccountDbStatus->getVerify'
+		    ],
+		    'controller' => 'Accounts\Account\Account->patch'
+	    ],
+
+		# AccountsManagement Patch specified account data 
+		'/accounts/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Accounts->patch'
+		],
+
+		# Patch a role
+		'/roles/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Roles->patch'
+		],
+
+		/* ========================= OLD VERSION ============================== */
+
+		/*
     	# User - Update User account (parts)
     	'/user' => [
             'middleware' => [
@@ -314,9 +526,58 @@ return [
 			    USER_ROLE_SUPER_ADMIN
 		    ]
 	    ]
+
+		*/
+
     ],
     'DELETE' => [
 
+		# User Account Get profile data
+		'/account' => [
+		    'middleware' => [
+			    'General\Auth\AuthByToken->check',
+				'Accounts\Account\VerifyAccountDbStatus->getVerify'
+		    ],
+		    'controller' => 'Accounts\Account\Account->delete'
+	    ],
+
+		# Delete specified logged in session (token)
+		'/account/sessions/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check',
+				'Accounts\Account\VerifyAccountDbStatus->getVerify'
+		    ],
+		    'controller' => 'Accounts\Account\Account->deleteLoginSession'
+		],
+
+		# Delete all logged in sessions (tokens)
+		'/account/sessions' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check',
+				'Accounts\Account\VerifyAccountDbStatus->getVerify'
+		    ],
+		    'controller' => 'Accounts\Account\Account->deleteAllLoginSessions'
+		],
+
+		# AccountsManagement Terminate specified account data 
+		'/accounts/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Accounts->delete'
+		],
+
+		# Delete role
+		'/roles/{any}' => [
+			'middleware' => [
+			    'General\Auth\AuthByToken->check'
+		    ],
+		    'controller' => 'Accounts\AccountsManagement\Roles->delete'
+		],
+
+		/* ========================= OLD VERSION ============================== */
+
+		/*
     	# Users - Terminate user account
         '/users/{id}' => [
             'middleware' => [
@@ -327,5 +588,7 @@ return [
 		        USER_ROLE_SUPER_ADMIN
 	        ]
         ]
+		*/
+
     ]
 ];

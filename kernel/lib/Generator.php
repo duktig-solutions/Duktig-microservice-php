@@ -18,11 +18,12 @@ class Generator {
     /**
      * Create random generated number
      *
+     * @static
      * @access public
      * @param  int $length
      * @return int
      */
-    public function createNumber(int $length) : int {
+    public static function createNumber(int $length) : int {
 
         $min = 1 . str_repeat(0, $length - 1);
         $max = str_repeat(9, $length);
@@ -33,29 +34,31 @@ class Generator {
     /**
      * Create random generated password
      *
+     * @static
      * @access public
      * @param  int $min
      * @param  int $max
      * @param  bool $uppercase
      * @return string
      */
-    public function createPassword(int $min = 6, int $max = 15, bool $uppercase = true) : string {
+    public static function createPassword(int $min = 6, int $max = 15, bool $uppercase = true) : string {
 
-        return $this->createString($min, $max, $uppercase, true, true);
+        return static::createString($min, $max, $uppercase, true, true);
 
     }
 
     /**
      * Create random generated username
      *
+     * @static
      * @access public
      * @param  int $min
      * @param  int $max
      * @return string
      */
-    public function createUsername(int $min = 6, int $max = 12) : string {
+    public static function createUsername(int $min = 6, int $max = 12) : string {
 
-        $str = $this->createName($min, $max, false, '-.');
+        $str = static::createName($min, $max, false, '-.');
         $is_num = mt_rand(0, 1);
 
         if($is_num == true and strlen($str) < $max and strpos($str, '.') === false and strpos($str, '-') == false) {
@@ -69,26 +72,27 @@ class Generator {
     /**
      * Create random generated email address
      *
+     * @static
      * @access public
      * @param string $baseName = NULL
      * @param  string $domain = NULL
      * @return string
      */
-    public function createEmail(?string $baseName = NULL, ?string $domain = NULL) : string {
+    public static function createEmail(?string $baseName = NULL, ?string $domain = NULL) : string {
 
         $min = 3;
         $max = 12;
 
         // Generate domain if null.
         if(is_null($domain)) {
-            $domain = $this->createDomain();
+            $domain = static::createDomain();
         }
 
         // Generate name if not set
         if(is_null($baseName)) {
             // 24-05-2019 - Listening - "Pink Floyd - The wall - Empty Spaces"
             // Let's travel to Bologna, Italy and get some Pizza, Pasta ... Enzo!
-            $baseName = $this->createName($min, $max, false, '-_.');
+            $baseName = static::createName($min, $max, false, '-_.');
         }
 
         $baseName = strtolower($baseName);
@@ -100,11 +104,12 @@ class Generator {
     /**
      * Create random generated domain name
      *
+     * @static
      * @access public
      * @param  string $country = NULL
      * @return string
      */
-    public function createDomain(?string $country = NULL) : string {
+    public static function createDomain(?string $country = NULL) : string {
 
         $min = 3;
         $max = 12;
@@ -116,7 +121,7 @@ class Generator {
         }
 
         // Set first char, that cannot be symbol.
-        $str = $this->createName($min, $max, false, '-.');
+        $str = static::createName($min, $max, false, '-.');
 
         // Set country prefix
         $str .= '.' . $country;
@@ -128,6 +133,7 @@ class Generator {
     /**
      * Create random string a-z, A-Z, 0-9, and symbols.
      *
+     * @static
      * @access public
      * @param  int $min
      * @param  int $max
@@ -137,7 +143,7 @@ class Generator {
      * @param  string $chars_allowed = NULL
      * @return string
      */
-    public function createString(int $min = 6, int $max = 12, bool $uppercase = true, bool $numbers = true, bool $symbols = true, string $chars_allowed = NULL) : string {
+    public static function createString(int $min = 6, int $max = 12, bool $uppercase = true, bool $numbers = true, bool $symbols = true, string $chars_allowed = NULL) : string {
 
         $chars_alpha = "abcdefghijklmnopqrstuvwxyz";
         $chars_alpha_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -171,7 +177,7 @@ class Generator {
         $length = mt_rand($min, $max);
         $chars_count = 0;
 
-        while ($i <= $length) {
+        while ($i < $length) {
             $num = mt_rand(0, (strlen($chars) - 1));
 
             $random_char = substr($chars, $num, 1);
@@ -187,7 +193,6 @@ class Generator {
                 }
             }
 
-            // $i++;
         }
 
         return $str;
@@ -197,11 +202,12 @@ class Generator {
     /**
      * Create random sentence by given text.
      *
+     * @static
      * @access public
      * @param  string $str
      * @return string
      */
-    public function createSentence(string $str = NULL) : string {
+    public static function createSentence(string $str = NULL) : string {
 
         if(is_null($str)) {
             $str = "{Hello!|Hi!|Hola!} {maybe|actually|fortunately} this is {your|our|my} {best|nice|well|cool|lucky} {chance|option|case|moment} {to|for} {make|take|get|generate|create|give|catch|bring} a random {sentence|string|expression}.";
@@ -226,13 +232,14 @@ class Generator {
     /**
      * Create random date between two dates.
      *
+     * @static
      * @access public
      * @param string $start_date
      * @param string $end_date
      * @param string $format
      * @return string
      */
-    public function createDate(string $start_date, string $end_date, string $format = 'Y-m-d H:i:s') : string {
+    public static function createDate(string $start_date, string $end_date, string $format = 'Y-m-d H:i:s') : string {
 
         $d1 = strtotime($start_date);
         $d2 = strtotime($end_date);
@@ -246,6 +253,7 @@ class Generator {
     /**
      * Generate name
      *
+     * @static
      * @access public
      * @param int $min
      * @param int $max
@@ -253,7 +261,7 @@ class Generator {
      * @param string $chars
      * @return string
      */
-    public function createName(int $min = 3, int $max = 8, bool $uc_first = true, string $chars = '') : string {
+    public static function createName(int $min = 3, int $max = 8, bool $uc_first = true, string $chars = '') : string {
 
         $a = 'AEIOU'; // W
         $b = 'BCDFGHJKLMNPQRSTVXYZ';
@@ -319,10 +327,11 @@ class Generator {
     /**
      * Create IP Address
      *
+     * @static
      * @access public
      * @return string;
      */
-    public function createIP() : string {
+    public static function createIP() : string {
 
         $str = '';
         $str .= mt_rand(100, 192);
