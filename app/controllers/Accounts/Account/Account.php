@@ -287,6 +287,7 @@ class Account {
     public function deleteAllLoginSessions(Request $request, Response $response, array $middlewareData) : bool {
 
         # Try to delete all sessions
+        // @todo Fix this issue
         $deletedCount = \Lib\Auth\TokenStorage::deleteAll($middlewareData['account']['userId']);
 
         $response->sendJson([
