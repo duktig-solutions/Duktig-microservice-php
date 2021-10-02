@@ -3,7 +3,25 @@
 
 ### Table of content
 
-- [Installation](install/Readme.md)
+- [Getting started](getting-started.md)
+- [Requirements](requirements.md) 
+- [Coding standards](coding-standards.md)
+- [Configuration](configuration.md)
+- [Predefined constants](predefined-constants.md)
+- [Libraries] 
+  - [Authentication]
+    - [JWT](kernel/libraries/auth/jwt.md)
+    - [Password](kernel/libraries/auth/password.md)
+  - [Database]
+    - [MySQLi](kernel/libraries/db/mysqli.md)
+    - [MySQLiUtility](kernel/libraries/db/mysqliutility.md)
+  - [HTTPClient](kernel/libraries/HttpClient.md)
+  - [Data validation]
+    - [Valid](kernel/libraries/valid.md)
+    - [Validator](kernel/libraries/validator.md)
+- [ChangeLog](ChangeLog.md)
+
+- 
 - [Project Overview](project_overview/Readme.md)
 - [Development](development/Readme.md)
 - [RESTFul API](api/Readme.md)

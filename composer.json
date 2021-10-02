@@ -1,24 +1,24 @@
 {
-  "name": "duktig-solutions/duktig.microservice.php.1",
+  "name": "duktig-solutions/duktig-microservice-php",
   "type": "project",
   "description": "Fast and Lightweight RESTFul API Microservice",
   "keywords": ["php", "restful api", "api", "cli", "microservice", "docker"],
-  "homepage": "https://github.com/duktig-solutions/duktig.microservice.php.1",
+  "homepage": "https://github.com/duktig-solutions/Duktig-microservice-php",
   "time":"2019-04-04",
   "license": "Proprietary",
   "authors": [
     {
       "name": "David A.",
       "email": "software@duktig.dev",
-      "homepage": "https://github.com/duktig-solutions/duktig.microservice.php.1",
+      "homepage": "https://github.com/duktig-solutions/Duktig-microservice-php",
       "role": "Founder"
     }
   ],
   "support": {
     "email": "software@duktig.dev",
-    "issues": "https://github.com/duktig-solutions/duktig.microservice.php.1/issues",
-    "source": "https://github.com/duktig-solutions/duktig.microservice.php.1",
-    "docs": "https://github.com/duktig-solutions/duktig.microservice.php.1"
+    "issues": "https://github.com/duktig-solutions/Duktig-microservice-php/issues",
+    "source": "https://github.com/duktig-solutions/Duktig-microservice-php",
+    "docs": "https://github.com/duktig-solutions/Duktig-microservice-php/tree/master/documentation"
   },
   "require": {
     "php": ">=7.1.0",
@@ -28,7 +28,8 @@
   },
   "suggest": {
     "ext-memcached": "*",
-    "ext-mysqli": "*"
+    "ext-mysqli": "*",
+    "ext-redis": "*"
   },
   "autoload": {
     "psr-4": {

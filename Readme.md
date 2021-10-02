@@ -1,7 +1,7 @@
-![Image](documentation/Duktig_Microservice_logo.svg "Duktig.Microservice")
+![Image](documentation/duktig.microservice.logo.png "Duktig.Microservice")
 
-## Fast and Lightweight RESTFul API Microservice
-     
+## Fast and Lightweight Docker friendly Microservice written in PHP to support RESTFul API and CLI interfaces.
+
 > As Rasmus Lerdorf (PHP founder) says, **"Frameworks sucks!"**.
 >
 > So, let's develop and deploy a code as Lightweight as it's possible, 
@@ -11,31 +11,33 @@
 ## Features
 
  - High performance Service
-   - Run under Web Server such as Apache/Nginx with PHP-FPM
+   - Running as php-fpm service with Nginx load balancer
    - Run as a Command line interface Tool
+ - RESTFul API service
+   - Simple to configure routing with middleware classes
+ - CLI interface
+   - Configure routes for CLI and call a controller to run
  - Simple functionality
    - Developed for specific purposes only.
+   - Just develop your controller and model, so you're ready.
  - Flexible configuration
+   - Allowing to configure API and CLI routing 
  - Docker container friendly
- - Security
-    - JWT Based Authorization 
-    - More security restrictions planned to do
- - Accounting
-    - User Accounts functionality
-    - User Roles functionality
+   - Build/Run and go!
  - Database access (MySQL)
     - Lightweight CRUD Library
     - Asynchronous queries
- - Redis
-    - Redis Message/Queue ready
- - Caching
-    - Redis
-    - Memcached
+ - Code Examples
+   - Included nice and very well commented code examples to follow.
+ - Redis functionality included
+    - Message/Queue ready classes uses Redis Database
+    - Publish/Subsribe events (between microservices) with Redis
+    - Caching with Redis functionality
  - Super Data Validation
     - Ready to handle Request Json data and more
+    - Validate multidimentional arrays
  - Database Backup (automatic)
- - Nice HTTP Routing with middleware
-         
+          
 And many more.
  
 ## Project Name definition
@@ -46,15 +48,12 @@ In phrases like `Oj, vad duktig du är!` (Wow, how skilled you are!) it's a comp
 
 ## Description in short
 
-The **Duktig** project developed as RESTFul API Microservice.
+The **Duktig** project developed as a RESTFul API Microservice with supported CLI functionality.
 
 It is possible to split a parts of project between hosts or run as one monolithic application.
 
-Duktig project includes User authorization functionality with Roles/Permissions.  
-Each resource in project can have allowed roles to access. For instance: Resource `/users` can be accessed only by **Super Admin** Role.
-
 Very flexible configuration of routing and development approach can allow you to create:  
-`Request -> Route -> Middleware -> Controller -> Model -> Response` in a moment.
+`Request -> Route -> Middleware -> (return Cached if needed) -> Controller -> Model -> Response` in a moment.
 
 ## Version definition
 
@@ -64,9 +63,13 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 |:----:|:----:|:----:|
 |Revolution|Evolution|Bug fix|
    
-## References
+## Documentation
 
-- [Installation](documentation/install/Readme.md)
+- [Table of content](documentation/Readme.md)
+- [Getting started](documentation/getting-started.md)
+- [Requirements](documentation/requirements.md)
+- [Configuration](documentation/configuration.md)
+ 
 - [Project Overview](documentation/project_overview/Readme.md)
 - [Development](documentation/development/Readme.md)
 - [RESTFul API](documentation/api/Readme.md)
@@ -79,4 +82,3 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 
 > **NOTICE:** Even if this project application is under strong stress and performance testing inside docker containers, 
 > We would recommend to look it as a "still under development" project.
- 
