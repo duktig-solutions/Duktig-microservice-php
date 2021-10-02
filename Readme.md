@@ -70,10 +70,6 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 - [Requirements](documentation/requirements.md)
 - [Configuration](documentation/configuration.md)
  
-- [Project Overview](documentation/project_overview/Readme.md)
-- [Development](documentation/development/Readme.md)
-- [RESTFul API](documentation/api/Readme.md)
-
 ## Credits
    
 - Author: `David A.` [software@duktig.dev](mailto:software@duktig.dev)
