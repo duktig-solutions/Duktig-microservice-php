@@ -4,7 +4,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.3.0
+ * @version 1.4.0
  */
 namespace Lib;
 
@@ -671,12 +671,28 @@ class Validator {
 
             foreach ($rules as $rule) {
 
-                switch ($rule) {
+				# Cut the rule name from Rule as first item in string.
+				# i.e. cut "range" from "range:10:35:!required"
+				if(strpos($rule, ":") !== false) {
+					$ruleOptions = explode(':', $rule);
+					$ruleName = array_shift($ruleOptions);
+				} else {
+					$ruleOptions = [];
+					$ruleName = $rule;
+				}
+
+                switch ($ruleName) {
+
 
                 	# Case when at least one value required.
                     case 'at_least_one_value':
 
-                        $validationResult = static::validateAtLeastOneValue($dataToValidate, array_keys($validationRules));
+						# If there is no fields required to check, this will check all rules.
+						if(empty($ruleOptions)) {
+							$ruleOptions = array_keys($validationRules);
+						}
+
+                        $validationResult = static::validateAtLeastOneValue($dataToValidate, $ruleOptions);
 
                         if (!empty($validationResult)) {
                             $validationErrors[$item][] = $validationResult;

@@ -31,11 +31,11 @@
    - Included nice and very well commented code examples to follow.
  - Redis functionality included
     - Message/Queue ready classes uses Redis Database
-    - Publish/Subsribe events (between microservices) with Redis
+    - Publish/Subscribe events (between microservices) with Redis
     - Caching with Redis functionality
  - Super Data Validation
     - Ready to handle Request Json data and more
-    - Validate multidimentional arrays
+    - Validate multidimensional arrays
  - Database Backup (automatic)
           
 And many more.

@@ -6,7 +6,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.1.0
  * @requires phpredis extension
  * @todo finalize with function argument types, comments...
  */
@@ -41,15 +41,6 @@ class HealthInspector {
      * @var Redis object
      */
     private static $redis;
-
-    /**
-     * Consumer log file name
-     *
-     * @static
-     * @access private
-     * @var string
-     */
-    private static $logFile = 'development-mq-consumer.log';
 
     public static function inspect($config) {
 
@@ -159,7 +150,7 @@ class HealthInspector {
 
             # Remove the worker, if the key is incorrect
             if(count($tmp) != 2) {
-                static::log('Incorrect worker defined in heartBeat list: '.$worker);
+                Logger::log('Incorrect worker defined in heartBeat list: '.$worker, Logger::WARNING, __FILE__, __LINE__);
                 //static::$redis->lRem(static::$heartBeatList, $worker, 1);
                 continue;
             }
@@ -168,7 +159,7 @@ class HealthInspector {
             $lastHeartBeat = $tmp[1];
 
             if(!static::checkHeartBeatTime($lastHeartBeat)) {
-                static::log('Worker: ' . $workerId . ' heartBeat time expired.');
+                Logger::log('Worker: ' . $workerId . ' heartBeat time expired.', Logger::WARNING, __FILE__, __LINE__);
                 static::moveWorkerQueueTasksToMainQueue($workerId);
                 static::$redis->lRem(static::$taskQueue . ':workers-heartbeat', $worker, 1);
             }
@@ -181,7 +172,7 @@ class HealthInspector {
         $tasksCount = static::$redis->lLen(static::$taskQueue);
 
         if($tasksCount > 10) {
-            static::log('Queue count: '.$tasksCount.' > 10');
+            Logger::log('Queue count: '.$tasksCount.' > 10', Logger::WARNING, __FILE__, __LINE__);
         }
 
     }
@@ -192,7 +183,6 @@ class HealthInspector {
 
         if(empty($workers)) {
             // This can be empty, because of no new tasks.
-            // static::log('No workers in Workers queue list.');
             return false;
         }
 
@@ -204,7 +194,7 @@ class HealthInspector {
             $workerId = $tmp[2];
 
             if(!static::heartBeatExists($workerId)) {
-                static::log('Worker Queue exists but heart beat not: '.$workerId);
+                Logger::log('Worker Queue exists but heart beat not: '.$workerId, Logger::WARNING, __FILE__, __LINE__);
                 static::moveWorkerQueueTasksToMainQueue($workerId);
             }
         }
@@ -216,7 +206,7 @@ class HealthInspector {
         $heartBeatWorkers = static::getWorkersCountFromHeartBeat();
 
         if($taskQueueWorkers != $heartBeatWorkers) {
-            static::log('Workers amount in heartBeat : '.$heartBeatWorkers.' not matches with workers Queue list: '.$taskQueueWorkers);
+            Logger::log('Workers amount in heartBeat : '.$heartBeatWorkers.' not matches with workers Queue list: '.$taskQueueWorkers, Logger::WARNING, __FILE__, __LINE__);
             return False;
         }
 
@@ -242,7 +232,7 @@ class HealthInspector {
             return false;
         }
 
-        static::log('Moving '.$workerTasksCount.' tasks of worker '.$workerId.' to main queue');
+        Logger::log('Moving '.$workerTasksCount.' tasks of worker '.$workerId.' to main queue', Logger::INFO, __FILE__, __LINE__);
 
         $task = True;
 
@@ -283,11 +273,6 @@ class HealthInspector {
             'getWorkersQueueCountFromWorkersQueueList' => static::getWorkersQueueCountFromWorkersQueueList(),
             'dbSize' => static::getDbSize()
         ]);
-    }
-
-    private static function log($message) {
-        Logger::Log($message, Logger::WARNING);
-        echo "LOG: " . $message . "\n";
     }
 
 }

@@ -4,7 +4,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.1.0
  * 
  * @todo in this I'm using lib\auth\jwt::blabla ... but I'm extending it here... maybe static static::...
  */
@@ -21,11 +21,20 @@ class Auth extends \Lib\Auth\Jwt {
      * @static
      * @access public
      * @param array $account
-	 * @param string $deviceId
+	 * @param \System\HTTP\Request $request
      * @return array
      * @throws \Exception
      */
-    public static function Authorize(array $account, string $deviceId) : array {
+    public static function Authorize(array $account, \System\HTTP\Request $request) : array {
+
+		# Assuming this can be an IP Address provided by Nginx Proxy pass
+		if(!empty($request->headers('X-Real-Ip'))) {
+            $userIpAddress = $request->headers('X-Real-Ip');
+        } else {
+            $userIpAddress = \Lib\HTTP\ClientInfo::ipAddress();
+        }
+
+		$deviceId = $request->headers('X-Device-Id');
 		
 		# Define TokenStorage data
 		$tokenStorageKey = $account['userId'].'_'.sha1($deviceId);
@@ -37,7 +46,7 @@ class Auth extends \Lib\Auth\Jwt {
             'firstName' => $account['firstName'],
             'lastName' => $account['lastName'],
             'dateLogin' => date('Y-m-d H:i:s'),
-            'loginIp' => ClientInfo::ipAddress(),
+            'loginIp' => $userIpAddress,
             'userAgent' => ClientInfo::userAgent(),
             'deviceId' => $deviceId,
             'tokenExpires' => date('Y-m-d H:i:s', strtotime(Config::get()['JWT']['access_token']['exp'])),
@@ -54,7 +63,7 @@ class Auth extends \Lib\Auth\Jwt {
             Config::get()['JWT']['access_token']['exp'],
             # Set the expiration time for HASH
             # This can alive as refresh token expiration time
-            Config::get()['JWT']['refresh_token']['exp'],
+            Config::get()['JWT']['refresh_token']['exp']
 
             # !!! As you see, the HASH lifetime is longer than KEY lifetime.
             # KEYs can be destroyed early, as getting expired,

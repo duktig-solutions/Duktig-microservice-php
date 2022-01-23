@@ -4,7 +4,9 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
+ *
+ * @todo Some of values should generate with encryption algorithm to avoid duplication
  */
 namespace Lib;
 

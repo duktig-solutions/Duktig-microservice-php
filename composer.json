@@ -4,7 +4,7 @@
   "description": "Fast and Lightweight RESTFul API Microservice",
   "keywords": ["php", "restful api", "api", "cli", "microservice", "docker"],
   "homepage": "https://github.com/duktig-solutions/Duktig-microservice-php",
-  "time":"2019-04-04",
+  "time":"2022-01-11",
   "license": "Proprietary",
   "authors": [
     {

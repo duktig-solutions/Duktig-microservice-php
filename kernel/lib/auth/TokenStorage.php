@@ -99,7 +99,7 @@ class TokenStorage {
     /**
      * Ping to Redis server
      * Each method of this class uses this method to be sure the connection is active.
-     * This method will automatically conenct to Redis server if not connected or no ping.
+     * This method will automatically connect to Redis server if not connected or no ping.
      * 
      * @access public
      * @return mixed

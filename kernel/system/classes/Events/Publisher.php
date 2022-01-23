@@ -5,7 +5,7 @@
  * 
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.1
+ * @version 1.1.0
  */  
 
 namespace System\Events;
@@ -14,6 +14,7 @@ namespace System\Events;
 use System\Config;
 use System\Logger;
 use \Redis;
+use \Throwable;
 
 /**
  * Class Event
@@ -187,14 +188,19 @@ class Publisher {
         }
 
         $publishingData = json_encode([
-            'service' => static::$serviceName,
-            'time' => date('Y-m-d H:i:s'),
             'event' => $event,
+            'service' => static::$serviceName,
+            'published_time' => date('Y-m-d H:i:s'),
             'data' => $data
         ]);
-
+        
         # Publish an event to channel
-        static::$eventsRedis->publish(static::$channelToPublish, $publishingData);
+        try {
+            static::$eventsRedis->publish(static::$channelToPublish, $publishingData);
+        } catch(Throwable $e) {
+            Logger::log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
+            return false;
+        }
 
         return true;
 

@@ -230,6 +230,12 @@ return [
 
     ],
 
+	# IP to location 
+	# This data (resources) used by LocationByIP Library.
+	'IPTolocation' => [
+		'resource' => 'https://www.iplocate.io/api/lookup/' // 'http://www.geoplugin.net/json.gp?ip=',
+	],
+	
 	# System binary executables
 	'Executables' => [
 		'curl' => '/usr/bin/curl',

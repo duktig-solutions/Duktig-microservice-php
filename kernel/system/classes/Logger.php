@@ -49,7 +49,7 @@ class Logger  {
 
     /**
      * Logger method
-     * Example format: 2019-11-02 13:08:19,687 _| DataCollector _| ERROR _| Cannot find configuration for collector: abc! _| Collector.py _| 61
+     * Example format: 2019-11-02 13:08:19 _| DataCollector _| ERROR _| Cannot find configuration for collector: abc! _| Collector.py _| 61
      *
      * @static
      * @access public
@@ -62,7 +62,7 @@ class Logger  {
      */
     public static function Log(string $message, string $type = 'INFO', ?string $file = NULL, ?int $line = NULL, $logFile = 'app.log') : void {
 
-        $message = date('Y-m-d H:i:s,v') . " _| " .
+        $message = date('Y-m-d H:i:s') . " _| " .
 	          Config::get()['Microservice'] . " _| " .
 	          $type . " _| " .
 	          $message;

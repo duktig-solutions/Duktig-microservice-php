@@ -7,7 +7,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 2.0.0
+ * @version 2.1.0
  * @requires phpredis extension
  */
 namespace System\MessageQueue;
@@ -28,6 +28,15 @@ class Consumer {
      * @var array
      */
     private static $config;
+
+    /**
+     * Connected status
+     *
+     * @static
+     * @access private
+     * @var bool
+     */
+    private static $connected = false;
 
     /**
      * Redis object
@@ -66,15 +75,6 @@ class Consumer {
     private static $lastBeat;
 
     /**
-     * Consumer log file name
-     *
-     * @static
-     * @access private
-     * @var string
-     */
-    private static $logFile = 'Accounts.Consumer.log';
-
-    /**
      * Main initialization class
      *
      * @static
@@ -86,7 +86,7 @@ class Consumer {
 
         sleep(2);
 
-        Logger::Log('Initializing MessageQueueConsumer for: '.$config['queueName'], Logger::INFO, null, null, static::$logFile);
+        Logger::Log('Initializing MessageQueueConsumer for: '.$config['queueName'], Logger::INFO, __FILE__, __LINE__);
 
         static::$config = $config;
         static::$taskQueue = $config['queueName'];
@@ -94,18 +94,19 @@ class Consumer {
 
         static::$redis = new Redis();
 
-        Logger::Log('Connecting to Redis Database for: '.$config['queueName'], Logger::INFO, null, null, static::$logFile);
+        Logger::Log('Connecting to Redis Database for: '.$config['queueName'], Logger::INFO, __FILE__, __LINE__);
 
         $step = 1;
-        $connected = false;
+        static::$connected = false;
 
-        while($connected == false) {
+        while(static::$connected == false) {
 
             try {
         static::$redis->connect($config['host'], $config['port'], 0);
-                $connected = true;
+                static::$connected = true;
+                Logger::Log('Connected to Redis Database for: '.$config['queueName'].' successfuly.', Logger::INFO, __FILE__, __LINE__);
             } catch(\Throwable $e) {
-                Logger::log('Retrying to connect Redis... ' . $step, Logger::INFO, null, null, static::$logFile);
+                Logger::log('Retrying to connect Redis... ' . $step, Logger::INFO, __FILE__, __LINE__);
                 $step++;
                 sleep(1);
             }
@@ -130,16 +131,23 @@ class Consumer {
      *
      * @static
      * @access private
-     * @return void
+     * @return bool
      */
-    private static function heartBeat() : void {
+    private static function heartBeat() : bool {
+
+        if(!static::$connected) {
+            Logger::log('Trying to heartBeat but still not connected!', Logger::ERROR, __FILE__, __LINE__);
+            return false;
+        }
 
         try {
         static::$redis->lRem(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat, 1);
         static::$lastBeat = time();
         static::$redis->lPush(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat);
+            return true;
         } catch(\Throwable $e) {
             Logger::log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
+            return false;
         }
 
     }
@@ -202,7 +210,7 @@ class Consumer {
      */
     public static function run() {
         
-        Logger::Log('Starting Consumer for '.static::$taskQueue.' ...', Logger::INFO, null, null, static::$logFile);
+        Logger::Log('Starting Consumer for '.static::$taskQueue.' ...', Logger::INFO, __FILE__, __LINE__);
 
         # Loop to catch a message and execute.
         # If there are no message, this will wait 0.5 second.
@@ -212,7 +220,7 @@ class Consumer {
             # Catch a message if any and move to own list.
             $message = static::$redis->rPopLPush(static::$taskQueue, static::$taskQueue . ':worker:' . static::$workerId);
             } catch(\Throwable $e)  {
-                Logger::log($e->getCode() . ' _ ' . $e->getMessage(), Logger::WARNING, __FILE__, __LINE__);
+                Logger::log($e->getCode() . ' _ ' . $e->getMessage(), Logger::WARNING, $e->getFile(), $e->getLine());
                 $message = NULL;
                 sleep(1);
             }
@@ -228,7 +236,7 @@ class Consumer {
                     $cmd = '' . Config::get()['Executables']['php'] . " /src/cli/exec.php runWorker '" . $message . "' ".static::$workerId." > /dev/null 2>&1 & ";
 
                     # Debug
-                    # Logger::log($cmd, Logger::INFO, null, null, static::$logFile);
+                    # Logger::log($cmd, Logger::INFO, __FILE__, __LINE__);
 
                     # Run the worker process in background mode.
                     exec($cmd);
@@ -236,7 +244,7 @@ class Consumer {
                     # From now this process is free. The 'runWorker' started to work in background mode and care about task execution.
 
                 } catch (\Throwable $e) {
-                    Logger::Log($e->getMessage(), Logger::ERROR, null, null, static::$logFile);
+                    Logger::Log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
                     # echo $e->getMessage() . "\n";
                 }
 
@@ -332,7 +340,7 @@ class Consumer {
         if($workerData['status'] == 'error') {
 
             static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
-            Logger::Log('Unable to execute worker task. Message: '.$workerData['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message/task will be deleted from Redis.', Logger::ERROR, __FILE__, __LINE__, static::$logFile);
+            Logger::Log('Unable to execute worker task. Message: '.$workerData['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message/task will be deleted from Redis.', Logger::ERROR, __FILE__, __LINE__);
 
         # fail status: task will attempt again until reach the attempts limit.
         } elseif($workerData['status'] == 'fail') {
@@ -341,7 +349,7 @@ class Consumer {
             if($workerData['attempts'] >= static::$config['task_execution_attempts']) {
 
                 static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
-                Logger::Log('Worker task reached attempts limit : TaskId: '.$workerData['taskId'].'. Message: '.$workerData['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message will be deleted from Redis.', Logger::ERROR, __FILE__, __LINE__, static::$logFile);
+                Logger::Log('Worker task reached attempts limit : TaskId: '.$workerData['taskId'].'. Message: '.$workerData['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message will be deleted from Redis.', Logger::ERROR, __FILE__, __LINE__);
 
             # Let's move this task again to main queue
             } else {
@@ -356,13 +364,13 @@ class Consumer {
                 # Adding attempted message to main queue
                 static::$redis->lPush(static::$taskQueue, $attempted_message);
 
-                Logger::Log($workerData['message'] .'. Worker task execution is failed and will be moved back to main Queue. Message: '.$attempted_message, Logger::ERROR, null, null, static::$logFile);
+                Logger::Log($workerData['message'] .'. Worker task execution is failed and will be moved back to main Queue. Message: '.$attempted_message, Logger::ERROR, __FILE__, __LINE__);
             }
 
         # ok status: The task is complete, we can remove this task.
         } elseif($workerData['status'] == 'ok') {
             static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
-            Logger::Log('Complete Worker Task! Removing from task queue: ' . static::$taskQueue . ' : Id: ' . $workerId, Logger::INFO, __FILE__, __LINE__, static::$logFile);
+            Logger::Log('Complete Worker Task! Removing from task queue: ' . static::$taskQueue . ' : Id: ' . $workerId, Logger::INFO, __FILE__, __LINE__);
         } else {
             throw new \Exception('Worker task not returned actual result. Message: '.$message.'. Consumer: '.static::$taskQueue, Logger::ERROR);
         }

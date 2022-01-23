@@ -1,6 +1,8 @@
 <?php
 /**
  * HTTP Client Class to Send and Receive data via HTTP Protocol
+ *
+ * @version 2.0 (Send files functionality added)
  */
 namespace Lib;
 
@@ -22,9 +24,10 @@ class HttpClient {
 	 * @param string $method
 	 * @param mixed array | string | null $data
 	 * @param mixed array | null $headers
+	 * @param mixed array | null $files
 	 * @return mixed
 	 */
-	public static function sendRequest(string $url, string $method = 'GET', $data = '',  ?array $headers = []) : array {
+	public static function sendRequest(string $url, string $method = 'GET', $data = '',  ?array $headers = [], ?array $files = []) : array {
 
 		# Initialize the CURL
 		$handle = curl_init();
@@ -40,25 +43,41 @@ class HttpClient {
 			CURLOPT_SSL_VERIFYPEER => 0
 		];
 
+		# Set POST/PUT/DELETE Data if not GET request
+		if($method != 'GET') {
+
+			$requestData = [];
+
+			$curlOptions[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
+
+			if(is_array($data)) {
+				$requestData = $data;
+				//$curlOptions[CURLOPT_POSTFIELDS] = http_build_query($data);
+			} else {
+				$requestData[] = $data;
+				//$curlOptions[CURLOPT_POSTFIELDS] = $data;
+			}
+
+			# Files attachment
+			if(!empty($files)) {
+
+				$headers['Content-Type'] = 'multipart/form-data';
+
+				foreach($files as $index => $file) {
+					$fileObj = curl_file_create($file);
+					$requestData[$index] = $fileObj;
+				}
+			}
+
+			$curlOptions[CURLOPT_POSTFIELDS] = $requestData;
+			}
+
 		# Initialize headers
 		if(!empty($headers)) {
 			$curlOptions[CURLOPT_HTTPHEADER] = [];
 			foreach($headers as $key => $value) {
 				$curlOptions[CURLOPT_HTTPHEADER][] = sprintf("%s:%s", $key, $value);
 			}
-		}
-
-		# Set POST/PUT/DELETE Data if not GET request
-		if($method != 'GET') {
-
-			$curlOptions[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
-
-			if(is_array($data)) {
-				$curlOptions[CURLOPT_POSTFIELDS] = http_build_query($data);
-			} else {
-				$curlOptions[CURLOPT_POSTFIELDS] = $data;
-			}
-
 		}
 
 		# Set request URL
@@ -91,6 +110,7 @@ class HttpClient {
 	 * Command will look like:
 	 *   curl -X POST -H 'Content-Type: application/json' \
 	 *   -d '{"batch":[{"secret":"testsecret","userId":"some_user","event":"PHP Fork Queued Event","properties":null,"timestamp":"2013-01-30T14:34:50-08:00","context":{"library":"analytics-php"},"action":"track"}],"secret":"testsecret"}' \
+	 *   -F 'fileX=@/path/to/fileX' -F 'fileY=@/path/to/fileY' \
 	 *  'https://api.segment.com/v1/import' > /dev/null 2>&1 &
 	 *
 	 * @static
@@ -99,9 +119,10 @@ class HttpClient {
 	 * @param string $method
 	 * @param mixed array | string | null $data
 	 * @param mixed array | null $headers
+	 * @param mixed array | null $files
 	 * @return void
 	 */
-	public static function sendRequestAsync(string $url, string $method = 'GET', $data = '', ?array $headers) : void {
+	public static function sendRequestAsync(string $url, string $method = 'GET', $data = '', ?array $headers = [], ?array $files = []) : void {
 
 		# Command to execute
 		$cmd = Config::get('app')['Executables']['curl'];
@@ -124,6 +145,16 @@ class HttpClient {
 			$cmd .= " -d '" . http_build_query($data) . "'";
 		} else {
 			$cmd .= " -d '" . $data . "'";
+		}
+
+		if(!empty($files)) {
+
+			$cmd .= " -H 'Content-Type: multipart/form-data'";
+
+			# -F 'fileX=@/path/to/fileX' -F 'fileY=@/path/to/fileY'
+			foreach($files as $index => $path) {
+				$cmd .= " -F '".$index."=@".$path."'";
+			}
 		}
 
 		# URL
