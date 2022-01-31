@@ -15,7 +15,7 @@ File: app/Models/Examples/PostgreSqlTestModel.php
 
 ```php
 /**
- * Class User
+ * Class UnitStructure
  *
  * @package App\Models\Examples
  */
