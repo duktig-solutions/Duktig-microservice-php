@@ -16,7 +16,7 @@ return [
 
 	# Microservice ID (Aka System Id) for each instance. 
 	# i.e. Accounts | Reports | DataReception | Notes, etc ...
-	'Microservice' => 'Accounts',
+	'Microservice' => 'Development',
 
     # Log errors. All type of error logs located in: /app/log
     'LogErrors' => 1,
@@ -84,7 +84,18 @@ return [
 		    'password' => 'abc123',
 		    'database' => 'Duktig',
 		    'charset' => 'utf8'
-	    ]
+		],
+
+		# PostgreSQL Connection
+		'DataWareHouse' => [
+			'driver' => 'PostgreSQL',
+			'host' => '192.168.0.132',
+			'port' => 5433,
+			'database' => 'Warehouse',
+			'username' => 'postgres',
+			'password' => 'warehouse123',
+			'client_encoding' => 'UTF8'
+		]
     ],
 
 	# Redis Connection configuration

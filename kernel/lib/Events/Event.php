@@ -73,7 +73,7 @@ class Event {
      * 
      * @access public
      * @param string $item
-     * @param mixed $valur
+     * @param mixed $value
      * @return void
      */
     public function set(string $item, $value) {

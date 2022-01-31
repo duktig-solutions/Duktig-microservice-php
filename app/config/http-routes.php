@@ -298,7 +298,7 @@ return [
     ],
     'POST' => [
 		
-    	# Example - Response All possible request Data
+		# Example - Response All possible request Data
 	    '/examples/response_all_request_data/{id}/{num}/{any}' => [
 		    'middleware' => [
 			    'Development\Auth\AuthByDeveloperKey->check',
@@ -330,6 +330,11 @@ return [
 		    ],
 		    'controller' => 'Development\Examples\Validation->validateFormRequest'
 	    ],
+
+		# Example - Test PostgreSQL class functionality
+		'/examples/test_postgres' => [
+			'controller' => 'Development\Examples\PostgreSqlTests->run'
+		],
 
 		# Account signup (with Email and Password)
 		'/signup' => [

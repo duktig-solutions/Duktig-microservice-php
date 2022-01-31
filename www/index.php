@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 namespace System\HTTP;
 
+use Exception;
 use System\Config;
 
 # Define project root path
@@ -20,27 +21,36 @@ define('DUKTIG_APP_PATH', realpath(DUKTIG_ROOT_PATH . 'app') . '/');
 # Include Constants file
 require_once (DUKTIG_APP_PATH . 'config/constants.php');
 
-# Include Autoloader
+# Include Auto loader
 require_once (DUKTIG_ROOT_PATH . 'vendor/autoload.php');
 
 # Initialize Request/Response
 $request = new Request();
 $response = new Response();
 
+set_exception_handler(function($e) use($response) {
+
+    # This will return true, if not notice
+    # In case if this is not a notice, we throwing Exception    
+        
+    # Reset Response data, Set new data and output.
+    $response->reset();
+    $response->sendJson(
+        \System\Ehandler::getDetailed($e->getMessage(), $e->getCode()),
+        500
+    );
+    $response->sendFinal();
+    
+
+});
+
 # Set error handler
 set_error_handler(function($code, $message, $file, $line) use($response) {
     
-    # This will return true, if not notice
-    # In case if this is not a notice, we throwing Exception
+    // # This will return true, if not notice
+    // # In case if this is not a notice, we throwing Exception
     if(\System\Ehandler::processError($message, $code, $file, $line)) {
-        
-        # Reset Response data, Set new data and output.
-        $response->reset();
-        $response->sendJson(
-            \System\Ehandler::getDetailed($message, $code),
-            500
-        );
-        $response->sendFinal();
+        throw new Exception($message . " - ".$file.":".$line);        
     }
 
 });

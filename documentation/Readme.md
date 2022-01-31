@@ -15,6 +15,7 @@
   - [Database]
     - [MySQLi](kernel/libraries/db/mysqli.md)
     - [MySQLiUtility](kernel/libraries/db/mysqliutility.md)
+    - [PostgreSQL](kernel/libraries/db/postgresql.md)
   - [HTTPClient](kernel/libraries/HttpClient.md)
   - [Data validation]
     - [Valid](kernel/libraries/valid.md)

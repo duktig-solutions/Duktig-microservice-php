@@ -57,7 +57,10 @@ $validation = Validator::validateJson(
 
 File: `kernel/lib/Validator.php`
 
+#### New Database library to support PostgreSQL Server functionality
+
+This library will provide the functionality to perform operations with PostgreSQL Database.
+
+See [PostgreSQL](kernel/libraries/db/postgresql.md)
+
 End of document
-
-
-
