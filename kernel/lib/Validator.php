@@ -4,7 +4,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.4.0
+ * @version 1.5.0
  */
 namespace Lib;
 
@@ -354,6 +354,14 @@ class Validator {
 
 				break;
 
+            case 'date_time_iso':
+
+                if(!Valid::dateTimeIso($value)) {
+                    $errorMessage = 'Required valid date-time with ISO format: Y-m-d H:i:s' . $errorMessageSuffix;
+                }
+
+                break;
+
 			case 'date':
 
 				# Set default format as Y-m-d if not defined
@@ -515,6 +523,22 @@ class Validator {
 	            }
 
 				break;
+
+			case 'latitude':
+
+				if(!Valid::latitude($value)) {
+					$errorMessage = 'Required a valid latitude between -90 and 90';
+				}
+
+				break;
+
+			case 'longitude':
+
+				if(!Valid::longitude($value)) {
+					$errorMessage = 'Required a valid longitude between -180 and 90';
+				}
+
+				break;	
 
 			default:
 				throw new \Exception('Unknown Validation rule: ' . $ruleName);

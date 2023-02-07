@@ -77,6 +77,85 @@ return [
         ],
 
 		# ------------------------------------------------- #
+	    # ------------- Data Warehouse -------------------- #
+		# ------------------------------------------------- #
+		
+		'/data-warehouse/references/data-structure-field-types' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\References->getDataStructureFieldTypes'
+		],
+
+		'/data-warehouse/references/alert-values' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\References->getAlertValues'
+		],
+		
+		'/data-warehouse/unit-structures' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructures->getAll'
+		],
+
+		'/data-warehouse/unit-structures/{id}' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructures->getById'
+		],
+
+		'/data-warehouse/unit-structures/{id}/data-structures' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\DataStructures->getAll'
+		],
+		
+		'/data-warehouse/unit-structures/data-structures/{any}' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\DataStructures->getByTableSuffix'
+		],
+
+		'/data-warehouse/unit-structures/{id}/properties' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructureProperties->getAll'
+		],
+
+		'/data-warehouse/unit-structures/{id}/alerts' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructureAlerts->getAll'
+		],
+
+		'/data-warehouse/units/' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\Units->getAll'
+		],
+
+		'/data-warehouse/units/{id}' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\Units->getById'
+		],
+
+		'/data-warehouse/units/{id}/properties' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitProperties->getAll'
+		],
+
+		'/data-warehouse/units/{id}/alerts' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitAlerts->getAll'
+		],
+
+		'/data-warehouse/unit-groups' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->getAll'
+		],
+
+		'/data-warehouse/unit-groups/{id}' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->getById'
+		],
+
+		'/data-warehouse/unit-groups/{id}/units' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->getUnitsOfGroup'
+		],
+
+		# ------------------------------------------------- #
 	    # ---------- Development Examples ----------------- #
 		# ------------------------------------------------- #
 
@@ -298,6 +377,39 @@ return [
     ],
     'POST' => [
 		
+		# ------------------------------------------------- #
+	    # ------------- Data Warehouse -------------------- #
+		# ------------------------------------------------- #
+		
+		'/data-warehouse/unit-structures' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructures->createUnitStructure'
+		],
+
+		'/data-warehouse/unit-structures/{id}/data-structures' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\DataStructures->createDataStructure'
+		],
+
+		'/data-warehouse/unit-groups' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->createUnitGroup'
+		],
+
+		'/data-warehouse/units' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\Units->createUnit'
+		],
+
+		'/data-warehouse/unit-groups/{id}/units' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->addUnitsToGroup'
+		],
+
+		# ------------------------------------------------- #
+	    # ----------------- Examples ---------------------- #
+		# ------------------------------------------------- #
+
 		# Example - Response All possible request Data
 	    '/examples/response_all_request_data/{id}/{num}/{any}' => [
 		    'middleware' => [
@@ -449,6 +561,34 @@ return [
 
     ],
     'PUT' => [
+		
+		# ------------------------------------------------- #
+	    # ------------- Data Warehouse -------------------- #
+		# ------------------------------------------------- #
+		'/data-warehouse/unit-structures/{id}/data-structures/{any}' => [
+			'middleware' => [],
+            'controller' => 'DataWarehouse\DataStructures->updateDataStructure',
+		],
+
+		'/data-warehouse/unit-structures/{id}/properties' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructureProperties->updateProperties'
+		],
+
+		'/data-warehouse/unit-structures/{id}/alerts' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitStructureAlerts->updateAlerts'
+		],
+				
+		'/data-warehouse/units/{id}/properties' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitProperties->updateProperties'
+		],
+
+		'/data-warehouse/units/{id}/alerts' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitAlerts->updateAlerts'
+		],
 
 		/* ========================= OLD VERSION ============================== */
 
@@ -479,6 +619,20 @@ return [
 
     ],
     'PATCH' => [
+
+		# ------------------------------------------------- #
+	    # ------------- Data Warehouse -------------------- #
+		# ------------------------------------------------- #
+		
+		'/data-warehouse/unit-groups/{id}' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->updateUnitGroup'
+		],
+
+		'/data-warehouse/unit-structures/{id}' => [
+			'middleware' => [],
+            'controller' => 'DataWarehouse\UnitStructures->updateUnitStructure',
+		],
 
 		# Logged in user - Patch profile data
 		'/account' => [
@@ -536,6 +690,27 @@ return [
 
     ],
     'DELETE' => [
+
+		# ------------------------------------------------- #
+	    # ------------- Data Warehouse -------------------- #
+		# ------------------------------------------------- #
+
+		'/data-warehouse/unit-structures/{id}/data-structures/{any}' => [
+			'middleware' => [],
+            'controller' => 'DataWarehouse\DataStructures->deleteDataStructure',
+		],
+
+		'/data-warehouse/unit-groups/{id}' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->deleteUnitGroup'
+		],
+
+		'/data-warehouse/unit-groups/{id}/units' => [
+			'middleware' => [],
+			'controller' => 'DataWarehouse\UnitGroups->deleteUnitsFromGroup'
+		],
+
+		# -------------------------------------------------- #
 
 		# User Account Get profile data
 		'/account' => [

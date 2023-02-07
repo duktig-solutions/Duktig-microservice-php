@@ -35,9 +35,11 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace Lib\Auth;
+
+use Exception;
 
 /**
  * Class Jwt
@@ -72,7 +74,7 @@ class Jwt {
      * @param string $alg
      * @param array|null $addHeaders
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @return string
      */
     public static function encode(array $payload, string $key, string $alg = 'HS256', ?array $addHeaders = []) : string {
@@ -111,7 +113,7 @@ class Jwt {
      * @param string $jwt
      * @param array $config
      * @return bool|mixed|string
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
     public static function decode(string $jwt, array $config) : array {
@@ -240,7 +242,7 @@ class Jwt {
             return $result;
         }
 
-        # Check, if the token started to use early than allowed.
+        # Check, if the token started to use early then allowed.
         # nbf = Not before given time
         if ($payload['nbf'] > $timestamp) {
 
@@ -284,7 +286,7 @@ class Jwt {
      * @param string $key
      * @param string $alg
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      * @return bool
      */
     protected static function verify(string $str, string $signature, string $key, string $alg) : bool
@@ -327,11 +329,11 @@ class Jwt {
                 return false;
             }
 
-            throw new \Exception('OpenSSL error: ' . openssl_error_string());
+            throw new Exception('OpenSSL error: ' . openssl_error_string());
 
         } else {
             # The method not defined
-            throw new \Exception('Unknown method for JWT verification ' . $method);
+            throw new Exception('Unknown method for JWT verification ' . $method);
         }
 
     }
@@ -345,14 +347,14 @@ class Jwt {
      * @param string $key
      * @param string $alg
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @return string
      */
     protected static function sign(string $str, string $key, string $alg) : string {
 
         # Check if the specified algorithm is allowed
         if(!isset(static::$supportedAlgorithms)) {
-            throw new \Exception('Unsupported Encryption algorithm ' . $alg);
+            throw new Exception('Unsupported Encryption algorithm ' . $alg);
         }
 
         # Define method and algorithm
@@ -370,14 +372,14 @@ class Jwt {
             $success = openssl_sign($str, $signature, $key, $algorithm);
 
             if (!$success) {
-                throw new \Exception("OpenSSL unable to sign data");
+                throw new Exception("OpenSSL unable to sign data");
             } else {
                 return $signature;
             }
 
         } else {
             # Method not allowed
-            throw new \Exception('Unknown method ' . $method . ' to sing swt');
+            throw new Exception('Unknown method ' . $method . ' to sing swt');
         }
 
     }
@@ -387,10 +389,10 @@ class Jwt {
      *
      * @static
      * @access protected
-     * @param $data
+     * @param mixed $data
      * @return string
      */
-    protected static function base64UrlEncode($data) {
+    protected static function base64UrlEncode($data) : string {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 

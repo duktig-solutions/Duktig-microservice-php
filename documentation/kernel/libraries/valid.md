@@ -5,6 +5,8 @@
 
 #### Valid
 
+Version 1.1.0
+
 Data validation class library.
 
 > You can use this library to validate data by specified methods.  
@@ -15,26 +17,34 @@ Class: `Valid`
 
 ##### Methods
 
-- [alpha() - Alphabetical value](#alphabetical-value)
-- [alphaNumeric() - Alphanumeric value](#alphanumeric-value)
-- [creditCard() - Credit card](#credit-card)
-- [date() - Date](#date)
-- [dateBetween() - Date between 2 dates](#date-between)
-- [dateEqualOrAfter() - Date equal or after](#date-equal-or-after)
-- [dateEqualOrBefore() - Date Equal or before](#date-equal-or-before)
-- [dateIso() - Date with ISO Standard](#date-iso)
-- [digits() - Digits](#digits)
-- [email() - Email address](#email)
-- [floatRange() - Range of float numbers](#float-range)
-- [httpHost() - HTTP Host](#http-host)
-- [id() - ID](#id)
-- [intRange() - Range of integer numbers](#int-range)
-- [ipAddress() - IP address](#ip-address)
-- [jsonString() - Json string](#json-string)
-- [passwordStrength() - Password strength](#password-strength)
-- [stringLength() - String length](#string-length)
-- [url() - URL](#url)
-
+- [Duktig.Microservice](#duktigmicroservice)
+  - [Development Documentation](#development-documentation)
+    - [Libraries](#libraries)
+      - [Valid](#valid)
+        - [Methods](#methods)
+          - [Alphabetical value](#alphabetical-value)
+          - [Alphanumeric value](#alphanumeric-value)
+          - [Credit card](#credit-card)
+          - [Date](#date)
+          - [Date between](#date-between)
+          - [Date equal or after](#date-equal-or-after)
+          - [Date equal or before](#date-equal-or-before)
+          - [Date ISO](#date-iso)
+          - [Date-Time ISO](#date-time-iso)
+          - [Digits](#digits)
+          - [Email](#email)
+          - [Float range](#float-range)
+          - [HTTP host](#http-host)
+          - [ID](#id)
+          - [Int range](#int-range)
+          - [IP Address](#ip-address)
+          - [Json string](#json-string)
+          - [Password strength](#password-strength)
+          - [String length](#string-length)
+          - [URL](#url)
+          - [Latitude](#latitude)
+          - [Longitude](#longitude)
+           
 ###### Alphabetical value
 
 Check if the value is alphabetical (a-z).
@@ -234,7 +244,7 @@ $isDateEqualOrBefore = \Lib\Valid::dateEqualOrBefore('2019-08-27', '2019-08-26',
 
 ###### Date ISO
 
-Check if the given date is valid and ISO standard: Y-m-d
+Check if the given date is valid and ISO standard 8601: Y-m-d
 
 `static bool dateIso(mixed $data)`
 
@@ -256,6 +266,33 @@ $isDateISO = \Lib\Valid::dateIso(12554747847847);
 
 // this will return false because the given date is not ISO standard
 $isDateISO = \Lib\Valid::dateIso('08/27/2019');
+
+```
+
+###### Date-Time ISO
+
+Check if the given date and time is valid and ISO standard 8601: Y-m-d H:i:s
+
+`static bool dateTimeIso(mixed $data)`
+
+Arguments:
+
+- `mixed` Data to check
+
+Return value:
+
+- `bool` True if the given date and time is valid and ISO standard 8601 Y-m-d H:i:s
+- `bool` False if the given date and time is invalid or not ISO standard 8601
+
+```php
+// this will return true 
+$isDateTimeISO = \Lib\Valid::dateTimeIso('2023-02-07 13:32:04');
+
+// this will return false because of invalid date 
+$isDateISO = \Lib\Valid::dateTimeIso(12554747847847);
+
+// this will return false because the given date is not ISO standard
+$isDateISO = \Lib\Valid::dateTimeIso('08/27/2019');
 
 ```
 
@@ -539,14 +576,14 @@ Return value:
 
 ```php
 // this will return true
-$isStringLengthValid = \Lib\Valid\stringLength('Hello World!');
-$isStringLengthValid = \Lib\Valid\stringLength('Hello World!', 5, 50);
+$isStringLengthValid = \Lib\Valid::stringLength('Hello World!');
+$isStringLengthValid = \Lib\Valid::stringLength('Hello World!', 5, 50);
 
 // this will return false because the value is not a scalar type
-$isStringLengthValid = \Lib\Valid\stringLength([1,2,3]);
+$isStringLengthValid = \Lib\Valid::stringLength([1,2,3]);
 
 // this will return false because the value length is out of specified range
-$isStringLengthValid = \Lib\Valid\stringLength('Hello!', 10, 20);
+$isStringLengthValid = \Lib\Valid::stringLength('Hello!', 10, 20);
 ```
 
 ###### URL
@@ -569,16 +606,52 @@ Return value:
 
 ```php
 // this will return true
-$isValidURL = \Lib\Valid\url('www.example.com');
-$isValidURL = \Lib\Valid\url('www.example.com/home', FILTER_FLAG_PATH_REQUIRED);
-$isValidURL = \Lib\Valid\url('www.example.com/index.php?a=1&b=2', FILTER_FLAG_QUERY_REQUIRED);
+$isValidURL = \Lib\Valid::url('www.example.com');
+$isValidURL = \Lib\Valid::url('www.example.com/home', FILTER_FLAG_PATH_REQUIRED);
+$isValidURL = \Lib\Valid::url('www.example.com/index.php?a=1&b=2', FILTER_FLAG_QUERY_REQUIRED);
 
 // this will return false because the value is not a valid URL
-$isValidURL = \Lib\Valid\url(123);
+$isValidURL = \Lib\Valid::url(123);
 
 // this will return false because the value is not matches with required flags 
-$isValidURL = \Lib\Valid\url('www.example.com', FILTER_FLAG_PATH_REQUIRED);
-$isValidURL = \Lib\Valid\url('www.example.com', FILTER_FLAG_QUERY_REQUIRED);
+$isValidURL = \Lib\Valid::url('www.example.com', FILTER_FLAG_PATH_REQUIRED);
+$isValidURL = \Lib\Valid::url('www.example.com', FILTER_FLAG_QUERY_REQUIRED);
+```
+
+###### Latitude
+
+Check if valid Latitude value: -90 and 90
+
+Arguments:
+
+- `mixed` Latitude
+
+Return value:
+
+- `bool` True if the given value is valid Latitude
+- `bool` False if the given value is not a valid Latitude
+
+```php
+$isValidLatitude = \Lib\Valid::latitude('-40');
+$isValidLatitude = \Lib\Valid::latitude(-40);
+```
+
+###### Longitude
+
+Check if valid Longitude value: -180 and 90
+
+Arguments:
+
+- `mixed` Longitude
+
+Return value:
+
+- `bool` True if the given value is valid Longitude
+- `bool` False if the given value is not a valid Longitude
+  
+```php
+$isValidLatitude = \Lib\Valid::longitude('-40');
+$isValidLatitude = \Lib\Valid::longitude(-40);
 ```
 
 > See also [Validator library](validator.md). 

@@ -63,4 +63,41 @@ This library will provide the functionality to perform operations with PostgreSQ
 
 See [PostgreSQL](kernel/libraries/db/postgresql.md)
 
+#### New Validation methods in `Valid` lib to validate for Latitude/Longitude and Date Time ISO: 8601
+
+Version 1.2.0
+
+```php
+
+if(Valid::latitude($value)) {
+  // code here
+}
+
+if(Valid::longitude($value)) {
+  // code here
+}
+
+if(Valid::dateTimeIso($value)) {
+  // code here
+}
+
+```
+
+File: kernel/lib/Valid.php
+
+#### New Validation rules in `Validator` lib to validate for Latitude/Longitude and Date Time ISO: 8601
+
+```php
+$validation = Validator::validateJson(
+  $request->rawInput(),
+  [
+    'lat' => 'latitude',
+    'lng' => 'longitude',
+    'date_time' => 'date_time_iso'
+  ]
+);
+```
+
+File: `kernel/lib/Validator.php`
+
 End of document

@@ -4,11 +4,14 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace Lib\Db;
 
+use Exception;
+use mysqli_result;
 use System\Ehandler;
+use Throwable;
 
 /**
  * Class MySQL
@@ -23,7 +26,7 @@ class MySQLi {
      * @access protected
      * @var array
      */
-    protected $config = NULL;
+    protected array $config = [];
 
     /**
      * Connection resource
@@ -31,7 +34,7 @@ class MySQLi {
      * @access protected
      * @var \mysqli
      */
-    protected $mysqli;
+    protected \mysqli $mysqli;
 
     /**
      * MySQLi Class constructor.
@@ -65,7 +68,7 @@ class MySQLi {
      * @param array $config
      * @return \mysqli
      */
-    final protected function connect($config) : \mysqli {
+    final protected function connect(array $config) : \mysqli {
 
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -117,8 +120,6 @@ class MySQLi {
      * @return int
      */
     final public function insert(string $table, array $data) : int {
-
-        $insertId = NULL;
 
         $sql = "INSERT INTO ".$this->escape($table)." SET ";
         $sql .= $this->prepareFields(array_keys($data), '=?, ', '=?');
@@ -179,12 +180,12 @@ class MySQLi {
             //$this->mysqli->query("COMMIT");
             //$this->mysqli->query("SET autocommit=1");
 
-        } catch(\Throwable $e) {
+        } catch(Throwable $e) {
 
             $this->rollbackTrans();
 
             //$this->mysqli->query("ROLLBACK");
-            \System\Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
+            Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
 
             # Reset insert IDs
             $insertIds = [];
@@ -253,15 +254,16 @@ class MySQLi {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return int|\mysqli_result
-     * @throws \Exception
+     * @return int|mysqli_result
+     * @throws Exception
      */
-    final public function query(string $queryString, ?array $params = NULL) {
+    final public function query(string $queryString, ?array $params = NULL): mysqli_result|int
+    {
 
     	try {
 		    $stmt = $this->mysqli->prepare($queryString);
-	    } catch(\Exception $e) {
-    		throw new \Exception('Unable to prepare MySQL statement. Query: ' . str_replace(["\n","\r","\t", "  "], ' ', $queryString) . ' | Error: ' . $e->getMessage());
+	    } catch(Exception $e) {
+    		throw new Exception('Unable to prepare MySQL statement. Query: ' . str_replace(["\n","\r","\t", "  "], ' ', $queryString) . ' | Error: ' . $e->getMessage());
 	    }
 
         if(!empty($params)) {
@@ -391,7 +393,7 @@ class MySQLi {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
     final public function fetchAllAssoc(string $queryString, ?array $params = NULL) : array {
@@ -409,7 +411,7 @@ class MySQLi {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
     final public function fetchAssoc(string $queryString, ?array $params = NULL) : array {
@@ -567,7 +569,7 @@ class MySQLi {
      * @param mixed $value
      * @return string
      */
-    final public function escape($value) : string {
+    final public function escape(mixed $value) : string {
         return $this->mysqli->real_escape_string($value);
     }
 

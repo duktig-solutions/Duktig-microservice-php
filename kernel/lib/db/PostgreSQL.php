@@ -4,7 +4,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.2
  */
 namespace Lib\Db;
 
@@ -31,7 +31,7 @@ class PostgreSQL {
      * @access protected
      * @var resource
      */
-    protected $conn;
+    protected $conn = null;
 
     /**
      * PostgreSQL Class constructor.
@@ -51,9 +51,7 @@ class PostgreSQL {
     public function __destruct() {
 
         # When developing this code: listening - Hungarian Dance Radio and planning to Visit Stuttgart Germany (Feb 2022)
-        if($this->conn) {
-            $this->close();
-        }
+        $this->close();
 
     }
 
@@ -81,8 +79,9 @@ class PostgreSQL {
         }
 
         try {
-            $conn = pg_connect("host=".$config['host']." ".$port."dbname=".$config['database']." user=".$config['username']." password=".$config['password']." ".$client_encoding);
+            $conn = pg_connect("host=".$config['host']." ".$port."dbname=".$config['database']." user=".$config['username']." password=".$config['password']." ".$client_encoding, PGSQL_CONNECT_FORCE_NEW);
         } catch(Throwable $e) {
+            \System\Logger::Log($e->getMessage(), \System\Logger::CRITICAL, __FILE__, __LINE__);
             return false;
         }
 
@@ -99,10 +98,30 @@ class PostgreSQL {
     final protected function close() : bool {
         
         if($this->conn) {
-            return pg_close($this->conn);
+            try {
+                pg_close($this->conn);
+                $this->conn = null;
+            } catch(\Throwable $e) {
+                return false;
+            }
         }
         
         return false;
+    }
+
+    /**
+     * Return true if connected
+     * 
+     * @access public
+     * @return bool
+     */
+    public function connected() : bool {
+        
+        if(!$this->conn) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -128,7 +147,7 @@ class PostgreSQL {
      * @return mixed int|boolean
      */
     final public function insert(string $table, array $data, ?string $returnInsertIdFieldName = null) {
-
+        
         $sql = "INSERT INTO ".$this->escape($table)." (";
         $valuesStr = "";
 
@@ -145,7 +164,7 @@ class PostgreSQL {
         $sql .= ") VALUES (".$valuesStr.") ";
 
         if(!is_null($returnInsertIdFieldName)) {
-            $sql .= " RETURNING " . $this->escape($returnInsertIdFieldName);            
+            $sql .= " RETURNING " . $this->escape($returnInsertIdFieldName);
         } 
         
         $result = $this->query($sql, array_values($data));
@@ -305,11 +324,11 @@ class PostgreSQL {
                 $result = pg_query_params($this->conn, $queryString, $params);
             }
         } catch(\Throwable $e) {
-            throw new \Exception(pg_last_error($this->conn));
+            throw new \Exception(\pg_last_error($this->conn));
         }
         
         if (!$result) {
-            throw new \Exception(pg_last_error($this->conn));
+            throw new \Exception(\pg_last_error($this->conn));
         }
 
         return $result;
@@ -343,9 +362,9 @@ class PostgreSQL {
      * @param string $queryString
      * @param array|null $params
      * @throws \Exception
-     * @return array
+     * @return mixed bool|array
      */
-    final public function fetchAllAssoc(string $queryString, ?array $params = NULL) : array {
+    final public function fetchAllAssoc(string $queryString, ?array $params = NULL) {
 
         $result = $this->query($queryString, $params);
 
@@ -365,14 +384,14 @@ class PostgreSQL {
      * @param string $queryString
      * @param array|null $params
      * @throws \Exception
-     * @return array
+     * @return mixed Bool|Array
      */
-    final public function fetchAssoc(string $queryString, ?array $params = NULL) : array {
+    final public function fetchAssoc(string $queryString, ?array $params = NULL) {
 
         $result = $this->query($queryString, $params);
 
         if (!$result) {
-            return false;
+            return [];
         }
     
         return pg_fetch_assoc($result);
@@ -386,11 +405,11 @@ class PostgreSQL {
      * @access public
      * @param string $table
      * @param array $where
-     * @return array
+     * @return mixed bool|array
      */
-    final public function fetchAllAssocByWhere(string $table, array $where) : array {
+    final public function fetchAllAssocByWhere(string $table, array $where) {
 
-        $sql = "SELECT * FROM ".pg_escape_string($this->conn, $table)." ";
+        $sql = "SELECT * FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
         
         $i = 1;
@@ -414,11 +433,11 @@ class PostgreSQL {
      * @param string $table
      * @param array $fields
      * @param array $where
-     * @return array
+     * @return mixed bool|array
      */
-    final public function fetchAllFieldsAssocByWhere(string $table, array $fields, array $where) : array {
+    final public function fetchAllFieldsAssocByWhere(string $table, array $fields, array $where) {
 
-        $sql = "SELECT ".implode(',', $fields)." FROM ".pg_escape_string($this->conn, $table)." ";
+        $sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
         
         $i = 1;
@@ -441,11 +460,11 @@ class PostgreSQL {
 	 * @access public
 	 * @param string $table
 	 * @param array $where
-	 * @return array
+	 * @return mixed bool|array
 	 */
-	final public function fetchAssocByWhere(string $table, array $where) : array {
+	final public function fetchAssocByWhere(string $table, array $where) {
 
-        $sql = "SELECT * FROM ".pg_escape_string($this->conn, $table)." ";
+        $sql = "SELECT * FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
         
         $i = 1;
@@ -469,11 +488,11 @@ class PostgreSQL {
 	 * @param string $table
      * @param array $fields
 	 * @param array $where
-	 * @return array
+	 * @return mixed bool|array
 	 */
-	final public function fetchFieldsAssocByWhere(string $table, array $fields, array $where) : array {
+	final public function fetchFieldsAssocByWhere(string $table, array $fields, array $where) {
 
-        $sql = "SELECT ".implode(',', $fields)." FROM ".pg_escape_string($this->conn, $table)." ";
+        $sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
         
         $i = 1;

@@ -278,6 +278,45 @@ return [
 		# for instance, setting number 7 will assume the backup will remove oldest one after 7 copies.
 		# And the 7 means keep backed up databases for 7 days and remove oldest 8th.
 		'DatabasesBackupSteps' => 7
+	],
+
+	# Data Warehouse functionality configuration 
+	'DataWarehouseConfig' => [
+		'DataStructures' => [
+			'DataTypes' => [
+				'integer' => 'integer default 0 not null',
+				'bigint' => 'bigint default 0 not null',
+				'smallint' => 'smallint default 0 not null',
+				'double' => 'double precision default 0 not null',
+				'varchar' => 'varchar',
+				'timestamp' => 'timestamp',
+				'time' => 'time',
+				'date' => 'date'
+			],
+			'DefaultFields' => [
+				'unit_id' => 'integer CHECK (unit_id > 0)',
+    			'time' => 'timestamp not null',
+			]
+		],
+		'Alerts' => [
+			'Comparison' => [
+				'less',
+				'less_or_equal',
+				'equal',
+				'greater_or_equal',
+				'greater'
+			],
+			'Measure' => [
+				'real',
+        		'percent'
+			]
+		],
+		'ResetTruncateTables' => [
+			'unit_group_assignments',
+    		'unit_groups',
+    		'unit_structures',
+    		'units'
+		]
 	]
 
 ];

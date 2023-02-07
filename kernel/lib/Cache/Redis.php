@@ -5,12 +5,12 @@
  * @author David A. <software@duktig.dev>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace Lib\Cache;
 
 # PHPRedis Extension
-use \Redis as RedisClient;
+use Redis as RedisClient;
 
 /**
  * class Redis
@@ -37,7 +37,7 @@ class Redis {
      * Redis object
      *
      * @access private
-     * @requires phpredis extension
+     * @requires php-redis extension
      * @var Redis object
      */
     private $redis;
@@ -71,14 +71,17 @@ class Redis {
         $this->redis->close();
     }
 
-	/**
-	 * Set cache content as String
-	 *
-	 * @param $key
-	 * @param $data
-	 * @return bool
-	 */
-	public function set(string $key, $data, ?int $expiresInSeconds = null) {
+    /**
+     * Set cache content as String
+     *
+     * @access public
+     * @param string $key
+     * @param mixed $data
+     * @param int|null $expiresInSeconds
+     * @return void
+     */
+	public function set(string $key, $data, ?int $expiresInSeconds = null): void
+    {
         
         $this->redis->set($key, $data);
 
@@ -98,6 +101,7 @@ class Redis {
      * 
      * Twitted this, when developed: https://twitter.com/DuktigS/status/1368224246325985281/photo/1
      *
+     * @access public
      * @param string $key
      * @param array $data
      * @param integer|null $expiresInSeconds
@@ -106,7 +110,7 @@ class Redis {
     public function setArray(string $key, array $data, ?int $expiresInSeconds = null) {
 
         $data = json_encode($data);
-        return $this->set($key, $data, $expiresInSeconds);
+        $this->set($key, $data, $expiresInSeconds);
 
     }
 

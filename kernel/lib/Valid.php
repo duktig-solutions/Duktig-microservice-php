@@ -4,7 +4,7 @@
  *
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.2.0
  */
 Namespace Lib;
 
@@ -236,7 +236,8 @@ class Valid {
 	/**
 	 * Check is valid date in ISO format
 	 * Format: YYYY-MM-DD (eg 1997-07-16)
-	 *
+	 * ISO: 8601
+     *
 	 * @static
 	 * @access public
 	 * @param  mixed $data
@@ -257,6 +258,32 @@ class Valid {
 		}
 
 	} // End func dateIso
+
+    /**
+     * Check is valid date and time in ISO format
+     * Format: YYYY-MM-DD H:i:s (eg 1997-07-16 13:10:36)
+     * ISO: 8601
+     *
+     * @static
+     * @access public
+     * @param  mixed $dataTime
+     * @return bool
+     */
+    public static function dateTimeIso($dataTime) : bool {
+
+        if(!is_scalar($dataTime)) {
+            return false;
+        }
+
+        $time = strtotime($dataTime);
+
+        if(date('Y-m-d H:i:s', $time) == $dataTime) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } // End func dateTimeIso
 
 	/**
 	 * Check string if contains only digits
@@ -563,5 +590,29 @@ class Valid {
 	    }
 
     } // End func url
+
+	/**
+	 * Check is valid Latitude: -90 and 90
+	 *
+	 * @static
+     * @access public
+	 * @param mixed $lat
+	 * @return bool
+	 */
+	public static function latitude($lat) : bool {
+		return preg_match('/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/', $lat);
+	}
+
+	/**
+	 * Check is valid Longitude: -180 and 90
+	 *
+	 * @static
+     * @access public
+	 * @param mixed $lng
+	 * @return bool
+	 */
+	public static function longitude($lng) : bool {
+		return preg_match('/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $lng);
+	}
 
 }

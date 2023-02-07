@@ -21,15 +21,17 @@
     "docs": "https://github.com/duktig-solutions/Duktig-microservice-php/tree/master/documentation"
   },
   "require": {
-    "php": ">=7.1.0",
+    "php": ">=7.4.0",
     "ext-mbstring": "*",
     "ext-mysqlnd": "*",
-    "ext-mysqli": "*"
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "ext-redis": "*",
+    "ext-openssl": "*"
   },
   "suggest": {
     "ext-memcached": "*",
-    "ext-mysqli": "*",
-    "ext-redis": "*"
+    "ext-mysqli": "*"
   },
   "autoload": {
     "psr-4": {

@@ -8,3 +8,4 @@ vendor
 .sql.gz
 .smbdelete*
 .vscode
+/.vscode/

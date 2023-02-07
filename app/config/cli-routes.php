@@ -88,6 +88,18 @@ return [
     # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer-health-inspector --redis-config MessageQueue
     'development-mq-consumer-health-inspector' => [
         'controller' => 'Development\MessageQueue\HealthInspector->inspect'
-	]	
+	],
+	
+	# ------------------------------------------------- #
+	# ------------- Data Warehouse -------------------- #
+	# ------------------------------------------------- #
+
+	'setup-data-warehouse' => [
+        'controller' => 'DataWarehouse\Setup->cliSetup'
+	],
+
+	'reset-data-warehouse' => [
+        'controller' => 'DataWarehouse\Setup->cliReset'
+	],
 	
 ];

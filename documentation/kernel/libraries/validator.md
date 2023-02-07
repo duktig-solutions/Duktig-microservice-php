@@ -5,6 +5,8 @@
 
 #### Validator
 
+Version 1.1.0
+
 Data structures validation class library.
 
 > You can use this library to validate data structures with multiple rules.  
@@ -859,11 +861,18 @@ See all rules listed bellow
         
         
 - `date_iso`
-    - Requirement: Valid date with ISO standard: Y-m-d
+    - Requirement: Valid with ISO standard 8601: Y-m-d
     - Pattern: ***date_iso:{not-required}***
     - Pattern examples: 
         - `date_iso` Required valid date with ISO standard
         - `date_iso:!required` Required valid date with ISO standard **Y-m-d** or empty string (not required)  
+    
+- `date_time_iso`
+    - Requirement: Valid date-time with ISO standard 8601: Y-m-d H:i:s
+    - Pattern: ***date_time_iso:{not-required}***
+    - Pattern examples:
+        - `date_time_iso` Required valid date-time with ISO standard
+        - `date_time_iso:!required` Required valid date-time with ISO standard **Y-m-d H:i:s** or empty string (not required)
     
 - `date`
     - Requirement: Valid date with given format (default Y-m-d)
@@ -947,7 +956,21 @@ See all rules listed bellow
         - `array:10:20:{unique}` Requires an array containing only unique values.
         - `array:10:20:{ids}` Requires an array containing only Id numbers.
         - `array:10:20:{unique}:{ids}` Requires an array containing only Unique Id numbers.
-                
+
+- `latitude`
+    - Requirement: Valid Latitude value: -90 and 90 
+    - Pattern: ***latitude:{not-required}*** 
+    - Pattern examples:
+        - `latitude` Requires a valid Latitude value
+        - `latitude:!required` Requires a valid Latitude value or empty (not required)
+         
+- `longitude`
+    - Requirement: Valid Longitude value: -180 and 90
+    - Pattern: ***longitude:{not-required}*** 
+    - Pattern examples:
+        - `longitude` Requires a valid Longitude value
+        - `longitude:!required` Requires a valid Longitude value or empty (not required)
+     
 Return value:
 
 - `string` Return empty string if validation passed
