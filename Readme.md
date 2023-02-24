@@ -1,11 +1,11 @@
 ![Image](documentation/duktig.microservice.logo.png "Duktig.Microservice")
 
-![PHP Version >= 7.4](https://img.shields.io/badge/PHP%20Version-%3E%3D%207.4-green)
-![Databases MySQL, PostgreSQL](https://img.shields.io/badge/Databases-MySQL,%20PostgreSQL-blue)
-![Pub/Sub, Cache](https://img.shields.io/badge/Pub/Sub,%20Cache-Redis-red)
+![PHP Version >= 7.4](https://img.shields.io/badge/PHP%20Version-%3E%3D%207.4-green?style=flat "PHP Version >= 7.4")
+![Databases MySQL, PostgreSQL](https://img.shields.io/badge/Databases-MySQL,%20PostgreSQL-blue?style=flat "Databases MySQL, PostgreSQL")
+![Pub/Sub, Cache](https://img.shields.io/badge/Pub/Sub,%20Cache-Redis-red?style=flat "Pub/Sub, Cache")
 
 
-[<img src="https://img.shields.io/badge/slack-@duktig-solutions/framework?style=flat&logo=slack">](https://app.slack.com/client/T04PR9UCJR0/C04QX3JGEG5/rimeto_profile/U04PNBQAHJR)
+[<img src="https://img.shields.io/badge/slack-@duktig-solutions/framework?style=flat&logo=slack">](https://app.slack.com/client/T04PR9UCJR0/C04QX3JGEG5/rimeto_profile/U04PNBQAHJR?style=flat)
 [![Twitter](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20Twitter%20)](https://twitter.com/DuktigS)
 
 
