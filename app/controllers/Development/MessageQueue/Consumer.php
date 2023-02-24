@@ -5,7 +5,7 @@
  *
  * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer --redis-config MessageQueue
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

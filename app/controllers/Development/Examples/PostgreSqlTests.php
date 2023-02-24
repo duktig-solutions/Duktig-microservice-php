@@ -3,7 +3,6 @@ namespace App\Controllers\Development\Examples;
 
 use System\HTTP\Request;
 use System\HTTP\Response;
-use System\Config;
 use App\Models\Examples\PostgreSqlTestModel as PgModel;
 
 /**

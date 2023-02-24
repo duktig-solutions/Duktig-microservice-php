@@ -3,9 +3,9 @@
  * Events Subscriber class
  * This class uses to subscribe General Events Instance based on Redis Databse
  * 
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */  
 
 namespace System\Events;
@@ -27,7 +27,7 @@ class Subscriber {
      * @access private
      * @var array
      */
-    private static $eventsRedisConfig;
+    private static array $eventsRedisConfig;
 
     /**
      * Events Redis Connection object
@@ -36,7 +36,7 @@ class Subscriber {
      * @access private
      * @var object
      */
-    private static $eventsRedis;
+    private static object $eventsRedis;
 
     /**
      * General Events Redis Configuration name 
@@ -45,7 +45,7 @@ class Subscriber {
      * @access private
      * @var string
      */
-    private static $eventsRedisConfigName = 'GeneralEventsRedis';
+    private static string $eventsRedisConfigName = 'GeneralEventsRedis';
 
     /**
      * How many times to try reconnect
@@ -54,7 +54,7 @@ class Subscriber {
      * @access private 
      * @var int
      */
-    private static $connectionAttempts = 10;
+    private static int $connectionAttempts = 10;
 
     /**
      * Channels to subscribe
@@ -63,7 +63,7 @@ class Subscriber {
      * @access private
      * @var array
      */
-    private static $subscribeToChannels = ['main'];
+    private static array $subscribeToChannels = ['main'];
     
     /**
      * Connect to Redis instance
@@ -147,6 +147,7 @@ class Subscriber {
             return static::connect();
         }
 
+        return true;
     }
 
     /**

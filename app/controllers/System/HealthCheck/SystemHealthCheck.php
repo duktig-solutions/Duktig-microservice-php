@@ -4,7 +4,7 @@
  *
  * - Just Ping and get response plain text: pong
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -24,8 +24,8 @@ class SystemHealthCheck {
 	 * Just ping the system and get plain text: pong
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return void
 	 */

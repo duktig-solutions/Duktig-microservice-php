@@ -2,9 +2,9 @@
 declare(strict_types=1); 
 /**
  * HTTP entrypoint for Web Servers such as Apache, Nginx.
- * To setup environment with web server you have to set ./www as web public directory.
+ * To set up the environment with web server you have to set ./www as web public directory.
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -48,7 +48,7 @@ set_exception_handler(function($e) use($response) {
 set_error_handler(function($code, $message, $file, $line) use($response) {
     
     // # This will return true, if not notice
-    // # In case if this is not a notice, we throwing Exception
+    // # In case if this is not a notice, we throw an Exception
     if(\System\Ehandler::processError($message, $code, $file, $line)) {
         throw new Exception($message . " - ".$file.":".$line);        
     }
@@ -78,7 +78,7 @@ try {
 	# If no route match/found to run, Routing will automatically send Error 404
 	Router::init($request, $response);
 
-	# Finally send response to client.
+	# Finally, send response to client.
     $response->sendFinal();
 
 } catch(\Throwable $e) {

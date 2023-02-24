@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  duktig-database-mysql:
+    build: ./database-mysql
+    image: duktig-database-mysql
+    container_name: duktig-database-mysql
+    ports:
+      - "3308:3306"
+    volumes:
+      - "./database-mysql/volume-data/:/var/lib/mysql"
+  duktig-php-fpm:
+    build: ./
+    image: duktig-php-fpm
+    container_name: duktig-php-fpm
+    depends_on:
+      - duktig-database-mysql
+    volumes:
+      - "../:/var/www"
+  duktig-php-cli-cron:
+    build: ./
+    image: duktig-php-cli-cron
+    container_name: duktig-php-cli-cron
+    depends_on:
+      - duktig-database-mysql
+    volumes:
+      - "../:/var/www"
+  duktig-nginx-server:
+    build: ./nginx-server
+    image: duktig-nginx-server
+    container_name: duktig-nginx-server
+    depends_on:
+      - duktig-php-fpm
+    volumes:
+      - "../www/:/var/www"
+  duktig-redis-server:
+    build: ./redis-server
+    image: duktig-redis-server
+    container_name: duktig-redis-server
+    volumes:
+      - "./redis-server/volume-data:/data"

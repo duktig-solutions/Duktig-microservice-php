@@ -9,3 +9,5 @@ vendor
 .smbdelete*
 .vscode
 /.vscode/
+docker-deployment/database-mysql/volume-data/
+

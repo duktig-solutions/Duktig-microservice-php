@@ -3,18 +3,19 @@
  * Application Main Configuration file.
  * See structure and explanation bellow.
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
 return [
+
     # Your project/setup name
     'ProjectName' => 'Duktig.Microservice',
 
     # Your project version
     'ProjectVersion' => '1.0.0',
 
-	# Microservice ID (Aka System Id) for each instance. 
+	# Microservice ID (Aka System id) for each instance.
 	# i.e. Accounts | Reports | DataReception | Notes, etc ...
 	'Microservice' => 'Development',
 
@@ -37,7 +38,7 @@ return [
     'UnderMaintenance' => 0,
 
     # Enable or disable CLI mode.
-    # In some cases you can temporary disable CLI functionality.
+    # In some cases you can temporarily disable CLI functionality.
     # Set this to "0" to stop Cli route parsing and functionality.
     'DisableCLI' => 0,
 
@@ -64,18 +65,7 @@ return [
 		    'charset' => 'utf8'
 	    ],
 
-	    # Accounts Database
-	    'Accounts' => [
-		    'driver' => 'MySQLi',
-		    'host' => 'localhost',
-		    'port' => 3306,
-		    'username' => 'root',
-		    'password' => 'abc123',
-		    'database' => 'DuktigAccounts',
-		    'charset' => 'utf8'
-	    ],
-
-	    # Authorization for Database backup user
+	    # Credentials for Database backup - MySQL Server root user account
 	    'BackupConn' => [
 		    'driver' => 'MySQLi',
 		    'host' => 'localhost',
@@ -86,8 +76,8 @@ return [
 		    'charset' => 'utf8'
 		],
 
-		# PostgreSQL Connection
-		'DataWareHouse' => [
+		# Credentials for PostgreSQL Connection
+		'PostgreSQL_Cred' => [
 			'driver' => 'PostgreSQL',
 			'host' => '192.168.0.132',
 			'port' => 5433,
@@ -112,17 +102,6 @@ return [
             'queueName' => 'MQ_d876g66886gfd'
 		],
 
-		# Intermediate Data Center for Microservices (Auth)
-		# The server is the same intermediate data center, but auth database.
-		'IntermediateDataCenterAuth' => [
-			'scheme' => 'tcp',
-            'host' => 'localhost',
-            'port' => 6380,
-            'database' => 1,
-            'read_write_timeout' => 0,
-            'password' => 're2020Duk_psGw'
-		],
-		
 		# Message/Queue For development purposes
 		'MessageQueue' => [
             'scheme' => 'tcp',
@@ -169,84 +148,6 @@ return [
 
 	],
 
-    # JWT Authorization Configuration
-    'JWT' => [
-		
-		'access_token' => [
-
-    		# Issuer
-		    'iss' => 'Duktig.dev.iss',
-
-		    # Audience (The area where this token allowed)
-		    # In the future this can be used as User access area definition.
-		    # i.e. admin|manager|data or data (only)
-		    'aud' => 'Duktig.dev.general.aud',
-
-		    # The subject of JWT
-		    'sub' => 'Duktig.dev.general.sub',
-
-		    # JWT ID. Case sensitive unique identifier of the token even among different issuers.
-			# This id will rebuild in Token creation time
-		    'jti' => 'Duktig.dev.general.jti',
-
-		    # Access token Expiration time
-		    # Warning! This string will be used in method strtotime(exp)
-		    'exp' => '+120 minute',// '+1 day',
-
-		    # Token can start after given time
-		    # Warning! This string will be used in method strtotime(exp)
-		    'nbf' => '+0 minutes',
-
-		    # 256-bit-secret key for token encryption
-		    'secretKey' => '_tSe7#K209wG@g1vroW~43985&c~edra',
-
-			# Special key to verify user account payload and jti
-		    'payload_secure_encryption_key' => '_A#_*EYI-CFO-2523cd&Jro_Gdp99ff8i90'
-	    ],
-
-	    'refresh_token' => [
-
-	    	# Key name in header
-		    'RefreshTokenKey' => 'X-Refresh-Token',
-
-		    # Issuer
-		    'iss' => 'Duktig.dev.iss',
-
-		    # Audience (The area where this token allowed)
-		    # In the future this can be used as User access area definition.
-		    # i.e. admin|manager|data or data (only)
-		    'aud' => 'Duktig.dev.auth.aud',
-
-		    # The subject of JWT
-		    'sub' => 'Duktig.dev.auth.sub',
-
-		    # JWT ID. Case sensitive unique identifier of the token even among different issuers.
-			# This id will rebuild in Token creation time
-		    'jti' => 'Duktig.dev.auth.jti',
-
-		    # Refresh token Expiration time
-		    # Warning! This string will be used in method strtotime(exp)
-		    'exp' => '+200 minute',// '+1 month',
-
-		    # Token can start after given time
-		    # Warning! This string will be used in method strtotime(exp)
-		    'nbf' => '+0 minutes',
-
-		    # 256-bit-secret key for token encryption
-		    'secretKey' => '$563ty7G4X8#9(j1@3-=',
-
-		    # Special key to verify user account payload and jti
-		    'payload_secure_encryption_key' => '!D#_REYI-CRO-2323cd&Fro@Gdf98fg8d97'
-	    ]
-
-    ],
-
-	# IP to location 
-	# This data (resources) used by LocationByIP Library.
-	'IPTolocation' => [
-		'resource' => 'https://www.iplocate.io/api/lookup/' // 'http://www.geoplugin.net/json.gp?ip=',
-	],
-	
 	# System binary executables
 	'Executables' => [
 		'curl' => '/usr/bin/curl',
@@ -270,53 +171,14 @@ return [
 		],
 
 		# Path where to save backup database files
-		# If this value is empty, the system will automatically backup into /backups/db/
+		# If this value is empty, the system will automatically back up into ./backups/db/
 		# Notice: The last slash is important if you specify a path.
 		'DatabasesBackupDir' => '',
 
 		# How many copies will keep the backup.
-		# for instance, setting number 7 will assume the backup will remove oldest one after 7 copies.
-		# And the 7 means keep backed up databases for 7 days and remove oldest 8th.
+		# for instance, setting number 7 will assume that the backup will remove old backups after 7 copies.
+		# And the 7 means to keep backed up databases for 7 days and remove the old 8th.
 		'DatabasesBackupSteps' => 7
 	],
-
-	# Data Warehouse functionality configuration 
-	'DataWarehouseConfig' => [
-		'DataStructures' => [
-			'DataTypes' => [
-				'integer' => 'integer default 0 not null',
-				'bigint' => 'bigint default 0 not null',
-				'smallint' => 'smallint default 0 not null',
-				'double' => 'double precision default 0 not null',
-				'varchar' => 'varchar',
-				'timestamp' => 'timestamp',
-				'time' => 'time',
-				'date' => 'date'
-			],
-			'DefaultFields' => [
-				'unit_id' => 'integer CHECK (unit_id > 0)',
-    			'time' => 'timestamp not null',
-			]
-		],
-		'Alerts' => [
-			'Comparison' => [
-				'less',
-				'less_or_equal',
-				'equal',
-				'greater_or_equal',
-				'greater'
-			],
-			'Measure' => [
-				'real',
-        		'percent'
-			]
-		],
-		'ResetTruncateTables' => [
-			'unit_group_assignments',
-    		'unit_groups',
-    		'unit_structures',
-    		'units'
-		]
-	]
 
 ];

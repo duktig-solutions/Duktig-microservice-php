@@ -6,12 +6,14 @@
  * - Response with all request data
  * - Send Http request in CLI mode
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
 namespace App\Controllers\Development\Examples;
 
+use Exception;
+use Lib\HttpClient;
 use System\HTTP\Request;
 use System\HTTP\Response;
 use System\CLI\Input;
@@ -27,15 +29,16 @@ use Lib\Benchmarking;
  */
 class Getter {
 
-	/**
-	 * Download file
-	 *
-	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
-	 * @param array $middlewareData
-	 * @return void
-	 */
+    /**
+     * Download file
+     *
+     * @access public
+     * @param Request $request
+     * @param Response $response
+     * @param array $middlewareData
+     * @return void
+     * @throws Exception
+     */
 	public function downloadFile(Request $request, Response $response, array $middlewareData) : void {		
 		$response->sendFile(DUKTIG_ROOT_PATH . 'Readme.md');
 	}
@@ -44,8 +47,8 @@ class Getter {
 	 * Response with all request data
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
 	 */
@@ -74,8 +77,8 @@ class Getter {
 	 * Send Http request from command line interface
 	 *
 	 * @access public
-	 * @param \System\CLI\Input $input
-	 * @param \System\CLI\Output $output
+	 * @param Input $input
+	 * @param Output $output
 	 * @param array $middlewareResult
 	 * @return void
 	 */
@@ -99,7 +102,7 @@ class Getter {
 		for($i = 1; $i <= $limit; $i++) {
 
 			# Send asynchronous http request using curl
-			\Lib\HttpClient::sendRequestAsync(
+			HttpClient::sendRequestAsync(
 				# URL
 				'http://duktig.microservice/examples/response_all_request_data?a=1&b=2',
 				# Request method
@@ -125,7 +128,7 @@ class Getter {
 
 		for($i = 1; $i <= $limit; $i++) {
 
-			$result = \Lib\HttpClient::sendRequest(
+			$result = HttpClient::sendRequest(
 				# URL
 				'http://duktig.microservice/examples/response_all_request_data?a=1&b=2',
 				# Request method

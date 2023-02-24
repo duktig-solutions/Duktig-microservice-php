@@ -4,17 +4,18 @@
  */
 namespace App\Controllers\Development\Examples;
 
-use Lib\Validator;
+use Exception;
 use System\HTTP\Request;
 use System\HTTP\Response;
 use System\CLI\Input;
 use System\CLI\Output;
 use System\Config;
+use Lib\Validator;
 use Lib\Cache\Redis as CacheClient;
 
 class DataCaching {
 
-	private $cacheLib;
+	private CacheClient $cacheLib;
 
 	public function __construct() {
 		
@@ -25,11 +26,11 @@ class DataCaching {
 	/**
 	 * System cached functionality
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function httpTestSystemCaching(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -69,11 +70,11 @@ class DataCaching {
 	/**
 	 * Custom cached functionality
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function httpTestManualCaching(Request $request, Response $response, array $middlewareData) : bool {
 

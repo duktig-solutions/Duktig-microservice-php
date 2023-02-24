@@ -6,7 +6,7 @@
  * - Use Application custom library
  * - Use Application custom library extended from system library
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -34,8 +34,8 @@ class LibrariesUsage {
 	 * Use System Library
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return void
 	 */
@@ -74,14 +74,14 @@ class LibrariesUsage {
 	 * Use Application Library
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return void
 	 */
 	public function useApplicationLibrary(Request $request, Response $response, array $middlewareData): void {
 
-		# In this example we getting to use Application custom created library
+		# In this example we are getting to use Application custom created library
 		$appLib = new ExampleLibClass();
 
 		# Using object method
@@ -108,8 +108,8 @@ class LibrariesUsage {
 	 * Use Application Library extended from System Library
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return void
 	 */
@@ -132,8 +132,8 @@ class LibrariesUsage {
 				'status' => 'ok',
 				'message' => 'Example of Using Application Library extended from System Library. See '. basename(__FILE__) . ' / ' . __CLASS__ .'->' . __FUNCTION__ . '()',
 				'Example results' => [
-					'numbers_comparision_greater' => $numGreater ? 1 : 0,
-					'numbers_comparision_less' => $numLess ? 1 : 0,
+					'numbers_comparison_greater' => $numGreater ? 1 : 0,
+					'numbers_comparison_less' => $numLess ? 1 : 0,
 					'number_valid_id' => $isValidId ? 1 : 0
 				]
 			]

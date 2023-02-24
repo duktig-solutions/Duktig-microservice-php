@@ -3,7 +3,7 @@
  * Application logs processor - Archiver
  *
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -27,7 +27,7 @@ class Archiver {
 	 * @access private
 	 * @var int
 	 */
-	private $logFileSizeToArchive = 500000;
+	private int $logFileSizeToArchive = 500000;
 
 	/**
 	 * Pattern to get log files (path with file type)
@@ -35,7 +35,7 @@ class Archiver {
 	 * @access private
 	 * @var string
 	 */
-	private $logFilesPathPattern;
+	private string $logFilesPathPattern;
 
 	/**
 	 * Log Files path
@@ -43,7 +43,7 @@ class Archiver {
 	 * @access private
 	 * @var string
 	 */
-	private $logFilesPath;
+	private string $logFilesPath;
 
 	/**
 	 * AppLogs constructor.
@@ -59,8 +59,8 @@ class Archiver {
 	 * This method archives large log files
 	 *
 	 * @access public
-	 * @param \System\CLI\Input $input
-	 * @param \System\CLI\Output $output
+	 * @param Input $input
+	 * @param Output $output
 	 * @param array $middlewareResult
 	 * @return bool
 	 */

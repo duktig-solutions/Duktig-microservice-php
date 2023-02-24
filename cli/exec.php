@@ -3,7 +3,7 @@ declare(strict_types=1);
 /**
  * Command Line Interface.
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

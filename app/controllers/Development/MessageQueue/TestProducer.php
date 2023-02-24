@@ -5,7 +5,7 @@
  *
  * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-producer-test --redis-config MessageQueue
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -25,8 +25,8 @@ class TestProducer {
      * @access private
      * @var string
      */
-    private $logFile = DUKTIG_APP_PATH . 'log/mq-analyze.txt';
-    private $logFileFailTasks = DUKTIG_APP_PATH . 'log/mq-fail-tasks.log';
+    private string $logFile = DUKTIG_APP_PATH . 'log/mq-analyze.txt';
+    private string $logFileFailTasks = DUKTIG_APP_PATH . 'log/mq-fail-tasks.log';
 
     /**
      * Main producing method

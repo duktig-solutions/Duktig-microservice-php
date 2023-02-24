@@ -37,10 +37,10 @@ This is `Block` text
 
 ## Table
 
-Item|Name|Value
-----|----|-----
-val1|val2|val3
-val4|val5|val6 
+| Item | Name | Value |
+|------|------|-------|
+| val1 | val2 | val3  |
+| val4 | val5 | val6  |
 
 Another table with columns text left, center, right. 
 
@@ -57,7 +57,7 @@ Another table with columns text left, center, right.
 {
   "name":"David",
   "surname":"Ayvazyan",
-  "email":"software@duktig.dev",
+  "email":"framework@duktig.solutions",
   "other_details":{
     "general_work":"Development",
     "second_work":"Server setup"

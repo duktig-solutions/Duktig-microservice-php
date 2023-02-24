@@ -2,7 +2,7 @@
 /**
  * MySQLi Class library
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.1
  */
@@ -254,11 +254,10 @@ class MySQLi {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return int|mysqli_result
+     * @return false|mysqli_result
      * @throws Exception
      */
-    final public function query(string $queryString, ?array $params = NULL): mysqli_result|int
-    {
+    final public function query(string $queryString, ?array $params = NULL) {
 
     	try {
 		    $stmt = $this->mysqli->prepare($queryString);

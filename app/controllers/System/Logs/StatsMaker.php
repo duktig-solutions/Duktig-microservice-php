@@ -3,9 +3,9 @@
  * Application logs statistics maker
  *
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 namespace App\Controllers\System\Logs;
@@ -30,7 +30,7 @@ class StatsMaker {
 	 * @access private
 	 * @var int
 	 */
-	private $logFileSizeToArchive = 500000;
+	private int $logFileSizeToArchive = 500000;
 
 	/**
 	 * Pattern to get log files (path with file type)
@@ -38,7 +38,7 @@ class StatsMaker {
 	 * @access private
 	 * @var string
 	 */
-	private $logFilesPathPattern;
+	private string $logFilesPathPattern;
 
 	/**
 	 * Log Files path
@@ -46,7 +46,7 @@ class StatsMaker {
 	 * @access private
 	 * @var string
 	 */
-	private $logFilesPath;
+	private string $logFilesPath;
 
 	/**
 	 * AppLogs constructor.
@@ -61,8 +61,8 @@ class StatsMaker {
 	/**
 	 * CLI - Make Application log statistics
 	 *
-	 * @param \System\CLI\Input $input
-	 * @param \System\CLI\Output $output
+	 * @param Input $input
+	 * @param Output $output
 	 * @param array $middlewareResult
 	 * @return bool
 	 */
@@ -120,8 +120,8 @@ class StatsMaker {
     /**
 	 * HTTP Request to get Application logs statistics
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareResult
 	 * @return bool
 	 */

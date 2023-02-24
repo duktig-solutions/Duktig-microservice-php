@@ -90,7 +90,7 @@ $table = 'users';
 
 $record = [
     'name' => 'David',
-    'email' => 'software@duktig.dev',
+    'email' => 'framework@duktig.solutions',
     'age' => 40
 ];
 
@@ -125,7 +125,7 @@ $fields = [
 ];
 
 $records = [
-    ['David', 'software@duktig.dev', 40],
+    ['David', 'framework@duktig.solutions', 40],
     ['Hakob', 'hakob.ayvazyan@gmail.com', 15]
 ];
 
@@ -154,13 +154,13 @@ $table = 'users';
 
 $record = [
     'name' => 'David',
-    'email' => 'software@duktig.dev',
+    'email' => 'framework@duktig.solutions',
     'age' => 39
 ];
 
 $where = [
     'id' => 13,
-    'email' => 'software@duktig.dev'
+    'email' => 'framework@duktig.solutions'
 ];
 
 // this will return affected rows count
@@ -187,7 +187,7 @@ $table = 'users';
 
 $where = [
     'id' => 13,
-    'email' => 'software@duktig.dev'
+    'email' => 'framework@duktig.solutions'
 ];
 
 // this will return affected rows count
@@ -213,7 +213,7 @@ Let's execute query with **select** statement and get rows from table.
 
 ```php
 $params = [
-    'software@duktig.dev'
+    'framework@duktig.solutions'
 ];
 
 // Execute query to get one row
@@ -417,7 +417,7 @@ Return value:
 ```php
 // define where condition
 $where = [
-    'email' => 'software@duktig.dev'
+    'email' => 'framework@duktig.solutions'
 ];
 
 // fetch row as assoc array by where condition
@@ -429,11 +429,11 @@ The where condition parameters will be converted to query string with "and" oper
 ```php
 $where = [
    'id' => 55,
-   'email' => 'software@duktig.dev',
+   'email' => 'framework@duktig.solutions',
    'status' => 2 
 ];
 
-// the query of this method will convert to: select * from users where id = 55 and email = 'software@duktig.dev' and status = '2';
+// the query of this method will convert to: select * from users where id = 55 and email = 'framework@duktig.solutions' and status = '2';
 $result = $this->fetchAssocByWhere('users', $where);
 ```
 
@@ -462,7 +462,7 @@ $fields = [
 ];
 
 $where = [
-    'email' => 'software@duktig.dev'
+    'email' => 'framework@duktig.solutions'
 ];
 
 // fetch row as assoc array by where condition
@@ -474,11 +474,11 @@ The where condition parameters will be converted to query string with "and" oper
 ```php
 $where = [
    'id' => 55,
-   'email' => 'software@duktig.dev',
+   'email' => 'framework@duktig.solutions',
    'status' => 2 
 ];
 
-// the query of this method will convert to: select id, firstName, lastName from users where id = 55 and email = 'software@duktig.dev' and status = '2';
+// the query of this method will convert to: select id, firstName, lastName from users where id = 55 and email = 'framework@duktig.solutions' and status = '2';
 $result = $this->fetchFieldsAssocByWhere('users', $fields, $where);
 ```
 

@@ -28,7 +28,7 @@
  * Log Example: 93:358050932:358050932:16987:Task2
  * Log Format: {taskId}:{expected-result}:{task-result}:{consumer-pid}:{task-method}
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -41,7 +41,7 @@ namespace App\Workers\Development;
  */
 Class TestWorker {
 
-    private $logFile;
+    private string $logFile;
     private $pid;
 
     public function __construct() {

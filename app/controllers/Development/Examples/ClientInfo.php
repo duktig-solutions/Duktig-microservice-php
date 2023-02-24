@@ -8,8 +8,8 @@ namespace App\Controllers\Development\Examples;
 
 use System\HTTP\Request;
 use System\HTTP\Response;
-use Lib\HTTP\ClientInfo as IpDetector;
 use System\Logger;
+use Lib\HTTP\ClientInfo as IpDetector;
 
 class ClientInfo {
 

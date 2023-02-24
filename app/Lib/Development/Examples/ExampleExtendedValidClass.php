@@ -2,7 +2,7 @@
 /**
  * Example: How to extend kernel's library
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -24,7 +24,7 @@ class ExampleExtendedValidClass extends \Lib\Valid {
 	 * @return bool
 	 */
 	public function numGreaterThen(int $a, int $b) : bool {
-		return $a > $b ? true : false;
+		return $a > $b;
 	}
 
     /**
@@ -36,7 +36,7 @@ class ExampleExtendedValidClass extends \Lib\Valid {
      * @return bool
      */
     public static function numLessThan(int $a, int $b) : bool {
-        return $a < $b ? true : false;
+        return $a < $b;
     }
 
 }

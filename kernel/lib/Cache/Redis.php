@@ -2,7 +2,7 @@
 /**
  * Redis Cache Class library
  * 
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
  * @version 1.0.1

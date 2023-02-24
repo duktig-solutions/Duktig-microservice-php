@@ -1,6 +1,11 @@
 <?php
 /**
- * CLI Routes configuration
+ * Application CLI Routes configuration file.
+ * See structure and explanation bellow.
+ *
+ * @author David A. <framework@duktig.solutions>
+ * @license see License.md
+ * @version 1.0.0
  */
 return [
 
@@ -68,38 +73,4 @@ return [
 		'controller' => 'Development\Examples\DataCaching->cliTestCaching'
 	],
 
-    # == Message/Queue functionality ==
-
-	# Message/Queue Producer for Testing
-	# A Producer pushes a tasks to Redis
-    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-producer-test --redis-config MessageQueue
-    'development-mq-producer-test' => [
-        'controller' => 'Development\MessageQueue\TestProducer->produce'
-    ],
-
-	# Message/Queue Consumer
-	# A Consumer receives tasks from Redis and calls workers
-    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer --redis-config MessageQueue
-    'development-mq-consumer' => [
-        'controller' => 'Development\MessageQueue\Consumer->consume'
-    ],
-
-    # Message/Queue Consumers health inspector
-    # Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer-health-inspector --redis-config MessageQueue
-    'development-mq-consumer-health-inspector' => [
-        'controller' => 'Development\MessageQueue\HealthInspector->inspect'
-	],
-	
-	# ------------------------------------------------- #
-	# ------------- Data Warehouse -------------------- #
-	# ------------------------------------------------- #
-
-	'setup-data-warehouse' => [
-        'controller' => 'DataWarehouse\Setup->cliSetup'
-	],
-
-	'reset-data-warehouse' => [
-        'controller' => 'DataWarehouse\Setup->cliReset'
-	],
-	
 ];

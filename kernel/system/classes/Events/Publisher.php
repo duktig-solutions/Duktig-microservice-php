@@ -3,7 +3,7 @@
  * Events Publisher class
  * This class uses to publish General Events to Instance based on Redis Databse
  * 
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.1.0
  */  

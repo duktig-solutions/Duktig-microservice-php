@@ -1,17 +1,23 @@
 <?php
 /**
- * PostgreSQL Testing Model
+ * PostgreSQL Demonstration Model
  * 
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  *
  */
 namespace App\Models\Examples;
 
+use Exception;
 use System\Config;
 use Throwable;
 
+/**
+ * Class PostgreSqlTestModel
+ *
+ * Model class to demonstrate the PostgreSQL connection and usage with Duktig.Microservice
+ */
 class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
 
     public function __construct() {
@@ -19,30 +25,73 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
         parent::__construct($config);
     }
 
+    /**
+     * Select all records ass assoc array
+     *
+     * @access public
+     * @throws Exception
+     * @retun array|mixed
+     */
     public function selectAllAssoc() {
         return $this->fetchAllAssoc("select * from unit_structures where title = $1", ['Server']);
     }
 
+    /**
+     * Select assoc
+     *
+     * @return array|mixed
+     * @throws Exception
+     */
     public function selectAssoc() {
         return $this->fetchAssoc("select * from unit_structures where title = $1", ['Server']);
     }
 
+    /**
+     * Select all assoc by where
+     *
+     * @access public
+     * @return false|mixed
+     */
     public function selectAllAssocByWhere() {
         return $this->fetchAllAssocByWhere('unit_structures', ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
     }
 
+    /**
+     * Select specified fields of records as assoc arrays by where
+     *
+     * @access public
+     * @return false|mixed
+     */
     public function selectAllFieldsAssocByWhere() {
         return $this->fetchAllFieldsAssocByWhere('unit_structures', ['unit_structure_id', 'title'], ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
     }
 
+    /**
+     * Select assoc array by where
+     *
+     * @access public
+     * @return array|mixed
+     */
     public function selectAssocByWhere() {
         return $this->fetchAssocByWhere('unit_structures', ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
     }
 
+    /**
+     * Select specified fields of records by where
+     *
+     * @access public
+     * @return array|mixed
+     */
     public function selectFieldsAssocByWhere() {
         return $this->fetchFieldsAssocByWhere('unit_structures', ['unit_structure_id', 'title'], ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
     }
 
+    /**
+     * Insert data
+     *
+     * @access public
+     * @return bool|mixed
+     */
     public function insertData() {
         return $this->insert(
             'unit_structures',
@@ -55,6 +104,12 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
         );
     }
 
+    /**
+     * Insert batch data
+     *
+     * @access public
+     * @return bool|mixed
+     */
     public function insertBatchData() {
 
         return $this->insertBatch(
@@ -76,20 +131,35 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
 
     }
 
-    public function updateData() {
+    /**
+     * Update data
+     *
+     * @access public
+     * @return int
+     */
+    public function updateData() : int {
         return $this->update('unit_structures', ['data_structures' => '{"test":"abc_'.time().'"}'], ['title' => 'title3']);
     }
 
-    public function deleteData() {
+    /**
+     * Delete data
+     *
+     * @access public
+     * @return int
+     */
+    public function deleteData() : int {
         return $this->delete('unit_structures', ['title' => 'Test']);
     }
 
-    public function testQueryWithAffectedRows() {
+    /**
+     * Test query with affected rows
+     *
+     * @access public
+     * @return array
+     */
+    public function testQueryWithAffectedRows() : array {
         
-        $result = [
-            'query1' => null,
-            'query2' => null
-        ];
+        $result = [];
 
         $result['query1'] = $this->queryWithAffectedRows("select * from unit_Structures where title = $1", ['update_this']);
         $result['query2'] = $this->queryWithAffectedRows("update unit_Structures set data_structures = $1 where title = $2", ['{"test":"abc_'.time().'"}', 'update_this']);
@@ -97,7 +167,13 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
         return $result;
     }
 
-    public function testTransactions() {
+    /**
+     * Transactions testing
+     *
+     * @access public
+     * @return string
+     */
+    public function testTransactions() : string {
         
         $this->beginTrans();
 
@@ -121,17 +197,30 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
 
     }
 
-    public function testQueryError() {
+    /**
+     * Test the query error
+     *
+     * @access public
+     * @return array|string[]
+     */
+    public function testQueryError(): array
+    {
 
         try {
+
             // This should trigger a warning
-            // The warning should be catch by the system and throw an Exception
+            // The warning should catch by the system and throw an Exception
             $this->query("update unit_Structures set data_structures = $1 where title_invalid_field_name = $2", ['{"test":"abc_'.time().'"}', 'update_this']);
+
         } catch (Throwable $e) {
             
             return [
                 'we_have_catch_the_query_exception_as' => $e->getMessage()
             ];
         }
+
+        return [
+            'nothing_to_catch' => 'OK'
+        ];
     }
 }

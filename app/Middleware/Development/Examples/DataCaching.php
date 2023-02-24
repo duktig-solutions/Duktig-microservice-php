@@ -2,7 +2,7 @@
 /**
  * DataCaching middleware class to handle Response data caching.
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
@@ -20,7 +20,16 @@ use Lib\Cache\Redis as CacheClient;
  */
 class DataCaching {
 
-	public function responseFromCache(Request $request, Response $response, array $middlewareData) {
+    /**
+     * Response from cache
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $middlewareData
+     * @return array
+     */
+	public function responseFromCache(Request $request, Response $response, array $middlewareData): array
+    {
 
 		$cacheLib = new CacheClient(Config::get()['Redis']['DevelopmentTestSystemCaching']);
 
@@ -36,7 +45,6 @@ class DataCaching {
 			$response->sendJson($content);
 			$response->sendFinal();
 
-			//return False;
 		}
 
 		$middlewareData['dataCached'] = False;
