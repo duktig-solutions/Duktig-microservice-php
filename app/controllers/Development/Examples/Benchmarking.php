@@ -4,6 +4,8 @@
  */
 namespace App\Controllers\Development\Examples;
 
+ini_set('memory_limit', -1);
+
 use Lib\Benchmarking as Bm;
 
 /**

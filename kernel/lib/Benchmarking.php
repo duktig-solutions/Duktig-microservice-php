@@ -20,7 +20,7 @@ class Benchmarking {
 	 * @var array
 	 */
 	private static array $points = [];
-	private static int $initMem;
+	private static int $initMem = 0;
 
 	/**
 	 * Set check point
