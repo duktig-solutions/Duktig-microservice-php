@@ -15,7 +15,7 @@
 
 ![PHP Version >= 7.4](https://img.shields.io/badge/PHP%20Version-%3E%3D%207.4-green?style=flat "PHP Version >= 7.4")
 ![Databases MySQL, PostgreSQL](https://img.shields.io/badge/Databases-MySQL,%20PostgreSQL-blue?style=flat "Databases MySQL, PostgreSQL")
-![Pub/Sub, Cache](https://img.shields.io/badge/Pub/Sub,%20Cache-Redis-red?style=flat "Pub/Sub, Cache")
+![Pub/Sub, Message/Queue, Cache](https://img.shields.io/badge/Pub/Sub,%20Message/Queue,%20Cache-Redis-red?style=flat "Pub/Sub, Message/Queue, Cache")
 
  - High performance Service
    - Running as php-fpm service with Nginx load balancer

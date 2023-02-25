@@ -2,6 +2,7 @@ version: "3"
 
 services:
   duktig-database-mysql:
+    restart: always
     build: ./database-mysql
     image: duktig-database-mysql
     container_name: duktig-database-mysql
@@ -9,22 +10,68 @@ services:
       - "3308:3306"
     volumes:
       - "./database-mysql/volume-data/:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=jsd234234nj4n5hg6f78d90
+      - MYSQL_DATABASE=TestDatabase
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=abc123
+    command:
+        - "--innodb_buffer_pool_size=256MB"
+
+  duktig-database-postgresql:
+    restart: always
+    build: ./database-postgresql
+    image: duktig-database-postgresql
+    container_name: duktig-database-postgresql
+    volumes:
+      - "./database-postgresql/volume-data/:/var/lib/mysql"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=abc123
+      - POSTGRES_DB=TestDatabase
+    ports:
+      - "5435:5432"
+    command:
+      - --shared_buffers=256MB
+      - --max_connections=200
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  duktig-database-redis: # Password: j65g3!h7^8f9d0s-f9g8
+    restart: always
+    build: ./database-redis
+    image: duktig-database-redis
+    container_name: duktig-database-redis
+    volumes:
+      - "./database-redis/volume-data/:/data"
+    ports:
+      - "6381:6379"
+
   duktig-php-fpm:
-    build: ./
+    build: ./php-fpm
     image: duktig-php-fpm
     container_name: duktig-php-fpm
     depends_on:
       - duktig-database-mysql
+      - duktig-database-postgresql
+      - duktig-database-redis
     volumes:
-      - "../:/var/www"
-  duktig-php-cli-cron:
-    build: ./
-    image: duktig-php-cli-cron
-    container_name: duktig-php-cli-cron
-    depends_on:
-      - duktig-database-mysql
-    volumes:
-      - "../:/var/www"
+      - "../www/:/src/www"
+
+#  duktig-php-cli-cron:
+#    build: ./php-cli-cron
+#    image: duktig-php-cli-cron
+#    container_name: duktig-php-cli-cron
+#    depends_on:
+#      - duktig-database-mysql
+#      - duktig-database-postgresql
+#      - duktig-database-redis
+#    volumes:
+#      - "../www/:/src/www"
+
   duktig-nginx-server:
     build: ./nginx-server
     image: duktig-nginx-server
@@ -32,10 +79,4 @@ services:
     depends_on:
       - duktig-php-fpm
     volumes:
-      - "../www/:/var/www"
-  duktig-redis-server:
-    build: ./redis-server
-    image: duktig-redis-server
-    container_name: duktig-redis-server
-    volumes:
-      - "./redis-server/volume-data:/data"
+      - "../www/:/src/www"

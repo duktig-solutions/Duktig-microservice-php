@@ -42,7 +42,7 @@ $output = new Output();
 set_error_handler(function($code, $message, $file, $line) use ($output) {
 
     # This will return true, if not notice
-    # In case if this is not a notice, we throwing Exception
+    # In case if this is not a notice, we are throwing an Exception
     if(\System\Ehandler::processError($message, $code, $file, $line)) {
         $output->stderr("\nError! " . $message);
     }
