@@ -474,8 +474,8 @@ class Valid {
 	 * @static
 	 * @access public
 	 * @param mixed $string
-	 * @return mixed
-	 */
+	 * @return bool|string
+     */
 	public static function jsonString($string) {
 
 		$initialErrorMessage = 'Required valid json string';
@@ -573,10 +573,10 @@ class Valid {
     /**
      * Check is valid url
      *
-	 * @static
+     * @static
      * @access public
      * @param mixed $data
-     * @param int $flag
+     * @param int|null $flag
      *     FILTER_FLAG_PATH_REQUIRED - URL must have a path after the domain name (like www.example.com/example1/)
      *     FILTER_FLAG_QUERY_REQUIRED - URL must have a query string (like "example.php?name=David&age=39")
      * @return bool

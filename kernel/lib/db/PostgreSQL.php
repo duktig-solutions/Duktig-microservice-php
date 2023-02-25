@@ -8,6 +8,7 @@
  */
 namespace Lib\Db;
 
+use Exception;
 use Throwable;
 
 /**
@@ -23,7 +24,7 @@ class PostgreSQL {
      * @access protected
      * @var array
      */
-    protected $config = NULL;
+    protected array $config = [];
 
     /**
      * Connection resource
@@ -61,9 +62,9 @@ class PostgreSQL {
      * @final
      * @access protected
      * @param array $config
-     * @return resource
+     * @return false|resource
      */
-    final protected function connect($config) {
+    final protected function connect(array $config) {
 
         # Set port if defined
         if ($config['port'] != '') {
@@ -143,8 +144,9 @@ class PostgreSQL {
      * @access public
      * @param string $table
      * @param array $data
-     * @param mixed string|null $returnInsertIdFieldName
-     * @return mixed int|boolean
+     * @param string|null $returnInsertIdFieldName
+     * @return string|boolean|null
+     * @throws Exception
      */
     final public function insert(string $table, array $data, ?string $returnInsertIdFieldName = null) {
         
@@ -189,8 +191,9 @@ class PostgreSQL {
      * @param string $table
      * @param array $fields
      * @param array $data
-     * @param mixed string|null $returnInsertIdFieldName
-     * @return mixed bool|array
+     * @param string|null $returnInsertIdFieldName
+     * @return boolean|array
+     * @throws Exception
      */
     final public function insertBatch(string $table, array $fields, array $data, ?string $returnInsertIdFieldName = null) {
 
@@ -247,6 +250,7 @@ class PostgreSQL {
      * @param array $data
      * @param array $where
      * @return int
+     * @throws Exception
      */
     final public function update(string $table, array $data, array $where) : int {
 
@@ -284,6 +288,7 @@ class PostgreSQL {
      * @param string $table
      * @param array $where
      * @return int
+     * @throws Exception
      */
     final public function delete(string $table, array $where) : int {
 
@@ -312,8 +317,8 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return mixed PgSql\Result|false
-     * @throws \Exception
+     * @return resource
+     * @throws Exception
      */
     final public function query(string $queryString, ?array $params = NULL) {
 
@@ -341,7 +346,8 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return mixed false|int
+     * @return false|int
+     * @throws Exception
      */
     public function queryWithAffectedRows(string $queryString, ?array $params = NULL) {
 
@@ -361,8 +367,8 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @throws \Exception
-     * @return mixed bool|array
+     * @throws Exception
+     * @return bool|array
      */
     final public function fetchAllAssoc(string $queryString, ?array $params = NULL) {
 
@@ -383,8 +389,8 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @throws \Exception
-     * @return mixed Bool|Array
+     * @throws Exception
+     * @return array|boolean
      */
     final public function fetchAssoc(string $queryString, ?array $params = NULL) {
 
@@ -405,7 +411,8 @@ class PostgreSQL {
      * @access public
      * @param string $table
      * @param array $where
-     * @return mixed bool|array
+     * @return array|boolean
+     * @throws Exception
      */
     final public function fetchAllAssocByWhere(string $table, array $where) {
 
@@ -433,7 +440,8 @@ class PostgreSQL {
      * @param string $table
      * @param array $fields
      * @param array $where
-     * @return mixed bool|array
+     * @return array|boolean
+     * @throws Exception
      */
     final public function fetchAllFieldsAssocByWhere(string $table, array $fields, array $where) {
 
@@ -454,14 +462,15 @@ class PostgreSQL {
     }
 
     /**
-	 * Fetch Record as assoc array by Where conditions
-	 *
-	 * @final
-	 * @access public
-	 * @param string $table
-	 * @param array $where
-	 * @return mixed bool|array
-	 */
+     * Fetch Record as assoc array by Where conditions
+     *
+     * @final
+     * @access public
+     * @param string $table
+     * @param array $where
+     * @return array|boolean
+     * @throws Exception
+     */
 	final public function fetchAssocByWhere(string $table, array $where) {
 
         $sql = "SELECT * FROM ".$this->escape($table)." ";
@@ -481,15 +490,16 @@ class PostgreSQL {
 	}
 
     /**
-	 * Fetch Record specified fields as assoc array by Where conditions
-	 *
-	 * @final
-	 * @access public
-	 * @param string $table
+     * Fetch Record specified fields as assoc array by Where conditions
+     *
+     * @final
+     * @access public
+     * @param string $table
      * @param array $fields
-	 * @param array $where
-	 * @return mixed bool|array
-	 */
+     * @param array $where
+     * @return array|boolean
+     * @throws Exception
+     */
 	final public function fetchFieldsAssocByWhere(string $table, array $fields, array $where) {
 
         $sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";

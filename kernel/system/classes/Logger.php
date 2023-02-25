@@ -23,11 +23,13 @@ class Logger  {
 	public const UNKNOWN = 'UNKNOWN';
 
 	/**
+     * Types
+     *
 	 * @static
 	 * @access protected
 	 * @var array
 	 */
-	protected static $types = [
+	protected static array $types = [
 		"notice",
         "warning",
         "exception",
@@ -48,19 +50,22 @@ class Logger  {
 	}
 
     /**
-     * Logger method
-     * Example format: 2019-11-02 13:08:19 _| DataCollector _| ERROR _| Cannot find configuration for collector: abc! _| Collector.py _| 61
+     * Log a message with details into log file
+     *
+     * Format: {date time} _| {service name} _| {type} _| {message} _| {file} _| {line}
+     * Example info without file, line: 2023-02-25 16:31:14 _| data.warehouse.units.aggregator _| INFO _| Data Warehouse Units aggregation success.
+     * Example Critical: 2023-02-25 16:31:14 _| data.warehouse.units.aggregator _| CRITICAL _| Unable to configure Data Warehouse. _| /var/www/app/Controllers/DataWarehouse/Setup.php _| 458
      *
      * @static
      * @access public
      * @param string $message
      * @param string $type = 'INFO'
-     * @param string $file
-     * @param int $line
-     * @param string $logFile
+     * @param string|null $file
+     * @param int|null $line
+     * @param string|null $logFile
      * @return void
      */
-    public static function Log(string $message, string $type = 'INFO', ?string $file = NULL, ?int $line = NULL, $logFile = 'app.log') : void {
+    public static function Log(string $message, string $type = 'INFO', ?string $file = NULL, ?int $line = NULL, ?string $logFile = 'app.log') : void {
 
         $message = date('Y-m-d H:i:s') . " _| " .
 	          Config::get()['Microservice'] . " _| " .

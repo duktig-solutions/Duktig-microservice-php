@@ -15,13 +15,37 @@ namespace System\MessageQueue;
 use \Redis;
 use System\Logger;
 
+/**
+ * Class HealthInspector
+ */
 class HealthInspector {
 
+    /**
+     * @access private
+     * @const int
+     */
     private const NO_WORKERS_IN_HEARTBEAT = -1;
 
-    private static $taskQueue;
-    private static $heartBeatList;
-    private static $heartBeatExpireMinutes = 5;
+    /**
+     * @static
+     * @access private
+     * @var string
+     */
+    private static string $taskQueue;
+
+    /**
+     * @static
+     * @access private
+     * @var string
+     */
+    private static string $heartBeatList;
+
+    /**
+     * @static
+     * @access private
+     * @var int
+     */
+    private static int $heartBeatExpireMinutes = 5;
 
     /**
      * Configuration
@@ -30,7 +54,7 @@ class HealthInspector {
      * @access private
      * @var array
      */
-    private static $config;
+    private static array $config;
 
     /**
      * Redis object
@@ -40,9 +64,17 @@ class HealthInspector {
      * @requires phpredis extension
      * @var Redis object
      */
-    private static $redis;
+    private static Redis $redis;
 
-    public static function inspect($config) {
+    /**
+     * Inspect
+     *
+     * @static
+     * @access public
+     * @param array $config
+     * @return mixed
+     */
+    public static function inspect(array $config) {
 
         static::$config = $config;
 
@@ -53,7 +85,7 @@ class HealthInspector {
 
         static::$redis->connect($config['host'], $config['port'], 0);
 
-        if ($config['password'] != '') {
+        if (static::$config['password'] != '') {
             static::$redis->auth($config['password']);
         }
 
@@ -62,7 +94,7 @@ class HealthInspector {
 
         // Possible cases to clean up.
 
-        // 1. Worker queue exists by worker id, but worker doesn't exists in heartbeat list.
+        // 1. Worker queue exists by worker id, but worker doesn't exist in heartbeat list.
         // 2. Worker queue exists by worker id, worker exists in heartbeat list, but the exec time expired.
         // 3. Worker exists in heartbeat list but worker queue not exists
         // 4. Workers count in heartbeat list not match with required workers count. someone died.
@@ -80,19 +112,47 @@ class HealthInspector {
 
     }
 
+    /**
+     * Get Queue tasks count
+     *
+     * @static
+     * @access private
+     * @return bool|int|Redis
+     */
     private static function getQueueCount() {
         return static::$redis->lLen(static::$taskQueue);
     }
 
+    /**
+     * Get Workers count from heart beat
+     *
+     * @static
+     * @access private
+     * @return bool|int|Redis
+     */
     private static function getWorkersCountFromHeartBeat() {
         return static::$redis->lLen(static::$heartBeatList);
     }
 
+    /**
+     * Get workers from heart beat
+     *
+     * @static
+     * @access private
+     * @return array|Redis
+     */
     private static function getWorkersFromHeartBeat() {
         return static::$redis->lRange(static::$heartBeatList, 0, -1);
     }
 
-    private static function getWorkersCountFromWorkersQueueList() {
+    /**
+     * Get workers count from workers queue list
+     *
+     * @static
+     * @access private
+     * @return int
+     */
+    private static function getWorkersCountFromWorkersQueueList() : int {
 
         $workers = static::$redis->keys(static::$taskQueue . ':worker:*');
 
@@ -103,7 +163,14 @@ class HealthInspector {
         return count($workers);
     }
 
-    private static function getWorkersQueueCountFromWorkersQueueList() {
+    /**
+     * Get workers queue count from workers queue list
+     *
+     * @static
+     * @access private
+     * @return array
+     */
+    private static function getWorkersQueueCountFromWorkersQueueList() : array {
 
         $workers = static::$redis->keys(static::$taskQueue . ':worker:*');
 
@@ -120,22 +187,59 @@ class HealthInspector {
         return $result;
     }
 
+    /**
+     * Get workers from workers queue list
+     *
+     * @static
+     * @access private
+     * @return array|Redis
+     */
     private static function getWorkersFromWorkersQueueList() {
         return static::$redis->keys(static::$taskQueue . ':worker:*');
     }
 
+    /**
+     * Get worker tasks from workers queue list
+     *
+     * @static
+     * @access private
+     * @param $workerId
+     * @return array|Redis
+     */
     private static function getWorkerTasksFromWorkersQueueList($workerId) {
         return static::$redis->lRange(static::$taskQueue.':worker:'.$workerId, 0, -1);
     }
 
+    /**
+     * Get worker tasks queue count from workers queue list
+     *
+     * @static
+     * @access private
+     * @param $workerId
+     * @return bool|int|Redis
+     */
     private static function getWorkerTasksQueueCountFromWorkersQueueList($workerId) {
         return static::$redis->lLen(static::$taskQueue.':worker:'.$workerId);
     }
 
+    /**
+     * Get Database size
+     *
+     * @static
+     * @access private
+     * @return int|Redis
+     */
     private static function getDbSize() {
         return static::$redis->dbSize();
     }
 
+    /**
+     * Inspect heart beat
+     *
+     * @static
+     * @access private
+     * @return int|void
+     */
     public static function inspectHeartBeat() {
 
         $workers = static::getWorkersFromHeartBeat();
@@ -167,6 +271,13 @@ class HealthInspector {
 
     }
 
+    /**
+     * Inspect tasks queue
+     *
+     * @static
+     * @access private
+     * @return void
+     */
     private static function inspectTasksQueue() {
         
         $tasksCount = static::$redis->lLen(static::$taskQueue);
@@ -177,6 +288,13 @@ class HealthInspector {
 
     }
 
+    /**
+     * Inspect workers queue
+     *
+     * @static
+     * @access public
+     * @return false|void
+     */
     public static function inspectWorkersQueue() {
 
         $workers = static::getWorkersFromWorkersQueueList();
@@ -200,7 +318,14 @@ class HealthInspector {
         }
     }
 
-    private static function inspectHeartBeatAndWorkersQueueMatch() {
+    /**
+     * Inspect heart beat and workers queue match
+     *
+     * @static
+     * @access private
+     * @return bool
+     */
+    private static function inspectHeartBeatAndWorkersQueueMatch() : bool {
 
         $taskQueueWorkers = static::getWorkersCountFromWorkersQueueList();
         $heartBeatWorkers = static::getWorkersCountFromHeartBeat();
@@ -213,7 +338,15 @@ class HealthInspector {
         return True;
     }
 
-    private static function checkHeartBeatTime($lastHeartBeat) {
+    /**
+     * Check heart beat time
+     *
+     * @static
+     * @access private
+     * @param $lastHeartBeat
+     * @return bool
+     */
+    private static function checkHeartBeatTime($lastHeartBeat) : bool {
 
         $lastHeartBeat = (int) $lastHeartBeat;
 
@@ -224,12 +357,20 @@ class HealthInspector {
         return True;
     }
 
-    private static function moveWorkerQueueTasksToMainQueue($workerId) {
+    /**
+     * Move worker queue tasks to main queue
+     *
+     * @static
+     * @access private
+     * @param $workerId
+     * @return void
+     */
+    private static function moveWorkerQueueTasksToMainQueue($workerId) : void {
 
         $workerTasksCount = static::getWorkerTasksQueueCountFromWorkersQueueList($workerId);
 
         if($workerTasksCount < 1) {
-            return false;
+            return;
         }
 
         Logger::log('Moving '.$workerTasksCount.' tasks of worker '.$workerId.' to main queue', Logger::INFO, __FILE__, __LINE__);
@@ -240,10 +381,17 @@ class HealthInspector {
             $task = static::$redis->rPopLPush(static::$taskQueue . ':worker:' . $workerId, static::$taskQueue);
         }
 
-        return True;
     }
 
-    private static function heartBeatExists($workerId) {
+    /**
+     * Check if heart beat exists
+     *
+     * @static
+     * @access private
+     * @param $workerId
+     * @return bool
+     */
+    private static function heartBeatExists($workerId) : bool {
 
         $workers = static::getWorkersFromHeartBeat();
 
@@ -263,8 +411,15 @@ class HealthInspector {
         return False;
     }
 
-    public static function reports() {
-        print_r([
+    /**
+     * Return Array in Message/Queue reports
+     *
+     * @static
+     * @access public
+     * @return array
+     */
+    public static function getAllReports() : array {
+        return [
             'getQueueCount' => static::getQueueCount(),
             'getWorkersCountFromHeartBeat' => static::getWorkersCountFromHeartBeat(),
             'getWorkersFromHeartBeat' => static::getWorkersFromHeartBeat(),
@@ -272,7 +427,7 @@ class HealthInspector {
             'getWorkersFromWorkersQueueList' => static::getWorkersFromWorkersQueueList(),
             'getWorkersQueueCountFromWorkersQueueList' => static::getWorkersQueueCountFromWorkersQueueList(),
             'dbSize' => static::getDbSize()
-        ]);
+        ];
     }
 
 }

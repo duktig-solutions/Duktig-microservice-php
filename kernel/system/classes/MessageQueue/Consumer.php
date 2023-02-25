@@ -27,7 +27,7 @@ class Consumer {
      * @access private
      * @var array
      */
-    private static $config;
+    private static array $config;
 
     /**
      * Connected status
@@ -36,7 +36,7 @@ class Consumer {
      * @access private
      * @var bool
      */
-    private static $connected = false;
+    private static bool $connected = false;
 
     /**
      * Redis object
@@ -46,7 +46,7 @@ class Consumer {
      * @requires phpredis extension
      * @var Redis object
      */
-    private static $redis;
+    private static Redis $redis;
 
     /**
      * Task Queue name to get messages
@@ -55,24 +55,24 @@ class Consumer {
      * @access private
      * @var string
      */
-    private static $taskQueue;
+    private static string $taskQueue;
 
     /**
      *
      * @static
      * @access private
-     * @var string $workerId
+     * @var string
      */
-    private static $workerId;
+    private static string $workerId;
 
     /**
      * Last Beat timestamp
      *
      * @static
      * @access private
-     * @var int $lastBeat
+     * @var int
      */
-    private static $lastBeat;
+    private static int $lastBeat;
 
     /**
      * Main initialization class
@@ -102,7 +102,7 @@ class Consumer {
         while(static::$connected == false) {
 
             try {
-        static::$redis->connect($config['host'], $config['port'], 0);
+                static::$redis->connect($config['host'], $config['port'], 0);
                 static::$connected = true;
                 Logger::Log('Connected to Redis Database for: '.$config['queueName'].' successfuly.', Logger::INFO, __FILE__, __LINE__);
             } catch(\Throwable $e) {
@@ -127,27 +127,27 @@ class Consumer {
      * Last Beat, like a ping to Redis list: {message_Queue}:workers-heartbeat
      *    {workerId}:{lastTimeStamp}
      *
-     * With this method, we always informing our last heart beat. When was the last?!
+     * With this method, we always notice our last heart beat. When was the last?!
      *
      * @static
      * @access private
-     * @return bool
+     * @return void
      */
-    private static function heartBeat() : bool {
+    private static function heartBeat() : void {
 
         if(!static::$connected) {
             Logger::log('Trying to heartBeat but still not connected!', Logger::ERROR, __FILE__, __LINE__);
-            return false;
+            return;
         }
 
         try {
-        static::$redis->lRem(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat, 1);
-        static::$lastBeat = time();
-        static::$redis->lPush(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat);
-            return true;
+            static::$redis->lRem(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat, 1);
+            static::$lastBeat = time();
+            static::$redis->lPush(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat);
+            return;
         } catch(\Throwable $e) {
             Logger::log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
-            return false;
+            return;
         }
 
     }
@@ -157,7 +157,7 @@ class Consumer {
      *
      * @access public
      * @param string $message
-     *
+     * @return array|mixed
      */
     public static function validateTask(string $message) {
 
@@ -266,7 +266,9 @@ class Consumer {
      * @static
      * @access public
      * @param string $message
+     * @param int $workerId
      * @return array
+     * @throws Exception
      */
     public static function execute(string $message, int $workerId) : array {
 
@@ -314,7 +316,7 @@ class Consumer {
             $methodName = $workerData['method'];
 
             # Define parameters if not empty
-            $parameters = isset($workerData['parameters']) ? $workerData['parameters'] : [];
+            $parameters = $workerData['parameters'] ?? [];
 
             # Create new Worker Object and execute
             $workerObject = new $className();

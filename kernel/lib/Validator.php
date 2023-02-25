@@ -8,6 +8,7 @@
  */
 namespace Lib;
 
+use Exception;
 use \Lib\Valid;
 
 /**
@@ -29,7 +30,7 @@ class Validator {
      * @param string $rule
      * @param bool $isset
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
 	public static function validateRule($value, string $rule, ?bool $isset = true) : string {
 
@@ -73,8 +74,7 @@ class Validator {
 
 		# Check if value is empty
 		if(!$allowEmpty and $valueIsEmpty and $isset) {
-			$errorMessage = 'Requires a not empty value or not set';
-			return $errorMessage;
+			return 'Requires a not empty value or not set';
 		}
 
 		# The value is not set in validation data structure and empty and is not required
@@ -171,7 +171,7 @@ class Validator {
 
 				# In case if this is not required value
 				if(empty($value) and !$isRequired) {
-					$errorMessage = '';
+					// $errorMessage = '';
 					break;
 				}
 
@@ -541,7 +541,7 @@ class Validator {
 				break;	
 
 			default:
-				throw new \Exception('Unknown Validation rule: ' . $ruleName);
+				throw new Exception('Unknown Validation rule: ' . $ruleName);
 				break;	
 
 		}
@@ -558,7 +558,7 @@ class Validator {
 	 * @param mixed $jsonStringToValidate
 	 * @param array $validationRules
      * @param array|null $extraRules
-     * @throws \Exception
+     * @throws Exception
 	 * @return array
 	 */
 	public static function validateJson($jsonStringToValidate, array $validationRules = [], ?array $extraRules = []) : array {
@@ -585,17 +585,15 @@ class Validator {
 		# We have to compare Json structure and data types
 		$arrayToValidate = json_decode($jsonStringToValidate, true);
 
-		$validationErrors = static::validateDataStructure($arrayToValidate, $validationRules, $extraRules);
-
-		# Continue with validating Json Structure
-		return $validationErrors;
+        # Continue with validating Json Structure
+		return static::validateDataStructure($arrayToValidate, $validationRules, $extraRules);
 
 	}
 
     /**
      * Validate Array data structure
      * This method used for any type of validation.
-     * When we calling json validation, the json will converted to array and use this method to validate json structure.
+     * When we call json validation, the json will be converted to array and use this method to validate json structure.
      *
      * @static
      * @access public
@@ -603,7 +601,7 @@ class Validator {
      * @param array $validationRules
      * @param array|null $extraRules
      * @return array
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
 	public static function validateDataStructure(array $dataToValidate, array $validationRules, ?array $extraRules = []) : array {
@@ -680,7 +678,7 @@ class Validator {
      * @param array $validationRules
      * @param array $extraRules
      * @return array
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
 	private static function validateExtraRules(array $dataToValidate, array $validationRules, array $extraRules) : array {
@@ -748,7 +746,7 @@ class Validator {
 
                     default:
 
-                        throw new \Exception('Unknown extra validation rule: ' . $rule);
+                        throw new Exception('Unknown extra validation rule: ' . $rule);
 
                         break;
                 }

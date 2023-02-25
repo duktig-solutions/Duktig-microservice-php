@@ -8,6 +8,8 @@
  */
 namespace Lib\Db;
 
+use Exception;
+
 /**
  * Class MySQLiUtility
  *
@@ -19,7 +21,7 @@ class MySQLiUtility extends \Lib\Db\MySQLi {
 	 * Return list of tables
 	 *
 	 * @access public
-	 * @throws \Exception
+	 * @throws Exception
 	 * @return array
 	 */
 	public function getTables() : array {
@@ -44,7 +46,7 @@ class MySQLiUtility extends \Lib\Db\MySQLi {
 	 *
 	 * @access public
 	 * @param string $tableName
-	 * @throws \Exception
+	 * @throws Exception
 	 * @return string
 	 */
 	public function getCreateTable(string $tableName) : string {

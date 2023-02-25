@@ -45,15 +45,20 @@ set_exception_handler(function($e) use($response) {
 });
 
 # Set error handler
-set_error_handler(function($code, $message, $file, $line) use($response) {
+set_error_handler(
+    /**
+     * @throws Exception
+     */
+    function($code, $message, $file, $line) use($response) {
     
-    // # This will return true, if not notice
-    // # In case if this is not a notice, we throw an Exception
-    if(\System\Ehandler::processError($message, $code, $file, $line)) {
-        throw new Exception($message . " - ".$file.":".$line);        
-    }
+        // # This will return true, if not notice
+        // # In case if this is not a notice, we throw an Exception
+        if(\System\Ehandler::processError($message, $code, $file, $line)) {
+            throw new Exception($message . " - ".$file.":".$line);
+        }
 
-});
+    }
+);
 
 try {
 

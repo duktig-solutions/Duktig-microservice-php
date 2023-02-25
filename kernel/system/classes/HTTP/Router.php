@@ -23,9 +23,9 @@ class Router {
 	 *
 	 * @static
 	 * @access protected
-	 * @var \System\HTTP\Request $request
+	 * @var Request $request
 	 */
-	protected static $request;
+	protected static Request $request;
 
 	/**
 	 * Response Object
@@ -34,7 +34,7 @@ class Router {
 	 * @access protected
 	 * @var Response $response
 	 */
-	protected static $response;
+	protected static Response $response;
 
 	/**
 	 * Parsed Route
@@ -106,7 +106,7 @@ class Router {
 			return false;
 		}
 		
-		# Some of route found. Let's execute it.
+		# Some route found. Let's execute it.
 		# If route has middleware, then execute
 		$middlewareResult = static::executeRouteMiddleware();
 
@@ -115,7 +115,7 @@ class Router {
 			return false;
 		}
 
-		# Finally execute Route Controller
+		# Finally, execute Route Controller
 		static::executeRouteController($middlewareResult);
 
 		return true;
@@ -192,7 +192,7 @@ class Router {
 	 */
 	protected static function executeRouteMiddleware() {
 
-		# By default the result is empty array
+		# By default, the result is empty array
 		$result = [];
 
 		# If there is no any middleware
@@ -285,7 +285,8 @@ class Router {
 
 	/**
 	 * Return dynamically generated URI
-	 *
+	 * (When refactoring this library at 25 Feb 2023, listening Robert Miles - Enjoy)
+     *
 	 * @static
 	 * @access public
 	 * @param null|string $next

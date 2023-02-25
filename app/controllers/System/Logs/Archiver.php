@@ -88,7 +88,7 @@ class Archiver {
 
 				rename(
 					$file,
-					DUKTIG_APP_PATH . 'log/' . $newName
+                    $this->logFilesPath . $newName
 				);
 
 			}

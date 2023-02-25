@@ -3,7 +3,7 @@
  * Message/Queue Consumer controller
  * This controller will receive a request from Command line and start the main Consumer class.
  *
- * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer --redis-config MessageQueue
+ * Usage: php ./cli/exec.php development-mq-consumer --redis-config MessageQueue
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md

@@ -23,18 +23,18 @@ class Router {
 	 *
 	 * @static
 	 * @access protected
-	 * @var \System\CLI\Input
+	 * @var Input
 	 */
-	protected static $input;
+	protected static Input $input;
 
 	/**
 	 * CLI output object
 	 *
 	 * @static
 	 * @access protected
-	 * @var \System\CLI\Output
+	 * @var Output
 	 */
-	protected static $output;
+	protected static Output $output;
 
 	/**
 	 * Parsed Route
@@ -62,7 +62,7 @@ class Router {
 	 * @access private
 	 * @var int
 	 */
-	private static $lockFileLifeTime = 0;
+	private static int $lockFileLifeTime = 0;
 
 	/**
 	 * Process lock file name
@@ -71,7 +71,7 @@ class Router {
 	 * @access private
 	 * @var string
 	 */
-	private static $lockFile;
+	private static string $lockFile;
 
 	/**
 	 * Initialize route 
@@ -81,8 +81,8 @@ class Router {
 	 *
 	 * @static
 	 * @access public
-	 * @param \System\CLI\Input $input
-	 * @param \System\CLI\Output $output
+	 * @param Input $input
+	 * @param Output $output
 	 * @return void
 	 */
 	public static function init(Input $input, Output $output) : void {
@@ -117,11 +117,11 @@ class Router {
 			static::runProcessUnique($output);
 		}
 
-		# Some of route found. Let's execute it.
+		# Some route found. Let's execute it.
         # If route has middleware, then execute
         $middlewareResult = static::executeRouteMiddleware();
 
-        # Finally execute Route Controller
+        # Finally, execute Route Controller
         static::executeRouteController($middlewareResult);
 
         # Unlock process if locked
@@ -134,7 +134,7 @@ class Router {
 	 *
 	 * @static
 	 * @access private
-	 * @param \System\CLI\Output $output
+	 * @param Output $output
 	 * @return void
 	 */
 	private static function runProcessUnique(Output $output) : void {
@@ -145,7 +145,9 @@ class Router {
 		static::$lockFileLifeTime = static::$route['executeUniqueProcessLifeTime'];
 
 		# Check if another instance of this process is already running.
-		static::checkProcessLocked($output);
+		if(!static::checkProcessLocked($output)) {
+            return;
+        }
 
 		$fp = fopen(static::$lockFile, 'w+');
 
@@ -166,7 +168,7 @@ class Router {
 	 *
 	 * @static
 	 * @access private
-	 * @param \System\CLI\Output $output
+	 * @param Output $output
 	 * @return bool
 	 */
 	private static function checkProcessLocked(Output $output) : bool {
@@ -180,8 +182,8 @@ class Router {
 		$fileTime = filectime(static::$lockFile);
 		$fileLiveTime = (time() - $fileTime); // Seconds
 
-		# Check file time if expired, delete lock file.
-		# i.e file created more then 15 seconds ago.
+		# Check file time if expired, delete the lock file.
+		# i.e. The file created more than 15 seconds ago.
 		if($fileLiveTime >= static::$lockFileLifeTime) {
 			$output->stdout('Process Lock file exists and expired. Deleting ...');
 			unlink(static::$lockFile);
@@ -224,7 +226,7 @@ class Router {
 	 */
 	private static function executeRouteMiddleware() : array {
 		
-		# By default the result is empty array
+		# By default, the result is an empty array
 		$result = [];
 
 		# If there is no any middleware

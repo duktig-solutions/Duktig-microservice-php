@@ -568,7 +568,7 @@ class MySQLi {
      * @param mixed $value
      * @return string
      */
-    final public function escape(mixed $value) : string {
+    final public function escape($value) : string {
         return $this->mysqli->real_escape_string($value);
     }
 

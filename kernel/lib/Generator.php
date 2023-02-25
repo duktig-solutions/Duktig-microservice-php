@@ -63,7 +63,7 @@ class Generator {
         $str = static::createName($min, $max, false, '-.');
         $is_num = mt_rand(0, 1);
 
-        if($is_num == true and strlen($str) < $max and strpos($str, '.') === false and strpos($str, '-') == false) {
+        if($is_num and strlen($str) < $max and strpos($str, '.') === false and strpos($str, '-') === false) {
             $str .= mt_rand(11, 999);
         }
 
@@ -76,8 +76,8 @@ class Generator {
      *
      * @static
      * @access public
-     * @param string $baseName = NULL
-     * @param  string $domain = NULL
+     * @param string|null $baseName
+     * @param  string|null $domain
      * @return string
      */
     public static function createEmail(?string $baseName = NULL, ?string $domain = NULL) : string {
@@ -108,7 +108,7 @@ class Generator {
      *
      * @static
      * @access public
-     * @param  string $country = NULL
+     * @param  string|null $country
      * @return string
      */
     public static function createDomain(?string $country = NULL) : string {
@@ -122,7 +122,7 @@ class Generator {
             $country = $countries_arr[array_rand($countries_arr)];
         }
 
-        // Set first char, that cannot be symbol.
+        // Set first char, that cannot be a symbol.
         $str = static::createName($min, $max, false, '-.');
 
         // Set country prefix
@@ -142,7 +142,7 @@ class Generator {
      * @param  bool $uppercase = true
      * @param  bool $numbers = true
      * @param  bool $symbols = true
-     * @param  string $chars_allowed = NULL
+     * @param  string|null $chars_allowed
      * @return string
      */
     public static function createString(int $min = 6, int $max = 12, bool $uppercase = true, bool $numbers = true, bool $symbols = true, string $chars_allowed = NULL) : string {
@@ -154,15 +154,15 @@ class Generator {
 
         $chars = $chars_alpha;
 
-        if($uppercase == true) {
+        if($uppercase) {
             $chars .= $chars_alpha_upper;
         }
 
-        if($numbers == true) {
+        if($numbers) {
             $chars .= $chars_numbers;
         }
 
-        if($symbols == true) {
+        if($symbols) {
             $chars .= $chars_symbols;
         }
 
@@ -206,7 +206,7 @@ class Generator {
      *
      * @static
      * @access public
-     * @param  string $str
+     * @param string|null $str
      * @return string
      */
     public static function createSentence(string $str = NULL) : string {
@@ -318,7 +318,7 @@ class Generator {
 
         $name = strtolower($name);
 
-        if($uc_first == true) {
+        if($uc_first) {
             $name = ucfirst($name);
         }
 

@@ -19,8 +19,8 @@ class Benchmarking {
 	 * @access private
 	 * @var array
 	 */
-	private static $points = [];
-	private static $initMem = NULL;
+	private static array $points = [];
+	private static int $initMem;
 
 	/**
 	 * Set check point
@@ -177,7 +177,7 @@ class Benchmarking {
 	 * @param $Nanosecond
 	 * @return string
 	 */
-	public static function NanoToTime($Nanosecond) {
+	public static function NanoToTime($Nanosecond): string {
 
 		if($Nanosecond <= 0) {
 			return '0 Nano';
@@ -198,7 +198,14 @@ class Benchmarking {
 		return 'More than a hour';
 	}
 
-	public static function ByteToMem($bytes) {
+    /**
+     * Return formatted memory
+     *
+     * @access public
+     * @param $bytes
+     * @return string
+     */
+    public static function ByteToMem($bytes) : string {
 
 		if($bytes <= 0) {
 			return '0 bytes';

@@ -115,11 +115,11 @@ class HttpClient {
 	 *
 	 * @static
 	 * @access public
-	 * @param $url
+	 * @param string $url
 	 * @param string $method
-	 * @param mixed array | string | null $data
-	 * @param mixed array | null $headers
-	 * @param mixed array | null $files
+	 * @param array|string|null $data
+	 * @param array|null $headers
+	 * @param array|null $files
 	 * @return void
 	 */
 	public static function sendRequestAsync(string $url, string $method = 'GET', $data = '', ?array $headers = [], ?array $files = []) : void {
@@ -166,20 +166,5 @@ class HttpClient {
 		exec($cmd);
 
 	}
-
-	/*
-	public function fast_request($url)
-	{
-		$parts=parse_url($url);
-		$fp = fsockopen($parts['host'],isset($parts['port'])?$parts['port']:80,$errno, $errstr, 30);
-		$out = "GET ".$parts['path']." HTTP/1.1\r\n";
-		$out.= "Host: ".$parts['host']."\r\n";
-		$out.= "Content-Length: 0"."\r\n";
-		$out.= "Connection: Close\r\n\r\n";
-
-		fwrite($fp, $out);
-		fclose($fp);
-	}
-	*/
 
 }

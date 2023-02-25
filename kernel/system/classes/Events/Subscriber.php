@@ -1,7 +1,7 @@
 <?php
 /**
  * Events Subscriber class
- * This class uses to subscribe General Events Instance based on Redis Databse
+ * This class uses to subscribe General Events Instance based on Redis Database
  * 
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
@@ -89,9 +89,6 @@ class Subscriber {
 
             static::$eventsRedis = new Redis();
 
-            $step = 1;
-            $connected = false;
-
             while($connected == false) {
         
                 try {
@@ -126,8 +123,6 @@ class Subscriber {
             return false;
         }
 
-        return false;
-
     }
 
     /**
@@ -159,7 +154,7 @@ class Subscriber {
      * @param string | null $eventsRedisConfigName
      * @return bool
      */
-    public static function subscribe($callback, ?array $subscribeToChannels = null, ?string $eventsRedisConfigName = null) : bool {
+    public static function subscribe(array $callback, ?array $subscribeToChannels = null, ?string $eventsRedisConfigName = null) : bool {
         
         if(!is_null($eventsRedisConfigName)) {
             static::$eventsRedisConfigName = $eventsRedisConfigName;
@@ -170,7 +165,7 @@ class Subscriber {
         }
         
         if(empty(static::$subscribeToChannels)) {
-            Logger::log('The subscription channels list is empty. Unable to subsribe!', Logger::ERROR, __FILE__, __LINE__);
+            Logger::log('The subscription channels list is empty. Unable to subscribe!', Logger::ERROR, __FILE__, __LINE__);
             return false;
         }
 
@@ -180,7 +175,7 @@ class Subscriber {
 
         # Subscribe to Events channels
 
-        # Shit! This maked me crazy! 
+        # Shit! This made me crazy!
         # Assuming, if there is no Subscriber channels, this container restarting without any error message
         # No internet connection in Home office.
         # Listening : Paul Oakenfold/2001 - Ibiza/Part-2 - 05_U2_beautiful_day_the_perfecto_mix

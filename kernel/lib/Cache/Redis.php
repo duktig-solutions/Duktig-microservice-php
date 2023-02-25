@@ -23,7 +23,7 @@ class Redis {
 	 * @access private
 	 * @var array
 	 */
-	private $config = [
+	private array $config = [
         'scheme' => 'tcp',
         'host' => '127.0.0.1',
         'port' => 6379,
@@ -38,9 +38,9 @@ class Redis {
      *
      * @access private
      * @requires php-redis extension
-     * @var Redis object
+     * @var RedisClient object
      */
-    private $redis;
+    private RedisClient $redis;
 
 	/**
 	 * Class constructor

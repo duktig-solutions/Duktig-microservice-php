@@ -13,6 +13,7 @@
  */
 namespace App\Controllers\Development\Examples;
 
+use Exception;
 use Lib\Validator;
 use System\HTTP\Request;
 use System\HTTP\Response;
@@ -28,11 +29,11 @@ class Validation {
 	 * Validate Request Array from Json
 	 * Test URL: http://localhost/duktig.microservice.1/www/index.php/validate_array_from_json
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function validateRequestArrayFromJson(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -338,11 +339,11 @@ class Validation {
 	 * Test URL: http://localhost/duktig.dev/www/index.php/validate_multidimensional_array_from_json
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function validateRequestMultiDimensionalArrayFromJson(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -391,11 +392,11 @@ class Validation {
 	 * Test URL: http://localhost/duktig.dev/www/index.php/validate_form_data
 	 *
 	 * @access public
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function validateFormRequest(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -439,11 +440,11 @@ class Validation {
 	}
 
 	/**
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function validateGetRequestData(Request $request, Response $response, array $middlewareData) : bool {
 

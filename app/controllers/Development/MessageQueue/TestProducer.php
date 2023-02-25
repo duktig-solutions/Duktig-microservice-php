@@ -3,7 +3,7 @@
  * Message/Queue Testing Producer
  * A Producer pushes a tasks to Redis
  *
- * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-producer-test --redis-config MessageQueue
+ * Usage: php ./cli/exec.php development-mq-producer-test --redis-config MessageQueue
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md

@@ -25,9 +25,11 @@
     "ext-mbstring": "*",
     "ext-mysqlnd": "*",
     "ext-mysqli": "*",
+    "ext-pgsql": "*",
     "ext-json": "*",
     "ext-redis": "*",
-    "ext-openssl": "*"
+    "ext-openssl": "*",
+    "ext-curl": "*"
   },
   "suggest": {
     "ext-memcached": "*",

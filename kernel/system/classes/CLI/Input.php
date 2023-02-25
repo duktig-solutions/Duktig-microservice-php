@@ -22,7 +22,7 @@ class Input {
      * @access protected
      * @var array
      */
-    protected $args = [];
+    protected array $args = [];
 
     /**
      * The first argument after file name is the route path
@@ -32,7 +32,7 @@ class Input {
      * @access protected
      * @var string
      */
-    protected $route = '';
+    protected string $route = '';
 
     /**
      * Console input parsed arguments from:
@@ -41,7 +41,7 @@ class Input {
      * @access protected
      * @var array
      */
-    protected $parsedArgs = [];
+    protected array $parsedArgs = [];
 
     /**
      * Input constructor.
@@ -99,10 +99,10 @@ class Input {
      *
      * @access public
      * @param int|Null $arg
-     * @param string $default
+     * @param string|null $default
      * @return array|mixed|string
      */
-    public function args(int $arg = Null, $default = '') {
+    public function args(?int $arg = Null, ?string $default = '') {
 
         if(is_null($arg)) {
             return $this->args;
@@ -121,10 +121,10 @@ class Input {
      *
      * @access public
      * @param string|Null $arg
-     * @param string $default
+     * @param string|null $default
      * @return array|mixed|string
      */
-    public function parsed(string $arg = Null, $default = '') {
+    public function parsed(?string $arg = Null, ?string $default = '') {
 
         if(is_null($arg)) {
             return $this->parsedArgs;
@@ -145,8 +145,7 @@ class Input {
      * @return string
      */
     public function stdin() {
-        $handle = trim(fgets(STDIN));
-        return $handle;
+        return trim(fgets(STDIN));
     }
 
 }

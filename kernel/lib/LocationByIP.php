@@ -34,7 +34,7 @@ class LocationByIP {
 
         $data = json_decode($response['result'], true);
 
-        return isset($data['country']) ? $data['country'] : 'N/A';
+        return $data['country'] ?? 'N/A';
         
     }
 

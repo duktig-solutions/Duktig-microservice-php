@@ -9,6 +9,7 @@
 namespace System\HTTP;
 
 use Exception;
+use Lib\Cache\Redis as CacheRedis;
 
 /**
  * Class Response
@@ -23,7 +24,7 @@ class Response {
      * @access protected
      * @var array
      */
-    protected $responseData = [
+    protected array $responseData = [
 	    'status' => 200,
 	    'headers' => [],
 	    'data' => ''
@@ -33,9 +34,9 @@ class Response {
 	 * Redis Cache Library
 	 *
 	 * @access protected
-	 * @var object
+	 * @var CacheRedis
 	 */
-	protected $cacheLib;
+	protected CacheRedis $cacheLib;
 
 	/**
 	 * Is Caching enabled in response
@@ -43,7 +44,7 @@ class Response {
 	 * @access protected
 	 * @var bool
 	 */
-	protected $cachingEnabled = False;
+	protected bool $cachingEnabled = False;
 
 	/**
 	 * Cache key for response
@@ -51,7 +52,7 @@ class Response {
 	 * @access protected
 	 * @var string
 	 */
-	protected $cacheKey;
+	protected string $cacheKey;
 
 	/**
      * HTTP Status codes
@@ -59,7 +60,7 @@ class Response {
      * @var array 
      * @access protected
      */
-    protected $statusCodes = [
+    protected array $statusCodes = [
         // HTTP Status codes
         // 1×× Informational
         100 => 'Continue',
@@ -207,13 +208,14 @@ class Response {
 
     }
 
-	/**
-	 * Send File
-	 *
-	 * @access public
-	 * @param string $filePath
-	 * @return void
-	 */
+    /**
+     * Send File
+     *
+     * @access public
+     * @param string $filePath
+     * @return void
+     * @throws Exception
+     */
 	public function sendFile(string $filePath) : void {
 
         if(!file_exists($filePath)) {
@@ -292,7 +294,7 @@ class Response {
 	 */
 	public function enableCaching(array $config, string $key) : void {
 
-		$this->cacheLib = new \Lib\Cache\Redis($config);
+		$this->cacheLib = new CacheRedis($config);
 		$this->cacheKey = $key;
 
 		$responseData = $this->cacheLib->getArray($key);

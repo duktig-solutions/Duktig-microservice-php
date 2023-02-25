@@ -57,7 +57,18 @@ class Ehandler extends \Exception implements \Throwable {
 
 	}
 
-	public static function processError($message, $code, $file, $line) {
+    /**
+     * Process an error
+     *
+     * @static
+     * @access public
+     * @param string $message
+     * @param int $code
+     * @param string $file
+     * @param int $line
+     * @return bool
+     */
+	public static function processError(string $message, int $code, string $file, int $line) : bool {
 
 		$type = self::getErrorGroupName($code);
 
@@ -74,7 +85,15 @@ class Ehandler extends \Exception implements \Throwable {
 
 	}
 
-	public static function getDetailed($message, $code) {
+    /**
+     * Get detailed information about error
+     *
+     * @access public
+     * @param string $message
+     * @param int $code
+     * @return array
+     */
+	public static function getDetailed(string $message, int $code) : array {
 
 		$type = self::getErrorGroupName($code);
 

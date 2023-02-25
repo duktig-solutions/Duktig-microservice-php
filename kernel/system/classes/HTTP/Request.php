@@ -21,7 +21,7 @@ class Request {
 	 * @access protected
 	 * @var string 
 	 */
-	protected $method;
+	protected string $method;
 
 	/**
 	 * HTTP Request headers
@@ -29,7 +29,7 @@ class Request {
 	 * @access protected
 	 * @var array
 	 */
-	protected $headers = [];
+	protected array $headers = [];
 
 	/**
      * Parsed Request Data from POST, PUT, etc...
@@ -37,7 +37,7 @@ class Request {
      * @access protected
      * @var array
      */
-    protected $input = [];
+    protected array $input = [];
 
     /**
      * Raw Request data from php://input
@@ -45,7 +45,7 @@ class Request {
      * @access protected
      * @var string
      */
-    protected $rawInput = '';
+    protected string $rawInput = '';
     
     /**
      * URI Request path
@@ -53,7 +53,7 @@ class Request {
      * @access protected
      * @var array
      */
-    protected $paths = [];
+    protected array $paths = [];
 
     /**
      * URI query parameters
@@ -61,7 +61,7 @@ class Request {
      * @access protected
      * @var array
      */
-    protected $queryParams = [];
+    protected array $queryParams = [];
 
     /**
      * $_SERVER 
@@ -69,14 +69,13 @@ class Request {
      * @access protected
      * @var array
      */
-    protected $_server = [];
+    protected array $_server = [];
 
 	/**
 	 * Class Constructor
 	 *
-	 *
 	 * @access public
-	 */
+     */
 	public function __construct() {
 
 		# $_SERVER
@@ -141,14 +140,21 @@ class Request {
 		return $this->method;
 	}
 
-	public function uri() {
+    /**
+     * Return request URI
+     *
+     * @access public
+     * @return string
+     */
+    public function uri() : string {
 		return $_SERVER['REQUEST_SCHEME'] . '://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	}
 
     /**
      * Return parsed paths from URI
      *
-     * @param int $index = null
+     * @access public
+     * @param int|null $index
      * @return mixed
      */
     public function paths(int $index = NULL) {
@@ -172,11 +178,11 @@ class Request {
      * Return parsed Query parameters
      *
      * @access public
-     * @param string $item
+     * @param string|null $item
      * @param mixed $default
      * @return mixed
      */
-    public function get(string $item = NULL, $default = '') {
+    public function get(?string $item = NULL, $default = '') {
 
 	    if(is_null($item)) {
 	        return $this->queryParams;
@@ -194,11 +200,11 @@ class Request {
      * Return Request values
      *
      * @access public
-     * @param string $item
+     * @param string|null $item
      * @param mixed $default
      * @return mixed
      */
-	public function input(string $item = NULL, $default = '') {
+	public function input(?string $item = NULL, $default = '') {
 
 	    if(is_null($item)) {
 	        return $this->input;
@@ -216,21 +222,21 @@ class Request {
      * Return raw input data (i.w. whole json content from client).
      * 
      * @access public
-     * @return mixed
+     * @return false|string
      */
 	public function rawInput() {
 	    return $this->rawInput;
     }
 
-	/**
-	 * Return values from global _SERVER
-	 *
+    /**
+     * Return values from global _SERVER
+     *
      * @access public
-	 * @param string $item = NULL
-     * @param mixed $default = ''
-	 * @return mixed
-	 */
-	public function server(string $item = NULL, $default = '') {
+     * @param string|null $item
+     * @param mixed $default
+     * @return mixed
+     */
+	public function server(?string $item = NULL, $default = '') {
 
 	    if(is_null($item)) {
 	        return $this->_server;
@@ -248,11 +254,11 @@ class Request {
      * Get Request headers
      *
      * @access public
-     * @param string $header = null
-     * @param mixed $default = ''
+     * @param string|null $header
+     * @param mixed $default
      * @return mixed
      */
-    public function headers(string $header = NULL, $default = '') {
+    public function headers(?string $header = NULL, $default = '') {
         
         if(is_null($header)) {
             return $this->headers;

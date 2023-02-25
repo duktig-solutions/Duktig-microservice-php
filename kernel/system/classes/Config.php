@@ -22,7 +22,7 @@ class Config {
      * @access private
      * @var array
      */
-    private static $loaded = [];
+    private static array $loaded = [];
 
     /**
      * Get Configurations

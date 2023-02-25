@@ -55,7 +55,7 @@ class Jwt {
      * @access protected
      * @var array
      */
-    protected static $supportedAlgorithms = [
+    protected static array $supportedAlgorithms = [
         'HS256' => ['hash_hmac', 'SHA256'],
         'HS512' => ['hash_hmac', 'SHA512'],
         'HS384' => ['hash_hmac', 'SHA384'],

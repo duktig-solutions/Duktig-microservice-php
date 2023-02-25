@@ -13,6 +13,7 @@ namespace Lib\Events;
 use \Redis as RedisClient;
 
 # Get Configuration to connect to redis server
+use RedisException;
 use System\Config;
 
 # Event data structure template
@@ -29,7 +30,7 @@ class IntermediateEvents {
 	 * @access private
 	 * @var array
 	 */
-	private static $config = [
+	private static array $config = [
         'scheme' => 'tcp',
         'host' => '127.0.0.1',
         'port' => 6379,
@@ -42,9 +43,9 @@ class IntermediateEvents {
      * Redis object
      * 
      * @access protected
-     * @var object
+     * @var RedisClient
      */
-    protected static $redis = Null;
+    protected static RedisClient $redis;
 
     /**
      * Connect to Redis server as a token storage
@@ -54,7 +55,7 @@ class IntermediateEvents {
      */
     protected static function connectStorage() : void {
 
-        # Get connaction from application config and merge with defaults
+        # Get connection from application config and merge with defaults
         static::$config = array_merge(static::$config, Config::get()['Redis']['GeneralEventsRedis']);
         
         # Connect to Redis
@@ -70,16 +71,17 @@ class IntermediateEvents {
         static::$redis->select(static::$config['database']);
 
     }
-    
+
     /**
      * Ping to Redis server
      * Each method of this class uses this method to be sure the connection is active.
-     * This method will automatically conenct to Redis server if not connected or no ping.
-     * 
+     * This method will automatically connect to Redis server if not connected or no ping.
+     *
      * @access public
-     * @return mixed
+     * @return boolean
+     * @throws RedisException
      */
-    protected static function pingStorage() {
+    protected static function pingStorage(): bool {
 
         if(is_null(static::$redis)) {
             static::connectStorage();
@@ -90,6 +92,7 @@ class IntermediateEvents {
             static::connectStorage();
         }
 
+        return true;
     }
 
     /**
@@ -99,9 +102,10 @@ class IntermediateEvents {
      * @access public
      * @param string $channel
      * @param string $dataJson
-     * @return bool
+     * @return boolean
+     * @throws RedisException
      */
-    public static function publish(string $channel = 'main', string $dataJson) : bool {
+    public static function publish(string $channel, string $dataJson) : bool {
 
         # Try to ping/reconnect to Redis server
         static::pingStorage();

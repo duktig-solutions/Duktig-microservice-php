@@ -11,6 +11,7 @@
 namespace Lib\Events;
 
 # Use of Redis configuration
+use RedisException;
 use System\Config;
 
 /**
@@ -24,7 +25,7 @@ class Event {
      * @access private
      * @var array
      */
-    private $data = [];
+    private array $data = [];
 
     /**
      * Event name
@@ -32,7 +33,7 @@ class Event {
      * @access private
      * @var string $eventName
      */
-    private $eventName = 'Unknown';
+    private string $eventName = 'Unknown';
 
     /**
      * Event channel 
@@ -40,7 +41,7 @@ class Event {
      * @access private
      * @var string $channel
      */
-    private $channel;
+    private string $channel;
 
     /**
      * The service name defined in configuration for given microservice
@@ -48,7 +49,7 @@ class Event {
      * @access private
      * @var string
      */
-    private $service;
+    private string $service;
 
     /**
      * Class Constructor
@@ -115,9 +116,10 @@ class Event {
 
     /**
      * Publish the Event
-     * 
+     *
      * @access public
      * @return void
+     * @throws RedisException
      */
     public function publish() {
         \Lib\Events\IntermediateEvents::publish($this->channel, $this->getDataJson());

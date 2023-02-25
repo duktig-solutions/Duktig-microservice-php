@@ -11,6 +11,7 @@
 namespace System\Events;
 
 # Use of Redis configuration
+use RedisException;
 use System\Config;
 use System\Logger;
 use \Redis;
@@ -28,16 +29,16 @@ class Publisher {
      * @access private
      * @var array
      */
-    private static $eventsRedisConfig;
+    private static array $eventsRedisConfig;
 
     /**
      * Events Redis Connection object
      * 
      * @static
      * @access private
-     * @var object
+     * @var Redis
      */
-    private static $eventsRedis;
+    private static Redis $eventsRedis;
 
     /**
      * General Events Redis Configuration name 
@@ -46,7 +47,7 @@ class Publisher {
      * @access private
      * @var string
      */
-    private static $eventsRedisConfigName = 'GeneralEventsRedis';
+    private static string $eventsRedisConfigName = 'GeneralEventsRedis';
 
     /**
      * How many times to try reconnect
@@ -55,7 +56,7 @@ class Publisher {
      * @access private 
      * @var int
      */
-    private static $connectionAttempts = 10;
+    private static int $connectionAttempts = 10;
 
     /**
      * Channel to publish
@@ -64,7 +65,7 @@ class Publisher {
      * @access private
      * @var string
      */
-    private static $channelToPublish = 'main';
+    private static string $channelToPublish = 'main';
 
     /**
      * Service name
@@ -73,7 +74,7 @@ class Publisher {
      * @access private
      * @var string
      */
-    private static $serviceName = 'Unknown';
+    private static string $serviceName = 'Unknown';
 
     /**
      * Connect to Redis instance
@@ -100,9 +101,6 @@ class Publisher {
             }
 
             static::$eventsRedis = new Redis();
-
-            $step = 1;
-            $connected = false;
 
             while($connected == false) {
         
@@ -138,16 +136,15 @@ class Publisher {
             return false;
         }
 
-        return false;
-
     }
 
     /**
      * Ping the Redis connection
      * Re-connect if not connected
-     * 
+     *
      * @access private
      * @return bool
+     * @throws RedisException
      */
     private static function pingConnection() : bool {
 
@@ -165,13 +162,14 @@ class Publisher {
 
     /**
      * Publish to Redis Events instance
-     * 
+     *
      * @access public
      * @param string $event
      * @param array $data
-     * @param string | null $channelToPublish
-     * @param string | null $eventsRedisConfigName
+     * @param string|null $channelToPublish
+     * @param string|null $eventsRedisConfigName
      * @return bool
+     * @throws RedisException
      */
     public static function publish(string $event, array $data, ?string $channelToPublish = null, ?string $eventsRedisConfigName = null) : bool {
         

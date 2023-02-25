@@ -2,7 +2,7 @@
 /**
  * Message/Queue Health inspector Class
  *
- * Usage: php ~/Sites/duktig.microservice.1/cli/exec.php development-mq-consumer-health-inspector --redis-config MessageQueue
+ * Usage: php ~./cli/exec.php development-mq-consumer-health-inspector --redis-config MessageQueue
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
