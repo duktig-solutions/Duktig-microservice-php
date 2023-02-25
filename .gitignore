@@ -10,4 +10,5 @@ vendor
 .vscode
 /.vscode/
 docker-deployment/database-mysql/volume-data/
+volume-data
 

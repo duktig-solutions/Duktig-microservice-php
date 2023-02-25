@@ -30,7 +30,7 @@ services:
       - POSTGRES_PASSWORD=abc123
       - POSTGRES_DB=TestDatabase
     ports:
-      - "5435:5432"
+      - "5436:5432"
     command:
       - --shared_buffers=256MB
       - --max_connections=200
@@ -48,7 +48,7 @@ services:
     volumes:
       - "./database-redis/volume-data/:/data"
     ports:
-      - "6381:6379"
+      - "6382:6379"
 
   duktig-php-fpm:
     build: ./php-fpm
@@ -59,7 +59,7 @@ services:
       - duktig-database-postgresql
       - duktig-database-redis
     volumes:
-      - "../www/:/src/www"
+      - "../:/src"
 
 #  duktig-php-cli-cron:
 #    build: ./php-cli-cron
@@ -79,4 +79,6 @@ services:
     depends_on:
       - duktig-php-fpm
     volumes:
-      - "../www/:/src/www"
+      - "../:/src"
+    ports:
+      - "8088:80"

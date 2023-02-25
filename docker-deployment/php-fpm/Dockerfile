@@ -23,6 +23,4 @@ RUN usermod -a -G vboxsf www-data
 RUN mkdir /src && chown root:root /src -R && chmod 777 /src -R && chmod +r /src -R
 #COPY ./src /src
 
-VOLUME /src
-
-RUN php-fpm
+# VOLUME /src
