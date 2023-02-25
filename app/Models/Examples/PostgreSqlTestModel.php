@@ -21,7 +21,7 @@ use Throwable;
 class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
 
     public function __construct() {
-        $config = Config::get()['Databases']['DataWareHouse'];
+        $config = Config::get()['Databases']['Example_PostgreSQL_SERVER_Connection'];
         parent::__construct($config);
     }
 
@@ -39,7 +39,7 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
     /**
      * Select assoc
      *
-     * @return array|mixed
+     * @return array
      * @throws Exception
      */
     public function selectAssoc() {
@@ -50,7 +50,8 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      * Select all assoc by where
      *
      * @access public
-     * @return false|mixed
+     * @return array|bool
+     * @throws Exception
      */
     public function selectAllAssocByWhere() {
         return $this->fetchAllAssocByWhere('unit_structures', ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
@@ -60,7 +61,8 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      * Select specified fields of records as assoc arrays by where
      *
      * @access public
-     * @return false|mixed
+     * @return array|bool
+     * @throws Exception
      */
     public function selectAllFieldsAssocByWhere() {
         return $this->fetchAllFieldsAssocByWhere('unit_structures', ['unit_structure_id', 'title'], ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
@@ -70,7 +72,8 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      * Select assoc array by where
      *
      * @access public
-     * @return array|mixed
+     * @return array
+     * @throws Exception
      */
     public function selectAssocByWhere() {
         return $this->fetchAssocByWhere('unit_structures', ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
@@ -80,7 +83,8 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      * Select specified fields of records by where
      *
      * @access public
-     * @return array|mixed
+     * @return array
+     * @throws Exception
      */
     public function selectFieldsAssocByWhere() {
         return $this->fetchFieldsAssocByWhere('unit_structures', ['unit_structure_id', 'title'], ['title' => 'Server', 'last_date' => '2022-01-24 20:37:17.065011']);
@@ -90,7 +94,8 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      * Insert data
      *
      * @access public
-     * @return bool|mixed
+     * @return bool
+     * @throws Exception
      */
     public function insertData() {
         return $this->insert(
@@ -108,7 +113,8 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      * Insert batch data
      *
      * @access public
-     * @return bool|mixed
+     * @return array|bool
+     * @throws Exception
      */
     public function insertBatchData() {
 
@@ -136,6 +142,7 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      *
      * @access public
      * @return int
+     * @throws Exception
      */
     public function updateData() : int {
         return $this->update('unit_structures', ['data_structures' => '{"test":"abc_'.time().'"}'], ['title' => 'title3']);
@@ -146,6 +153,7 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      *
      * @access public
      * @return int
+     * @throws Exception
      */
     public function deleteData() : int {
         return $this->delete('unit_structures', ['title' => 'Test']);
@@ -156,6 +164,7 @@ class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
      *
      * @access public
      * @return array
+     * @throws Exception
      */
     public function testQueryWithAffectedRows() : array {
         

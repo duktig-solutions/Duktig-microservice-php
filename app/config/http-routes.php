@@ -152,6 +152,14 @@ return [
 		    'controller' => 'Development\Examples\ClientInfo->dump'
 	    ],
 
+        # Example - Response All possible request Data
+        '/examples/response_all_environment_variables' => [
+            'middleware' => [
+                'Development\Auth\AuthByDeveloperKey->check'
+            ],
+            'controller' => 'Development\Examples\Getter->responseAllEnvironmentVariables'
+        ],
+
 	    # System - Get System Logs Statistics
 	    'system/app_log_stats' => [
 		    'middleware' => [

@@ -9,6 +9,7 @@ declare(strict_types=1);
  */
 namespace System\CLI;
 
+use \System\Env;
 use \System\Logger;
 use \System\Config;
 
@@ -22,6 +23,9 @@ require_once (DUKTIG_APP_PATH . 'config/constants.php');
 
 # Include Autoloader
 require_once (DUKTIG_ROOT_PATH . 'vendor/autoload.php');
+
+# Load environment variables
+Env::load(DUKTIG_ROOT_PATH.'.env');
 
 /**
  * Because this is command line interface,

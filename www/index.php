@@ -12,6 +12,7 @@ namespace System\HTTP;
 
 use Exception;
 use System\Config;
+use System\Env;
 
 # Define project root path
 define('DUKTIG_ENV', 'http');
@@ -24,6 +25,9 @@ require_once (DUKTIG_APP_PATH . 'config/constants.php');
 # Include Auto loader
 require_once (DUKTIG_ROOT_PATH . 'vendor/autoload.php');
 
+# Load environment variables
+Env::load(DUKTIG_ROOT_PATH.'.env');
+
 # Initialize Request/Response
 $request = new Request();
 $response = new Response();
@@ -31,7 +35,7 @@ $response = new Response();
 set_exception_handler(function($e) use($response) {
 
     # This will return true, if not notice
-    # In case if this is not a notice, we throwing Exception    
+    # In case if this is not a notice, we are throwing an Exception
         
     # Reset Response data, Set new data and output.
     $response->reset();
@@ -40,7 +44,6 @@ set_exception_handler(function($e) use($response) {
         500
     );
     $response->sendFinal();
-    
 
 });
 

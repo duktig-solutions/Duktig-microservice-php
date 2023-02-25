@@ -1,4 +1,7 @@
 <?php
+
+use \System\Env;
+
 /**
  * Application Main Configuration file.
  * See structure and explanation bellow.
@@ -10,119 +13,117 @@
 return [
 
     # Your project/setup name
-    'ProjectName' => 'Duktig.Microservice',
-
-    # Your project version
-    'ProjectVersion' => '1.0.0',
+    'ProjectName' => Env::get('PROJECT_NAME'),
 
 	# Microservice ID (Aka System id) for each instance.
 	# i.e. Accounts | Reports | DataReception | Notes, etc ...
-	'Microservice' => 'Development',
+	'Microservice' => Env::get('MICROSERVICE_ID'),
 
     # Log errors. All type of error logs located in: /app/log
-    'LogErrors' => 1,
+    'LogErrors' => Env::get('LOG_ERRORS'),
 
     # Display errors configuration flag for php.ini
-    'DisplayErrors' => 1,
+    'DisplayErrors' => Env::get('DISPLAY_ERRORS'),
 
     # Default date time zone for application
 	# America/Los_Angeles
-    'DateTimezone' => 'Asia/Yerevan',
+    # Asia/Yerevan
+    'DateTimezone' => Env::get('DATE_TIME_ZONE'),
 
     # Application mode can be: production | development and others
     # If it is production mode, detailed error messages will not be displayed in Response json.
-    'Mode' => 'development',
+    'Mode' => Env::get('RUN_MODE'),
 
     # If application is under maintenance any Request will be
     # Responded with 503 Status (Service not available).
-    'UnderMaintenance' => 0,
+    'UnderMaintenance' => Env::get('UNDER_MAINTENANCE'),
 
     # Enable or disable CLI mode.
     # In some cases you can temporarily disable CLI functionality.
     # Set this to "0" to stop Cli route parsing and functionality.
-    'DisableCLI' => 0,
+    'DisableCLI' => Env::get('DISABLE_CLI'),
 
     # Database Connection Configuration
     # Each model in /app/models is able to use/start with one connection section.
     'Databases' => [
 
 	    # Section name defined by Developer will be used in model file.
-	    'ExampleDatabaseConnectionInstance' => [
+	    'Example_MySQL_SERVER_Connection' => [
 
 		    # Database Driver Class can be defined as MySQLi
 		    'driver' => 'MySQLi',
 		    # Host
-		    'host' => 'localhost',
+		    'host' => Env::get('EXAMPLE_MYSQL_HOST'),
 		    # Port
-		    'port' => 3306,
+		    'port' => Env::get('EXAMPLE_MYSQL_PORT'),
 		    # MySQL Username
-		    'username' => 'root',
+		    'username' => Env::get('EXAMPLE_MYSQL_USER'),
 		    # MySQL Password
-		    'password' => 'abc123',
+		    'password' => Env::get('EXAMPLE_MYSQL_PASSWORD'),
 		    # MySQL Database name
-		    'database' => 'Duktig',
+		    'database' => Env::get('EXAMPLE_MYSQL_DATABASE'),
 		    # Charset
-		    'charset' => 'utf8'
+		    'charset' => Env::get('EXAMPLE_MYSQL_CHARSET')
 	    ],
 
 	    # Credentials for Database backup - MySQL Server root user account
-	    'BackupConn' => [
+	    'MySQLBackupConn' => [
 		    'driver' => 'MySQLi',
-		    'host' => 'localhost',
-		    'port' => 3306,
-		    'username' => 'root',
-		    'password' => 'abc123',
-		    'database' => 'Duktig',
-		    'charset' => 'utf8'
+		    'host' => Env::get('EXAMPLE_MYSQL_HOST'),
+		    'port' => Env::get('EXAMPLE_MYSQL_PORT'),
+            'username' => Env::get('EXAMPLE_MYSQL_USER'),
+            'password' => Env::get('EXAMPLE_MYSQL_PASSWORD'),
+            'database' => Env::get('EXAMPLE_MYSQL_DATABASE'),
+            'charset' => Env::get('EXAMPLE_MYSQL_CHARSET')
 		],
 
 		# Credentials for PostgreSQL Connection
-		'PostgreSQL_Cred' => [
+		'Example_PostgreSQL_SERVER_Connection' => [
 			'driver' => 'PostgreSQL',
-			'host' => '192.168.0.132',
-			'port' => 5433,
-			'database' => 'Warehouse',
-			'username' => 'postgres',
-			'password' => 'warehouse123',
-			'client_encoding' => 'UTF8'
+			'host' => Env::get('EXAMPLE_POSTGRESQL_HOST'),
+			'port' => Env::get('EXAMPLE_POSTGRESQL_PORT'),
+			'database' => Env::get('EXAMPLE_POSTGRESQL_DATABASE'),
+			'username' => Env::get('EXAMPLE_POSTGRESQL_USER'),
+			'password' => Env::get('EXAMPLE_POSTGRESQL_PASSWORD'),
+			'client_encoding' => Env::get('EXAMPLE_POSTGRESQL_CLIENT_ENCODING')
 		]
     ],
 
 	# Redis Connection configuration
     'Redis' => [
         
-		# Intermediate Data Center for Microservices (misc)
-		'IntermediateDataCenter' => [
-			'scheme' => 'tcp',
-            'host' => 'localhost',
-            'port' => 6380,
-            'database' => 0,
-            'read_write_timeout' => 0,
-            'password' => 're2020Duk_psGw',
-            'queueName' => 'MQ_d876g66886gfd'
+		# Events Pub/Sub for Development purposes
+		'EventsPubSub' => [
+			'scheme' => Env::get('REDIS_EVENTS_PUB_SUB_SCHEME'),
+            'host' => Env::get('REDIS_EVENTS_PUB_SUB_HOST'),
+            'port' => Env::get('REDIS_EVENTS_PUB_SUB_PORT'),
+            'database' => Env::get('REDIS_EVENTS_PUB_SUB_DATABASE'),
+            'read_write_timeout' => Env::get('REDIS_EVENTS_PUB_SUB_READ_WRITE_TIMEOUT'),
+            'password' => Env::get('REDIS_EVENTS_PUB_SUB_PASSWORD'),
+            'channel' => Env::get('REDIS_EVENTS_PUB_SUB_CHANNEL')
 		],
 
 		# Message/Queue For development purposes
 		'MessageQueue' => [
-            'scheme' => 'tcp',
-            'host' => 'localhost',
-            'port' => 6380,
-            'database' => 2,
-            'read_write_timeout' => 0,
-            'password' => 're2020Duk_psGw',
-            'queueName' => 'MQ_d876g66886gfd',
-            'task_execution_attempts' => 5
+            'scheme' => Env::get('REDIS_MQ_SCHEME'),
+            'host' => Env::get('REDIS_MQ_HOST'),
+            'port' => Env::get('REDIS_MQ_PORT'),
+            'database' => Env::get('REDIS_MQ_DATABASE'),
+            'read_write_timeout' => Env::get('REDIS_MQ_READ_WRITE_TIMEOUT'),
+            'password' => Env::get('REDIS_MQ_PASSWORD'),
+            'queueName' => Env::get('REDIS_MQ_QUEUE_NAME'),
+            'task_execution_attempts' => Env::get('REDIS_MQ_TASK_EXEC_ATTEMPTS')
         ],
 
 		# System Data Caching for development purposes
-		'DevelopmentTestSystemCaching' => [
-			'scheme' => 'tcp',
-            'host' => 'localhost',
-            'port' => 6380,
-            'database' => 3,
-            'read_write_timeout' => 0,
-            'password' => 're2020Duk_psGw',
-            'cache_expiration_seconds' => 3 // (5 minute = 300 seconds)
+		'SystemCaching' => [
+			'scheme' => Env::get('REDIS_CACHING_SCHEME'),
+            'host' => Env::get('REDIS_CACHING_HOST'),
+            'port' => Env::get('REDIS_CACHING_PORT'),
+            'database' => Env::get('REDIS_CACHING_DATABASE'),
+            'read_write_timeout' => Env::get('REDIS_CACHING_READ_WRITE_TIMEOUT'),
+            'password' => Env::get('REDIS_CACHING_PASSWORD'),
+            'cache_expiration_seconds' => Env::get('REDIS_CACHING_EXPIRATION_SECS') // (5 minute = 300 seconds)
 		]
     ],
 
@@ -130,10 +131,10 @@ return [
     'Auth' => [
 
         # The key name in headers
-        'AuthKey' => 'X-Auth-Key',
+        'AuthKey' => Env::get('AUTH_BY_HEADER_KEY_NAME'),
 
         # The key value in headers
-        'AuthKeyValue' => 'aFrt$63^_tgrDlp-0Ar20-06G'
+        'AuthKeyValue' => Env::get('AUTH_BY_HEADER_KEY_VALUE')
 
     ],
 
@@ -141,22 +142,23 @@ return [
 	'AuthDevelopers' => [
 
 		# The key name in headers
-		'DevAuthKey' => 'X-Dev-Auth-Key',
+		'DevAuthKey' => Env::get('AUTH_DEV_BY_HEADER_KEY_NAME'),
 
 		# The key value in headers
-		'DevAuthKeyValue' => 'FRE-20%Dev-Gro@25464-'
+		'DevAuthKeyValue' => Env::get('AUTH_DEV_BY_HEADER_KEY_VALUE')
 
 	],
 
 	# System binary executables
 	'Executables' => [
-		'curl' => '/usr/bin/curl',
-		'mysqldump' => '/usr/bin/mysqldump'
+		'curl' => Env::get('EXECUTABLE_CURL'),
+		'mysqldump' => Env::get('EXECUTABLE_MYSQLDUMP')
 	],
 
 	# Backup Configuration
 	'Backups' => [
-		# Databases to backup
+
+        # Databases to backup
 		'Databases' => [
 			
 			[

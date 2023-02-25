@@ -1,4 +1,5 @@
-# Duktig.Microservice
+# Duktig PHP Microservice
+
 ## Development Documentation
 
 ### Change log
@@ -99,5 +100,31 @@ $validation = Validator::validateJson(
 ```
 
 File: `kernel/lib/Validator.php`
+
+#### New System library `Env` allows to load environment variable files and get values. 
+
+>NOTE: The system will load all environment variables from file `.env` located in project root dir by default 
+
+```php
+// This will be loaded by system in bootstrap. Default .env file located in project dir
+\System\Env::load();
+
+// Load custom environment file
+$myCustomEnv = \System\Env::load('.my_env');
+
+// Get item value from loaded environment variables
+// the second argument of the method is default to return
+$customValue = \System\Env::get('PROJECT_STATUS', 'development');
+```
+
+#### New way to load environment variables to Configuration files
+
+The system will automatically load `.env` file as environment variables into project.
+
+In case if a variable with the same name exists in the System/Docker container, the last will be used.
+
+>NOTE: A Docker container environment variables always will replace values defined in environment file if exist. 
+
+From now, Application configuration values setting from environment variables. 
 
 End of document

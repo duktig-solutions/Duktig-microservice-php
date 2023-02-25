@@ -153,4 +153,10 @@ class Getter {
 
 	}
 
+    public function responseAllEnvironmentVariables(Request $request, Response $response, array $middlewareData) {
+        $response->sendJson(
+            \System\Env::get()
+        );
+    }
+
 }
