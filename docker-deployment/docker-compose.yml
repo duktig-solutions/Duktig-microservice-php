@@ -66,16 +66,18 @@ services:
     environment:
       - DATE_TIME_ZONE=Europe/Berlin
 
-#  duktig-php-cli-cron:
-#    build: ./php-cli-cron
-#    image: duktig-php-cli-cron
-#    container_name: duktig-php-cli-cron
-#    depends_on:
-#      - duktig-database-mysql
-#      - duktig-database-postgresql
-#      - duktig-database-redis
-#    volumes:
-#      - "../www/:/src/www"
+  duktig-php-cli-cron:
+    build: ./php-cli-cron
+    image: duktig-php-cli-cron
+    container_name: duktig-php-cli-cron
+    depends_on:
+      - duktig-database-mysql
+      - duktig-database-postgresql
+      - duktig-database-redis
+    volumes:
+      - "../src/:/src"
+      - "../src/app/log:/log"
+      - "../backups/:/backups"
 
   duktig-nginx-server:
     build: ./nginx-server
