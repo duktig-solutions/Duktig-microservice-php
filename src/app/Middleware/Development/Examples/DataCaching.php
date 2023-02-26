@@ -32,7 +32,7 @@ class DataCaching {
 	public function responseFromCache(Request $request, Response $response, array $middlewareData): array
     {
 
-		$cacheLib = new CacheClient(Config::get()['Redis']['DevelopmentTestSystemCaching']);
+		$cacheLib = new CacheClient(Config::get()['Redis']['SystemCaching']);
 
 		$key = md5($request->uri());
 

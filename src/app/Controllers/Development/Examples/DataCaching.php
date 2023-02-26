@@ -18,9 +18,9 @@ class DataCaching {
 	private CacheClient $cacheLib;
 
 	public function __construct() {
-		
+
 		# Load cache library
-		$this->cacheLib = new CacheClient(Config::get()['Redis']['DevelopmentTestSystemCaching']);
+		$this->cacheLib = new CacheClient(Config::get()['Redis']['SystemCaching']);
 	}
 
 	/**
@@ -108,7 +108,7 @@ class DataCaching {
 		$response->sendJson($data);
 
 		# We have to cache the content manually
-		$this->cacheLib->setArray(md5($request->uri()), $data, 3); // 3 seconds
+		$this->cacheLib->setArray(md5($request->uri()), $data, 10); // 3 seconds
 
 		return True;
 

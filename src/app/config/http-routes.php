@@ -106,7 +106,7 @@ return [
 		    # This Route configured to cache response data by system
 		    # Just putting the configuration name here and all will work automatically.
 			# In the application configuration this directive defined in "Redis" section.
-		    'cacheConfig' => 'DevelopmentTestSystemCaching'
+		    'cacheConfig' => 'SystemCaching'
 	    ],
 
 	    # Example - Get Custom Cached data using middleware

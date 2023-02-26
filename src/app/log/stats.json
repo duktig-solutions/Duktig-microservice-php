@@ -1,0 +1,12 @@
+{
+    "lastUpdate": "2021-03-04 23:44:20",
+    "filesCount": 6,
+    "logsCount": 16,
+    "logs": {
+        "EXCEPTION": 1,
+        "UNKNOWN": 1,
+        "WARNING": 7,
+        "INFO": 4,
+        "ERROR": 5
+    }
+}

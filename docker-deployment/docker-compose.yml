@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+
   duktig-database-mysql:
     restart: always
     build: ./database-mysql
@@ -59,9 +60,12 @@ services:
       - duktig-database-postgresql
       - duktig-database-redis
     volumes:
-      - "../:/src"
+      - "../src/:/src"
+      - "../src/app/log:/log"
+      - "../backups/:/backups"
     environment:
-      - DATE_TIME_ZONE=Africa/Lagos
+      - DATE_TIME_ZONE=Europe/Berlin
+
 #  duktig-php-cli-cron:
 #    build: ./php-cli-cron
 #    image: duktig-php-cli-cron
@@ -80,6 +84,6 @@ services:
     depends_on:
       - duktig-php-fpm
     volumes:
-      - "../:/src"
+      - "../src/:/src"
     ports:
       - "8088:80"
