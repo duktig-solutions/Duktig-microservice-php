@@ -7,6 +7,7 @@
  * @version 1.0.1
  *
  * @todo Some of values should generate with encryption algorithm to avoid duplication
+ * @todo rename this to DataGenerator
  */
 namespace Lib;
 

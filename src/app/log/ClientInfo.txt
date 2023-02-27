@@ -1,2 +1,4 @@
 2023-02-25 20:19:05 _| Development _| INFO _| client_ip: 172.21.0.1 | client_info: insomnia/2022.7.0 | client_machine: Macbook15Postman
 2023-02-25 20:19:38 _| Development _| INFO _| client_ip: 172.21.0.1 | client_info: insomnia/2022.7.0 | client_machine: Macbook15Postman
+2023-02-27 11:17:52 _| Duktig.Microservice _| INFO _| client_ip: 172.30.0.1 | client_info: insomnia/2022.7.0 | client_machine: Macbook15Postman
+2023-02-27 11:18:42 _| Duktig.Microservice _| INFO _| client_ip: 172.30.0.1 | client_info: insomnia/2022.7.0 | client_machine: Macbook15Postman

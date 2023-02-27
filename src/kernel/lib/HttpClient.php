@@ -3,6 +3,7 @@
  * HTTP Client Class to Send and Receive data via HTTP Protocol
  *
  * @version 2.0 (Send files functionality added)
+ * @todo move this to from \Lib\HttpClient -> \Lib\HTTP\Client
  */
 namespace Lib;
 

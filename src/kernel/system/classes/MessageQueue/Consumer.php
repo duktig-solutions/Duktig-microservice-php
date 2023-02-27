@@ -358,7 +358,7 @@ class Consumer {
 
                 # We have to take last attempted message with attempts count
                 unset($workerData['status']);
-                $attempted_message = json_encode($workerData);
+                $attempted_message = json_encode($workerData, JSON_NUMERIC_CHECK);
 
                 # Removing the message from Consumer list
                 static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);

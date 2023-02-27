@@ -1,8 +1,4 @@
-# Duktig PHP Microservice
-
-## Development Documentation
-
-### Change log
+# Change log
 
 Each release of **Duktig.Microservice** contains changes with logs for all functionality.  
 
@@ -11,6 +7,7 @@ Each release of **Duktig.Microservice** contains changes with logs for all funct
 `ids` - New rule option in `array` rule, requires array to contain only id numbers. 
 
 ```php
+<?php
 // Validate if array contains only Ids
 $validation = Validator::validateJson(
   $request->rawInput(),
@@ -26,6 +23,7 @@ $validation = Validator::validateJson(
 `unique` - New rule option in `array` rule, requires array to contain only unique values. 
 
 ```php
+<?php
 // Validate if array contains only Unique values
 $validation = Validator::validateJson(
   $request->rawInput(),
@@ -46,6 +44,7 @@ $validation = Validator::validateJson(
 Value should be specified or not set in request/data structure array. 
 
 ```php
+<?php
 // Validate if array contains only Ids
 $validation = Validator::validateJson(
   $request->rawInput(),
@@ -69,6 +68,7 @@ See [PostgreSQL](kernel/libraries/db/postgresql.md)
 Version 1.2.0
 
 ```php
+<?php
 
 if(Valid::latitude($value)) {
   // code here
@@ -89,6 +89,8 @@ File: kernel/lib/Valid.php
 #### New Validation rules in `Validator` lib to validate for Latitude/Longitude and Date Time ISO: 8601
 
 ```php
+<?php
+
 $validation = Validator::validateJson(
   $request->rawInput(),
   [
@@ -106,6 +108,8 @@ File: `kernel/lib/Validator.php`
 >NOTE: The system will load all environment variables from file `.env` located in project root dir by default 
 
 ```php
+<?php
+
 // This will be loaded by system in bootstrap. Default .env file located in project dir
 \System\Env::load();
 

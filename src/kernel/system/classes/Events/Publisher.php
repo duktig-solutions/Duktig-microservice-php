@@ -190,7 +190,7 @@ class Publisher {
             'service' => static::$serviceName,
             'published_time' => date('Y-m-d H:i:s'),
             'data' => $data
-        ]);
+        ], JSON_NUMERIC_CHECK);
         
         # Publish an event to channel
         try {

@@ -97,8 +97,8 @@ class Jwt {
         }
 
         # Encode
-        $jwtString = static::base64UrlEncode(json_encode($sendHeaders)) . '.';
-        $jwtString .= static::base64UrlEncode(json_encode($payload));
+        $jwtString = static::base64UrlEncode(json_encode($sendHeaders, JSON_NUMERIC_CHECK)) . '.';
+        $jwtString .= static::base64UrlEncode(json_encode($payload, JSON_NUMERIC_CHECK));
         $signature = static::sign($jwtString, $key, $alg);
 
         return $jwtString . '.' . static::base64UrlEncode($signature);

@@ -1,7 +1,4 @@
-# Duktig.Microservice
-## Development Documentation
-
-### Coding Standards
+# Coding Standards
 
 **Duktig.Microservice** Project provides coding standards and rules for developers which are very important to follow.
 
@@ -204,6 +201,7 @@ You can define constants for Duktig.Microservice project in file: `app/config/co
 #### Correct
 
 ```php
+<?php
 define('MY_NAME', 'David');
 define('USER_STATUS_ACTIVE', 1);
 define('USER_ALLOW_CREATE_ARTICLE', true);
@@ -212,6 +210,7 @@ define('USER_ALLOW_CREATE_ARTICLE', true);
 #### Incorrect
 
 ```php
+<?php
 define('MYNAME', 'David');
 define('myname', 'David');
 define('my_name', 'David');
@@ -229,6 +228,7 @@ In Duktig.Microservice there are several rules to follow when creating logical o
 #### Correct
 
 ```php
+<?php
 if($a == $b and $k != $b)
 if($a > 0 or $a < 100)
 if(!empty($a))
@@ -238,6 +238,7 @@ if(is_null($a))
 #### Incorrect
 
 ```php
+<?php
 if($a == $b && $k != $b)
 if($a > 0 || $a < 100)
 if($a)
@@ -264,6 +265,7 @@ If the File name defined as `User.php`, than the class inside file should be def
 File: `User.php`
 
 ```php
+<?php
 class User {
     // ...
 }
@@ -272,6 +274,8 @@ class User {
 File: `UserNotifications.php`
 
 ```php
+<?php
+
 class UserNotifications {
     // ...
 }
@@ -282,6 +286,8 @@ class UserNotifications {
 File: `User.php`
 
 ```php
+<?php
+
 // Class name should be equal to file name
 class UserClass {
     // ...
@@ -291,6 +297,8 @@ class UserClass {
 File: `UserNotifications.php`
 
 ```php
+<?php
+
 class UserNotifications {
     // ...
 }
@@ -318,6 +326,8 @@ In any project, method names explains the mater of functionality. So they should
 #### Correct
     
 ```php
+<?php
+
 function parse()
 function parseNotifications()
 function parseUserNotifications()
@@ -327,6 +337,8 @@ function parseUserNotifications()
 #### Incorrect
     
 ```php
+<?php
+
 function Parse()
 function PARSE()
 function ParseUserNotifications()
@@ -341,6 +353,8 @@ function prsusrntf()
 Because this project requires PHP version starting from `7.1`, it is strongly recommended to define methods with type hints for arguments. Example:
 
 ```php
+<?php
+
 // Method requires integer type for first argument, string type for second argument and returns an array.
 function myFunc(int $a, string $b) : array {
     // ...
@@ -352,6 +366,8 @@ function myFunc(int $a, string $b) : array {
 ###### array
 
 ```php
+<?php
+
 // array
 function foo(array $a)
 function foo(?array $a)
@@ -361,7 +377,10 @@ function foo(): ?array
 ```
 
 ###### bool
+
 ```php
+<?php
+
 // bool
 function foo(bool $bar)	
 function foo(?bool $bar)
@@ -373,6 +392,8 @@ function foo(bool $bar): ?bool
 
 ###### callable
 ```php
+<?php
+
 // callable
 function foo(callable $bar)
 function foo(?callable $bar)	
@@ -384,6 +405,8 @@ function foo(callable $bar): ?callable
 
 ###### float
 ```php
+<?php
+
 // float
 function foo(float $bar)
 function foo(?float $bar)
@@ -395,6 +418,8 @@ function foo(float $bar): ?float
 
 ###### int
 ```php
+<?php
+
 // int
 function foo(int $bar)
 function foo(?int $bar)
@@ -406,6 +431,8 @@ function foo(int $bar): ?int
 
 ###### iterable
 ```php
+<?php
+
 // iterable
 function foo(iterable $bar)
 function foo(?iterable $bar)
@@ -417,6 +444,8 @@ function foo(iterable $bar): ?iterable
 
 ###### object (PHP 7.2+)
 ```php
+<?php
+
 // object - PHP 7.2+
 function foo(object $bar)
 function foo(?object $bar)
@@ -428,6 +457,8 @@ function foo(object $bar): ?object
 
 ###### self
 ```php
+<?php
+
 // self
 function foo(self $bar)
 function foo(?self $bar)
@@ -439,6 +470,8 @@ function foo(self $bar): ?self
 
 ###### string
 ```php
+<?php
+
 // string
 function foo(string $bar)
 function foo(?string $bar)
@@ -450,6 +483,8 @@ function foo(string $bar): ?string
 
 ###### class name
 ```php
+<?php
+
 // class names
 function foo(ClassName $bar)
 function foo(?ClassName $bar)
@@ -461,6 +496,8 @@ function foo(ClassName $bar): ?ClassName
 
 ###### void
 ```php
+<?php
+
 // void
 function foo(): void
 function bar(int $a, string $b): void
@@ -473,6 +510,8 @@ Note that when using default arguments, any defaults should be on the right side
 #### Correct
 
 ```php
+<?php
+
 function myFunc(int $a, int $b, int $c = 5, int $d = 9) : int {
     // ...
 }
@@ -481,6 +520,8 @@ function myFunc(int $a, int $b, int $c = 5, int $d = 9) : int {
 #### Incorrect
 
 ```php
+<?php
+
 function myFunc(int $c = 5, int $d = 9, int $a, int $b) : int {
     // ...
 }
@@ -506,6 +547,8 @@ In Duktig.Microservice variable names should be defined much readable as it's po
 #### Correct
     
 ```php
+<?php
+
 $name = 'David';
 $fullName = 'David A.';
 $userLastStatus = 0;
@@ -514,6 +557,8 @@ $userLastStatus = 0;
 #### Incorrect
     
 ```php
+<?php
+
 $Name = 'David';
 $FullName = 'David A.';
 $UserLastStatus = 0;
@@ -538,6 +583,7 @@ IF, ELSE, ELSEIF, FOR, FOREACH, WHILE
 
 ```php
 <?php
+
 # Logical operations and loops should be defined with curly braces
 if($a > 90) {
 	echo $a;
@@ -708,7 +754,7 @@ class myClass {
 #### Incorrect
 
 ```php
-<?
+<?php
 class myclass {
     var $L;
     // add values
@@ -739,5 +785,3 @@ class myclass {
 }   
 ?>
 ```
-
-End of document

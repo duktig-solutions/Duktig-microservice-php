@@ -9,7 +9,7 @@ RUN apt-get update
 RUN apt-get install cron -y
 
 # Install PHP-CLI
-RUN apt-get install php-cli -y
+RUN apt-get install php-cli php-curl -y
 
 # Add crontab file in the cron directory
 ADD crontab /etc/cron.d/simple-cron

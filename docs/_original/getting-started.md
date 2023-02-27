@@ -5,9 +5,9 @@
 
 **Duktig** Project provides documentation for developers to maintain a code and create a new functionality.
 
-For this purposes we have a list of documents explaining how the project code organized and how to develop your own resources.
+For this purpose we have a list of documents explaining how the project code organized and how to develop your own resources.
 
-Let's say, that this project has it's own pattern and business logic. Some of parts you can see is very similar to **MVC** but without "V" View files, because it is only **RESTFul API Microservice** and **CLI (Command line interface)**.
+Let's say, this project has its own pattern and business logic. Some parts you can see is very similar to **MVC** but without "V" View files, because it is only **RESTFul API Microservice** and **CLI (Command line interface)**.
 
 Please read the [Coding standards](coding-standards.md) document before continue to develop. 
 It is **Important** to keep development rules and standards in this project.

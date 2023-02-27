@@ -2,7 +2,7 @@
 /**
  * Get User location by IP from given resources
  * 
- * This library using `IPTolocation` directive from application configuration.
+ * This library uses `IPTolocation` directive from application configuration.
  *
  * @version 1.0.0
  */

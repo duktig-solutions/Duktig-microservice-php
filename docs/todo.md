@@ -1,4 +1,4 @@
-# DoTo stuff for the framework
+# DoTo 
 
 - Setup Docker deployment
 - Run all tests / Dev examples ~ and create documentation

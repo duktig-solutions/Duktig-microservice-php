@@ -183,7 +183,7 @@ class Response {
         # Set the Content-type anyway
         $this->responseData['status'] = $status;
         $this->responseData['headers']['Content-Type'] = 'application/json';
-        $this->responseData['data'] = json_encode($responseData);
+        $this->responseData['data'] = json_encode($responseData, JSON_NUMERIC_CHECK);
 
     }
 

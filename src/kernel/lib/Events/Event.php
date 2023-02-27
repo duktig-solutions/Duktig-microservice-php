@@ -110,7 +110,7 @@ class Event {
             'time' => date('Y-m-d H:i:s'),
             'event' => $this->eventName,
             'data' => $this->data
-        ]);
+        ], JSON_NUMERIC_CHECK);
 
     }
 

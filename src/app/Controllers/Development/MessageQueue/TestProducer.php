@@ -109,7 +109,7 @@ class TestProducer {
                     'taskId' => $taskId
                 ],
                 'taskId' => $taskId
-            ]);
+            ],JSON_NUMERIC_CHECK);
 
             echo $taskId . ' : ' . $i . ' : '  . $expectingResult . "\n";
 

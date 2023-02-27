@@ -109,7 +109,7 @@ class Redis {
      */
     public function setArray(string $key, array $data, ?int $expiresInSeconds = null) {
 
-        $data = json_encode($data);
+        $data = json_encode($data, JSON_NUMERIC_CHECK);
         $this->set($key, $data, $expiresInSeconds);
 
     }

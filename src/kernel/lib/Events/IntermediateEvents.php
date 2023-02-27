@@ -6,6 +6,8 @@
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
  * @version 1.0.0
+ *
+ * @todo this is a file in documentation event-publisher.md
  */ 
 namespace Lib\Events;
 
