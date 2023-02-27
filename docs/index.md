@@ -133,9 +133,11 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
    
 ## Credits
    
-Author: `Davit A.` [davit@duktig.solutions](mailto:davit@duktig.solutions)
+Author: `Duktig Solutions` [framework@duktig.solutions](mailto:framework@duktig.solutions)
 
->Project Development Idea from 04 April 2019 by [Duktig Solutions](http://https://duktig.solutions/) 
+[Duktig Solutions on Twitter](https://twitter.com/DuktigS)
+
+>Project Development Idea from 04 April 2019 by [Duktig Solutions](https://duktig.solutions/) 
 
 
 

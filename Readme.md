@@ -140,11 +140,8 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 
 ## Credits
 
-Author: `Davit A.` [davit@duktig.solutions](mailto:davit@duktig.solutions)
+Author: `Duktig Solutions` [framework@duktig.solutions](mailto:framework@duktig.solutions)
 
-[<img src="https://img.shields.io/badge/slack-@duktig-solutions/framework?style=flat&logo=slack">](https://app.slack.com/client/T04PR9UCJR0/C04QX3JGEG5/rimeto_profile/U04PNBQAHJR?style=flat)
 [![Twitter](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20Twitter%20)](https://twitter.com/DuktigS)
 
->Project Development Idea from 04 April 2019 by [Duktig Solutions](http://https://duktig.solutions/)
-
-
+>Project Development Idea from 04 April 2019 by [Duktig Solutions](https://duktig.solutions/)
