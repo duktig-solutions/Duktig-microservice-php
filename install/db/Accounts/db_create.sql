@@ -1,1 +1,0 @@
-CREATE SCHEMA `DuktigAccounts` DEFAULT CHARACTER SET utf8mb4 ;

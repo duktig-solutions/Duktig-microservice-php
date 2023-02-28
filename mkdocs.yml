@@ -59,10 +59,10 @@ extra:
 #      indexing: 'full'
 
 nav:
-   - Overview:
-       - index.md
-       - overview/requirements.md
-       - overview/change-log.md
+    - Overview:
+        - index.md
+        - overview/requirements.md
+        - overview/change-log.md
 #   - Installation:
 #       - installation/env-configuration.md
 #       - installation/local-dev-deployment.md
@@ -110,8 +110,8 @@ nav:
 #       - tutorials/pub-sub.md
 #       - tutorials/message-queue.md
 #       - tutorials/db-backup.md
-#   - References:
+    - References:
 #       - references/predefined-constants.md
-#       - references/coding-standards.md
+        - references/coding-standards.md
 #   - faq.md
 #   - todo.md
