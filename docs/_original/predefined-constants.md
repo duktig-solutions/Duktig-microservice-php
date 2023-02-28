@@ -1,9 +1,6 @@
-# Duktig.Microservice
-## Development Documentation
+# Predefined constants
 
-### Predefined constants
-
-In **Duktig.Microservice** project there ara two types of predefined constants:
+In **Duktig PHP Framework** project there ara two types of predefined constants:
 
 - System constants
 - User defined constants in `app/config/constants.php`

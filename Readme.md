@@ -144,4 +144,4 @@ Author: `Duktig Solutions` [framework@duktig.solutions](mailto:framework@duktig.
 
 [![Twitter](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20Twitter%20)](https://twitter.com/DuktigS)
 
->Project Development Idea from 04 April 2019 by [Duktig Solutions](https://duktig.solutions/)
+>Project Development Idea from 04 April 2019

@@ -1,5 +1,4 @@
-# Duktig.Microservice
-## Development Documentation
+# Development Documentation
 
 ### Libraries
 

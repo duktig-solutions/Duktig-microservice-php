@@ -1,7 +1,4 @@
-# Duktig.Microservice
-## Documentation 
-
-### Configuration
+# Configuration
 
 #### Application main configuration
 
@@ -46,7 +43,7 @@ It is also possible to define a new section in configuration file and get values
 
 #### HTTP Routing
 
-The HTTP routing file `http-routes.php` in Duktig.Microservice located in `app/config/` directlry.
+The HTTP routing file `http-routes.php` in Duktig PHP Framework located in `app/config/` directory.
 
 You're always able to add new route, configure (edit) existing routes in your application.
 
@@ -138,7 +135,7 @@ Working example of HTTP Routing configuration:
 
 #### CLI routing
 
-In Duktig.Microservice it is possible to configure any command line access operation in CLI routing.
+In Duktig PHP Framework it is possible to configure any command line access operation in CLI routing.
 
 For example, if you want to call Databases backup controller to run, you can configure a route in configuration file and access with one command.
 
@@ -192,9 +189,9 @@ Working example of CLI Routing configuration:
 
 ### Web server and php functionality
 
-Duktig.Microservice developed and tested under Nginx web server with php-fpm service. 
+Duktig PHP Framework developed and tested under Nginx web server with php-fpm service. 
 It is also possible to run this project with other web server such as Apache with php module.
 
-For performence and Docker friendly usage, we running it with Nginx Docker container with load balanced php-fpm containers.
+For performance and Docker friendly usage, we running it with Nginx Docker container with load balanced php-fpm containers.
 
 End of Document

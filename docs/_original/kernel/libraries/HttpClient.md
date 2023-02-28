@@ -1,5 +1,4 @@
-# Duktig.Microservice
-## Development Documentation
+# Development Documentation
 
 ### Libraries
 
@@ -58,7 +57,7 @@ Return value:
 // Send Request (Json data) and get response
 $response = \Lib\HttpClient::sendRequest(
     # URL
-    'http://localhost/duktig.microservice.1/www/index.php/tests/response_all_request_data?a=1&b=2',
+    'http://localhost/www/index.php/tests/response_all_request_data?a=1&b=2',
     
     # Request method
     'POST',
@@ -78,7 +77,7 @@ print_r($result);
 // Send Request (Form data) and get response
 $response = \Lib\HttpClient::sendRequest(
     # URL
-    'http://localhost/duktig.microservice.1/www/index.php/tests/response_all_request_data?a=1&b=2',
+    'http://localhost/www/index.php/tests/response_all_request_data?a=1&b=2',
     
     # Request method
     'POST',
@@ -122,7 +121,7 @@ Return value:
 // Send Request (Json data)
 \Lib\HttpClient::sendRequestAsync(
     # URL
-    'http://localhost/duktig.microservice.1/www/index.php/tests/response_all_request_data?a=1&b=2',
+    'http://localhost/www/index.php/tests/response_all_request_data?a=1&b=2',
     
     # Request method
     'POST',
@@ -140,7 +139,7 @@ Return value:
 // Send Request (Form data)
 \Lib\HttpClient::sendRequestAsync(
     # URL
-    'http://localhost/duktig.microservice.1/www/index.php/tests/response_all_request_data?a=1&b=2',
+    'http://localhost/www/index.php/tests/response_all_request_data?a=1&b=2',
     
     # Request method
     'POST',

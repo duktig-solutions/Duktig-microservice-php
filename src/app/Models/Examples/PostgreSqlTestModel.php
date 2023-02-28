@@ -16,7 +16,7 @@ use Throwable;
 /**
  * Class PostgreSqlTestModel
  *
- * Model class to demonstrate the PostgreSQL connection and usage with Duktig.Microservice
+ * Model class to demonstrate the PostgreSQL connection and usage with Duktig PHP Framework
  */
 class PostgreSqlTestModel extends \Lib\Db\PostgreSQL {
 

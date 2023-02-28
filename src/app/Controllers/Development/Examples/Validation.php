@@ -27,7 +27,7 @@ class Validation {
 
 	/**
 	 * Validate Request Array from Json
-	 * Test URL: http://localhost/duktig.microservice.1/www/index.php/validate_array_from_json
+	 * Test URL: http://localhost/www/index.php/validate_array_from_json
 	 *
 	 * @param Request $request
 	 * @param Response $response

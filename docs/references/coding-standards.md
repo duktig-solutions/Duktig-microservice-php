@@ -1,6 +1,6 @@
 # Coding Standards
 
-**Duktig.Microservice** Project provides coding standards and rules for developers which are very important to follow.
+**Duktig PHP Framework** Project provides coding standards and rules for developers which are very important to follow.
 
 Files
 --- 
@@ -32,7 +32,7 @@ This rules affects almost to all files, such as `Controllers`, `Middleware class
 PHP Tags
 ---
 
-In Duktig.Microservice it is very important to follow PHP tags creation rules. 
+In Duktig PHP Framework it is very important to follow PHP tags creation rules. 
 Depends on server PHP configuration, the opening tags without `php` can cause an unexpected behavior.  
 
 #### PHP Tags creation rules
@@ -64,7 +64,7 @@ Depends on server PHP configuration, the opening tags without `php` can cause an
 Comments
 ---
 
-In Duktig.Microservice it is strongly recommended to comment all parts of code as detailed as possible.
+In Duktig PHP Framework it is strongly recommended to comment all parts of code as detailed as possible.
 
 For Files, Classes, methods and other DocBlocks see: [Anatomy of a DocBlock](https://docs.phpdoc.org/guides/docblocks.html).
 
@@ -189,7 +189,7 @@ class User {
 Constants
 ---
 
-You can define constants for Duktig.Microservice project in file: `app/config/constants.php`
+You can define constants for Duktig PHP Framework project in file: `app/config/constants.php`
 
 #### Constants definition rules
 
@@ -223,7 +223,7 @@ define('USCRTARTL', true);
 Logical Operations
 ---
 
-In Duktig.Microservice there are several rules to follow when creating logical operations.   
+In Duktig PHP Framework there are several rules to follow when creating logical operations.   
 
 #### Correct
 
@@ -248,7 +248,7 @@ if(!$a)
 Classes 
 ---
 
-In Duktig.Microservice all type of classes are almost similar divided by namespaces.
+In Duktig PHP Framework all type of classes are almost similar divided by namespaces.
 As an instance, you can have class `User` in Controller namespace as a controller and class `User` in model namespace as a model.
 
 #### Class definition rules
@@ -534,7 +534,7 @@ function myFunc(int $c = 5, int $d, int $a = 4, int $b) : int {
 Variables
 ---
 
-In Duktig.Microservice variable names should be defined much readable as it's possible.
+In Duktig PHP Framework variable names should be defined much readable as it's possible.
 
 #### Variables definition rules
 

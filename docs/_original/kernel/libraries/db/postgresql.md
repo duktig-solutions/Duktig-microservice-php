@@ -1,13 +1,8 @@
-# Duktig.Microservice
-## Development Documentation
-
-### Libraries
-
-#### PostgreSQL
+# PostgreSQL
 
 PostgreSQL Database class library
 
-All Database models in Duktig.Microservice extends this base class to work with PostgreSQL Database.
+All Database models in Duktig PHP Framework extends this base class to work with PostgreSQL Database.
 
 For instance:
 

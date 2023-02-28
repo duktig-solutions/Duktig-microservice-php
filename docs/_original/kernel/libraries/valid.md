@@ -1,9 +1,4 @@
-# Duktig.Microservice
-## Development Documentation
-
-### Libraries
-
-#### Valid
+# Valid
 
 Version 1.1.0
 

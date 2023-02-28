@@ -1,13 +1,8 @@
-# Duktig.Microservice
-## Development Documentation
-
-### Libraries
-
-#### MySQLi
+# MySQLi
 
 MySQL Database class library
 
-All Database models in Duktig.Microservice extends this base class to work with MySQL Database.
+All Database models in Duktig PHP Framework extends this base class to work with MySQL Database.
 
 For instance:
 

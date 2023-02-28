@@ -1,11 +1,6 @@
-# Duktig.Microservice
-## Development Documentation
+# Auth / Password
 
-### Libraries
-
-#### Auth / Password
-
-**Password** library in Duktig.Microservice supports functionality to **encrypt**, **verify** password and more.
+**Password** library in Duktig PHP Framework supports functionality to **encrypt**, **verify** password and more.
 
 File: `kernel/lib/auth/Password.php`
 Class: `Password`

@@ -1,7 +1,7 @@
 site_name: Duktig PHP Microservice
 site_description: Duktig PHP Microservice - Development documentation
 site_author: Davit A. <david@duktig.solutions>
-copyright: Copyright &copy; 2023 <a href='http://duktig.solutions'>Duktig Solutions LLC</a>
+copyright: Copyright &copy; 2023 <a href='https://duktig.solutions'>Duktig Solutions LLC</a>
 extra_css: [css/duktig.css]
 
 hide:
@@ -61,8 +61,8 @@ extra:
 nav:
    - Overview:
        - index.md
-#       - overview/requirements.md
-#       - overview/change-log.md
+       - overview/requirements.md
+       - overview/change-log.md
 #   - Installation:
 #       - installation/env-configuration.md
 #       - installation/local-dev-deployment.md

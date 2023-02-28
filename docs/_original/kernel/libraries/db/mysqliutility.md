@@ -1,15 +1,10 @@
-# Duktig.Microservice
-## Development Documentation
-
-### Libraries
-
-#### MySQLiUtility
+# MySQLiUtility
 
 MySQL Database Utility class library
 
 **MySQLiUtility** class extends [**MySQLi**](mysqli.md) library and your models can extend it as explained in [MySQLi](mysqli.md) library documentation. 
 
-> Duktig.Microservice recommends to create a model and extend it to **MySQLiUtility** to use MySQLi Utility methods, 
+> We recommend to create a model and extend it to **MySQLiUtility** to use MySQLi Utility methods, 
 > however, it is possible to define **MySQLiUtility** instance in any class and use as shown bellow.
 
 ```php

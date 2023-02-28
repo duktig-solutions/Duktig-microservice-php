@@ -1,13 +1,8 @@
-# Duktig.Microservice
-## Project Overview
-
-Version 1.0.0
-
-### Cron jobs
+# Cron jobs
 
 #### Backup Databases
 
-**Duktig.Microservice** provides cron job for **CLI** to:
+**Duktig PHP Framework** provides cron job for **CLI** to:
 
 - Periodic backup of given databases.
 - Keep an old copy of backup for given day.
@@ -97,6 +92,6 @@ The Cron job file located in: `install/cron/app.cron`
 
 Recommended to run this job once a day in last minutes of day.
 
-    $ php /duktig.microservice.1/cli/exec.php db-backup
+    $ php /cli/exec.php db-backup
 
 End of document

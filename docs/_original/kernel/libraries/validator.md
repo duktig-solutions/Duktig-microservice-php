@@ -1,9 +1,4 @@
-# Duktig.Microservice
-## Development Documentation
-
-### Libraries
-
-#### Validator
+# Validator
 
 Version 1.1.0
 

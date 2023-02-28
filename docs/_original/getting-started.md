@@ -1,7 +1,6 @@
-# Duktig.Microservice
-## Development Documentation
+# Development Documentation
 
-### Getting started
+## Getting started
 
 **Duktig** Project provides documentation for developers to maintain a code and create a new functionality.
 
@@ -12,7 +11,7 @@ Let's say, this project has its own pattern and business logic. Some parts you c
 Please read the [Coding standards](coding-standards.md) document before continue to develop. 
 It is **Important** to keep development rules and standards in this project.
 
-General steps to develop a new RESTFul API resource in Duktig.Microservice listed bellow:
+General steps to develop a new RESTFul API resource in Duktig PHP Framework listed bellow:
 
 -  Create/Configure new Route to resource
     - Create a new item in: `app/config/http-routes.php`
@@ -23,7 +22,7 @@ General steps to develop a new RESTFul API resource in Duktig.Microservice liste
 - Create a Controller
 - Test to access and that's all!
 
-- General steps to create a new CLI process in Duktig.Microservice listed bellow:
+- General steps to create a new CLI process in Duktig PHP Framework listed bellow:
 
 - Create/Configure a new Route 
     - Create a new item in: `app/config/cli-routes.php`

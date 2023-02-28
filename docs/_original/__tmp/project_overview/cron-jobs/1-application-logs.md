@@ -1,9 +1,4 @@
-# Duktig.Microservice
-## Project Overview
-
-Version 1.0.0
-
-### Cron jobs
+# Cron jobs
 
 #### Application logs
 
@@ -25,7 +20,7 @@ File `app/log/app.log` will be renamed to `app/log/app_2019-08-10_18.05.31_archi
 
 Recommended to run this job 6 times in day (every 4 hours).
 
-    $ php /duktig.microservice.1/cli/exec.php archiveLogFiles
+    $ php ./cli/exec.php archiveLogFiles
 
 ##### Generate Application Logs statistics
 

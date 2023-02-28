@@ -1,13 +1,23 @@
-# Change log
+# Change Log
 
-Each release of **Duktig.Microservice** contains changes with logs for all functionality.  
+Each release of **Duktig PHP Framework** contains detailed explanation about changes.  
 
-#### New Validation rule option for Validation library
+Changes in this file will be described new to old, for instance, you will see on top of this list every latest changes. 
+
+## Version 1.1.0
+
+**New Validation rules in Validation library**
+
+
+---
+
 
 `ids` - New rule option in `array` rule, requires array to contain only id numbers. 
 
+
 ```php
 <?php
+
 // Validate if array contains only Ids
 $validation = Validator::validateJson(
   $request->rawInput(),
@@ -20,7 +30,12 @@ $validation = Validator::validateJson(
 );
 ```
 
+
+---
+
+
 `unique` - New rule option in `array` rule, requires array to contain only unique values. 
+
 
 ```php
 <?php
@@ -37,14 +52,17 @@ $validation = Validator::validateJson(
 ```
 
 
-#### New Validation sub rule for Validation library
+---
 
-`!empty` - Sub-rule to disallow empty values
+
+`!empty` - sub-rule to disallow empty values
+
 
 Value should be specified or not set in request/data structure array. 
 
 ```php
 <?php
+
 // Validate if array contains only Ids
 $validation = Validator::validateJson(
   $request->rawInput(),
@@ -55,17 +73,47 @@ $validation = Validator::validateJson(
 );
 ```
 
-File: `kernel/lib/Validator.php`
 
-#### New Database library to support PostgreSQL Server functionality
+---
 
-This library will provide the functionality to perform operations with PostgreSQL Database.
 
-See [PostgreSQL](kernel/libraries/db/postgresql.md)
+`latitude`, `longitude` - validate Latitude and Longitude values
 
-#### New Validation methods in `Valid` lib to validate for Latitude/Longitude and Date Time ISO: 8601
 
-Version 1.2.0
+```php
+<?php
+
+$validation = Validator::validateJson(
+  $request->rawInput(),
+  [
+    'lat' => 'latitude',
+    'lng' => 'longitude'
+  ]
+);
+```
+
+
+---
+
+
+`date_time_iso` - validate Date Time ISO: 8601
+
+
+```php
+<?php
+
+$validation = Validator::validateJson(
+  $request->rawInput(),
+  [
+    'date_time' => 'date_time_iso'
+  ]
+);
+```
+
+*File: kernel/lib/Validator.php*
+
+
+**New Validation methods in `Valid` library to validate for Latitude/Longitude and Date Time ISO: 8601**
 
 ```php
 <?php
@@ -84,28 +132,23 @@ if(Valid::dateTimeIso($value)) {
 
 ```
 
-File: kernel/lib/Valid.php
+*File: kernel/lib/Valid.php*
 
-#### New Validation rules in `Validator` lib to validate for Latitude/Longitude and Date Time ISO: 8601
 
-```php
-<?php
 
-$validation = Validator::validateJson(
-  $request->rawInput(),
-  [
-    'lat' => 'latitude',
-    'lng' => 'longitude',
-    'date_time' => 'date_time_iso'
-  ]
-);
-```
+**New Database library to support PostgreSQL Server functionality**
 
-File: `kernel/lib/Validator.php`
 
-#### New System library `Env` allows to load environment variable files and get values. 
+This library will provide the functionality to perform operations with PostgreSQL Database.
 
->NOTE: The system will load all environment variables from file `.env` located in project root dir by default 
+See [PostgreSQL](libs/db/postgresql.md)
+
+*File: kernel/lib/db/PostgreSQL.php*
+
+
+**New System library `Env` allows to define environment variables from `.env.` file and System (Docker).** 
+
+>NOTE: The system will load all environment variables from file `.env` located in project root dir by **automatically** 
 
 ```php
 <?php
@@ -121,14 +164,13 @@ $myCustomEnv = \System\Env::load('.my_env');
 $customValue = \System\Env::get('PROJECT_STATUS', 'development');
 ```
 
-#### New way to load environment variables to Configuration files
+**New way to load environment variables to Configuration files**
 
-The system will automatically load `.env` file as environment variables into project.
+The system will automatically load to parse the content of `/.env` file and set environment variables inside project.
 
 In case if a variable with the same name exists in the System/Docker container, the last will be used.
 
 >NOTE: A Docker container environment variables always will replace values defined in environment file if exist. 
 
-From now, Application configuration values setting from environment variables. 
+From now, with `Env::get('item');` you can use environment variables in your code, including main application configuration file. 
 
-End of document
