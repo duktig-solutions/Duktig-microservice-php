@@ -1,15 +1,37 @@
 # Configuration
 
-#### Application main configuration
+As mentioned before, Duktig PHP Framework is Docker friendly. So ability to use environment variables is mandatory in this case.
 
-The main application configuration file: `app.php` located in `app/config/` directory.
+## Environment variables
 
-The file contains multidimentional array with configuration segments.
+Default Environment variables located in `./src/.env` file which you can use to manage your application configuration, 
+such as database connection credentials, secure keys and other. 
 
-For instance, MySQL Databases configuration values defined in `Databases` section of file.
+In both, HTTP and CLI modes the project will load variables from file automatically and keep in `Env` static class. 
+In case if variable exists in System/Docker environment, it will be replaced with last one. 
+
+>NOTE: Variables defined in Docker containers always have high priority.
+ 
+## Application configuration 
+
+The main application configuration values defined in file: `app/config/app.php` as an array.
+Each value of configuration can be hard coded or defined as environment variable.
+
+For instance:
 
 ```php
-...    
+<?php
+[
+    "variable1" => 'The value is hard coded',
+    "variable2" => Env::get('value_of_environment_variable')
+]
+```
+
+Application configuration file divided into sections and each one contains a group of configuration values.
+For instance, Databases configuration values defined in `Databases` section of file.
+
+```php
+<?php    
     # Database Connection Configuration
     # Each model in /app/models is able to use/start with one connection section.
     'Databases' => [
@@ -17,7 +39,7 @@ For instance, MySQL Databases configuration values defined in `Databases` sectio
 	    # Section name defined by Developer will be used in model file.
 	    'ExampleDatabaseConnectionInstance' => [
 
-		    # Database Driver Class can be defined as MySQLi
+		    # This group of configuration values are hard coded in file
 		    'driver' => 'MySQLi',
 		    # Host
 		    'host' => 'localhost',
@@ -32,25 +54,43 @@ For instance, MySQL Databases configuration values defined in `Databases` sectio
 		    # Charset
 		    'charset' => 'utf8'
 	    ],
-    ...
+	    
+	    [
+            # This group of configuration values defined as environment variables
+		    'driver' => 'MySQLi',
+		    # Host
+		    'host' => Env::get('EXAMPLE_MYSQL_HOST'),
+		    # Port
+		    'port' => Env::get('EXAMPLE_MYSQL_PORT'),
+		    # MySQL Username
+		    'username' => Env::get('EXAMPLE_MYSQL_USER'),
+		    # MySQL Password
+		    'password' => Env::get('EXAMPLE_MYSQL_PASSWORD'),
+		    # MySQL Database name
+		    'database' => Env::get('EXAMPLE_MYSQL_DATABASE'),
+		    # Charset
+		    'charset' => Env::get('EXAMPLE_MYSQL_CHARSET')	    
+        ]       
+    
     ]
-...    
+
 ```
 
-Each section can contain more than one defined instances, for example, your application can access to more than one Database server or Redis instance.
+Each section can contain more than one defined instances, for example, 
+your application can access to more than one Database servers or Redis instance.
 
 It is also possible to define a new section in configuration file and get values in your code.
 
-#### HTTP Routing
+## HTTP Routing
 
 The HTTP routing file `http-routes.php` in Duktig PHP Framework located in `app/config/` directory.
 
 You're always able to add new route, configure (edit) existing routes in your application.
 
-Explanation of HTTP route configuration:
+Example and Explanation of HTTP route configuration:
 
 ```php
-...
+<?php
 # Example: Template of Route configuration
 
 # Request method
@@ -116,13 +156,13 @@ Explanation of HTTP route configuration:
         'cacheConfig' => '___ResponseDataCaching'
 
     ],
-...        
+        
 ```
 
 Working example of HTTP Routing configuration:
 
 ```php
-...    
+<?php    
     # Example - Validate GET Request data
     '/examples/validate_get_request_data' => [
         'middleware' => [
@@ -130,10 +170,10 @@ Working example of HTTP Routing configuration:
         ],
         'controller' => 'Development\Examples\Validation->validateGetRequestData'
     ],
-...        
-```        
+        
+```
 
-#### CLI routing
+## CLI routing
 
 In Duktig PHP Framework it is possible to configure any command line access operation in CLI routing.
 
@@ -143,55 +183,59 @@ CLI routing configuration file `cli-routes.php` located in `app/config/`.
 
 Explanation of CLI routing configuration:
 
-```php 
-...
-    # Example: Template of Route configuration
+```php
+<?php
+    
+# Example: Template of Route configuration
 
-	# Route to access in CLI.
-	# For instance: php /duktig.solutions.1/cli/exec.php example-route --parameter1name parameter1value
-	'example-route' => [
+# Route to access in CLI.
+# For instance: php /duktig.solutions.1/cli/exec.php example-route --parameter1name parameter1value
+'example-route' => [
 
-		# Middleware
-		# With The middleware option you can set any number of middleware methods before the controller starts.
-		# For instance, you can make middleware methods to: Check/validate command line parameters then continue to controller.
-		# The format of middleware configuration is: ClassName->methodName where the middleware classes located in /app/middleware directory.
-		# Note: If you not have any middleware functionality for this route, you can just pass this section as empty.
-		'middleware' => [
-			'___ExampleMiddlewareClass->exampleMiddlewareCliMethod'
-		],
+    # Middleware
+    # With The middleware option you can set any number of middleware methods before the controller starts.
+    # For instance, you can make middleware methods to: Check/validate command line parameters then continue to controller.
+    # The format of middleware configuration is: ClassName->methodName where the middleware classes located in /app/middleware directory.
+    # Note: If you not have any middleware functionality for this route, you can just pass this section as empty.
+    'middleware' => [
+        '___ExampleMiddlewareClass->exampleMiddlewareCliMethod'
+    ],
 
-		# Controller
-		# Controllers runs as a regular function like in web MVC Pattern.
-		# The format of controller configuration is: ClassName->methodName where the controller classes located in /app/controllers directory.
-		# Note: You can put caching, data validation and other functionality inside a controller method instead of creating a dedicated middleware for it.
-		'controller' => '___ExampleControllerClass->exampleControllerCliMethod',
+    # Controller
+    # Controllers runs as a regular function like in web MVC Pattern.
+    # The format of controller configuration is: ClassName->methodName where the controller classes located in /app/controllers directory.
+    # Note: You can put caching, data validation and other functionality inside a controller method instead of creating a dedicated middleware for it.
+    'controller' => '___ExampleControllerClass->exampleControllerCliMethod',
 
-		# Execute process as unique and enable to start next process after given time in seconds.
-		# If the value is 0, the next starting process will run immediately without checking if another instance is in process.
-		'executeUniqueProcessLifeTime' => 10
+    # Execute process as unique and enable to start next process after given time in seconds.
+    # If the value is 0, the next starting process will run immediately without checking if another instance is in process.
+    'executeUniqueProcessLifeTime' => 10
 
-		# Unlike Restful API interface the Command line interface doesn't support authorization/permission checking and caching functionality.
-	],
-...    
+    # Unlike Restful API interface the Command line interface doesn't support authorization/permission checking and caching functionality.
+],
+    
 ```
 Working example of CLI Routing configuration:
 
-```php 
-...
+```php
+<?php
     # System - Make logs stats: app/log/stats.json
 	'make-log-stats' => [
 		'controller' => 'System\Logs\StatsMaker->process',
 		'middleware' => [],
 		'executeUniqueProcessLifeTime' => 10
 	],
-...
+
 ```
 
-### Web server and php functionality
+For more details, see [Routing](../development/routing.md)   
+
+## Constants
+
+You can define your application constants in file `./src/app/config/constants.php`
+
+## Web server and php functionality
 
 Duktig PHP Framework developed and tested under Nginx web server with php-fpm service. 
 It is also possible to run this project with other web server such as Apache with php module.
 
-For performance and Docker friendly usage, we running it with Nginx Docker container with load balanced php-fpm containers.
-
-End of Document

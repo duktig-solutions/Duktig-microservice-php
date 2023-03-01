@@ -98,8 +98,8 @@ It will allow you to back up MySQL Databases with configured time and copies.
 ### Data Caching
 
 Duktig project includes a simple data caching mechanism using Redis Server.
-For the Restful API development, it is possible to configure automatic content caching in the Routing configuration,
-without writing any line code.
+For the Restful API development, it is possible to set automatic content caching in the Routing configuration,
+without writing any line of code.
 
 ### Super Data Validation
 
