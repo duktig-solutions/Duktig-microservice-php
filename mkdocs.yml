@@ -65,7 +65,7 @@ nav:
         - overview/change-log.md
     - Installation:
         - installation/env-configuration.md
-#       - installation/local-dev-deployment.md
+        - installation/local-dev-deployment.md
 #   - Development:
 #       - development/config.md
 #       - development/environment.md
