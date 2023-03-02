@@ -8,8 +8,8 @@
  */
 namespace Lib;
 
+use Kernel\lib\HTTP\Client;
 use System\Config;
-use Lib\HttpClient;
 
 class LocationByIP {
 
@@ -26,7 +26,7 @@ class LocationByIP {
 
         $resource = Config::get('app')['IPTolocation']['resource'];        
                         
-        $response = HttpClient::sendRequest($resource . $ipAddress, 'GET');
+        $response = Client::sendRequest($resource . $ipAddress, 'GET');
 
         if($response['error']) {
             return 'N/A';

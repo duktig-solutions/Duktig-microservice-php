@@ -13,14 +13,14 @@
 namespace App\Controllers\Development\Examples;
 
 use Exception;
-use Lib\HttpClient;
-use System\HTTP\Request;
-use System\HTTP\Response;
+use Lib\HTTP\Client as HttpClient;
+use Lib\Benchmarking;
 use System\CLI\Input;
 use System\CLI\Output;
-use System\Logger;
 use System\Config;
-use Lib\Benchmarking;
+use System\HTTP\Request;
+use System\HTTP\Response;
+use System\Logger;
 
 /**
  * Class Getter
@@ -102,7 +102,7 @@ class Getter {
 		for($i = 1; $i <= $limit; $i++) {
 
 			# Send asynchronous http request using curl
-			HttpClient::sendRequestAsync(
+            HttpClient::sendRequestAsync(
 				# URL
 				'http://duktig.microservice/examples/response_all_request_data?a=1&b=2',
 				# Request method

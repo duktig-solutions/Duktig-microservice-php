@@ -20,7 +20,7 @@ class ClientInfo {
             $response->sendFinal();
         }
 
-        //\Lib\HttpClient::sendRequest('http://duktig.microservice/examples/client_info?key=abc123&client_machine=Macbook15PHP-HTTPClient');
+        //\Lib\Http\Client::sendRequest('http://duktig.microservice/examples/client_info?key=abc123&client_machine=Macbook15PHP-HTTPClient');
 
         Logger::Log(
             'client_ip: ' . IpDetector::ipAddress() . ' | ' .

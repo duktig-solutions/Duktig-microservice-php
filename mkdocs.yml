@@ -81,7 +81,7 @@ nav:
 #       - development/logging.md
 #       - development/events-pub-sub.md
 #       - development/message-queue.md
-#   - Libraries:
+    - Libraries:
 #       - libs/auth/jwt.md
 #       - libs/auth/password.md
 #       - libs/cache/redis.md
@@ -91,7 +91,7 @@ nav:
 #       - libs/events/event.md
 #       - libs/events/event-publisher.md
 #       - libs/http/client-info.md
-#       - libs/http/client.md
+        - libs/http/client.md
 #       - libs/benchmarking.md
 #       - libs/date.md
 #       - libs/generator.md
@@ -111,7 +111,7 @@ nav:
 #       - tutorials/message-queue.md
 #       - tutorials/db-backup.md
     - References:
-#       - references/predefined-constants.md
+        - references/predefined-constants.md
         - references/coding-standards.md
 #   - faq.md
 #   - todo.md

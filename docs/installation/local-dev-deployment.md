@@ -9,7 +9,7 @@ As you can see in the directory structure, the project contains all Database ser
 
 ## Clone the project
 
-Let's clone the project from Github and prepare for deployment 
+Let's clone the project from GitHub and prepare for deployment 
 
     git clone https://github.com/duktig-solutions/Duktig-microservice-php.git
     

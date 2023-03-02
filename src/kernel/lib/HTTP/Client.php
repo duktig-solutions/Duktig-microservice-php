@@ -3,18 +3,18 @@
  * HTTP Client Class to Send and Receive data via HTTP Protocol
  *
  * @version 2.0 (Send files functionality added)
- * @todo move this to from \Lib\HttpClient -> \Lib\HTTP\Client
+ * @todo move this to from \Lib\Http\Client -> \Lib\HTTP\Client
  */
-namespace Lib;
+namespace Lib\HTTP;
 
 use System\Config;
 
 /**
- * Class HttpClient
+ * Class Client
  *
  * @package Lib
  */
-class HttpClient {
+class Client {
 
 	/**
 	 * Send request and get response data
