@@ -121,7 +121,7 @@ class Request {
 
 		Switch ($contentType) {
 			case 'application/json':
-				$this->input = json_decode($this->rawInput, true);
+                $this->input = json_decode($this->rawInput, true);
 				break;
 			default:
 				parse_str(file_get_contents('php://input'), $this->input);

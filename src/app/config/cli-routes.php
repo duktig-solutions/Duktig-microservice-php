@@ -37,6 +37,8 @@ return [
 		# Unlike Restful API interface the Command line interface doesn't support authorization/permission checking and caching functionality.
 	],
 
+    # ---- Log file processing ------
+
 	# System - Archive log files if size is larger than expected
 	'archive-log-files' => [
 		'controller' => 'System\Logs\Archiver->process',
@@ -51,12 +53,14 @@ return [
 		'executeUniqueProcessLifeTime' => 10
 	],
 
+    # ------ Database backup --------
+
 	# Backup Databases
 	'db-backup' => [
 		'controller' => 'System\Backups\DB->cliBackupDB'
 	],
 
-	# Development examples
+	# ------ Development examples --------
 
 	# Example - Benchmarking
 	'benchmarking-example-cli' => [
@@ -72,5 +76,18 @@ return [
 	'development-test-redis-caching' => [
 		'controller' => 'Development\Examples\DataCaching->cliTestCaching'
 	],
+
+    # ------ Message/Queue --------
+
+    # Message/Queue Producer
+    'development-mq-producer-test' => [
+        'controller' => 'Development\MessageQueue\TestProducer->produce'
+    ],
+
+    # Message/Queue Consumer
+    'development-mq-consumer' => [
+        'controller' => 'Development\MessageQueue\Consumer->consume'
+    ]
+
 
 ];

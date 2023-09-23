@@ -11,6 +11,7 @@ namespace Lib\Cache;
 
 # PHPRedis Extension
 use Redis as RedisClient;
+use RedisException;
 
 /**
  * class Redis
@@ -79,6 +80,7 @@ class Redis {
      * @param mixed $data
      * @param int|null $expiresInSeconds
      * @return void
+     * @throws RedisException
      */
 	public function set(string $key, $data, ?int $expiresInSeconds = null): void
     {
@@ -98,7 +100,7 @@ class Redis {
     /**
      * Set array value to cache.
      * WARNING! This uses Json encode and decode for array functional.
-     * 
+     *
      * Twitted this, when developed: https://twitter.com/DuktigS/status/1368224246325985281/photo/1
      *
      * @access public
@@ -106,6 +108,7 @@ class Redis {
      * @param array $data
      * @param integer|null $expiresInSeconds
      * @return void
+     * @throws RedisException
      */
     public function setArray(string $key, array $data, ?int $expiresInSeconds = null) {
 

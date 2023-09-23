@@ -88,6 +88,16 @@ class Logger  {
 
     }
 
+    public static function CleanLogFile(?string $logFile = 'app.log') {
+
+        $filePath = DUKTIG_APP_PATH . 'log/'.$logFile;
+
+        if(is_writable($filePath)) {
+            file_put_contents($filePath, '');
+        }
+
+    }
+
 	/**
 	 * Parse Log line and return array
 	 *

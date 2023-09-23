@@ -14,6 +14,7 @@ namespace System\MessageQueue;
 
 use Exception;
 use \Redis;
+use RedisException;
 use System\Config;
 use System\Logger;
 use Throwable;
@@ -46,7 +47,7 @@ class Consumer {
      * @requires phpredis extension
      * @var Redis object
      */
-    private static Redis $redis;
+    private static \Redis $redis;
 
     /**
      * Task Queue name to get messages
@@ -58,21 +59,11 @@ class Consumer {
     private static string $taskQueue;
 
     /**
-     *
      * @static
      * @access private
-     * @var string
+     * @var array
      */
-    private static string $workerId;
-
-    /**
-     * Last Beat timestamp
-     *
-     * @static
-     * @access private
-     * @var int
-     */
-    private static int $lastBeat;
+    private static array $messages = [];
 
     /**
      * Main initialization class
@@ -81,6 +72,7 @@ class Consumer {
      * @access private
      * @param array $config
      * @return bool
+     * @throws RedisException
      */
     public static function init(array $config) : bool {
 
@@ -90,7 +82,6 @@ class Consumer {
 
         static::$config = $config;
         static::$taskQueue = $config['queueName'];
-        static::$workerId = getmypid();
 
         static::$redis = new Redis();
 
@@ -124,138 +115,51 @@ class Consumer {
     }
 
     /**
-     * Last Beat, like a ping to Redis list: {message_Queue}:workers-heartbeat
-     *    {workerId}:{lastTimeStamp}
-     *
-     * With this method, we always notice our last heart beat. When was the last?!
-     *
-     * @static
-     * @access private
-     * @return void
-     */
-    private static function heartBeat() : void {
-
-        if(!static::$connected) {
-            Logger::log('Trying to heartBeat but still not connected!', Logger::ERROR, __FILE__, __LINE__);
-            return;
-        }
-
-        try {
-            static::$redis->lRem(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat, 1);
-            static::$lastBeat = time();
-            static::$redis->lPush(static::$taskQueue . ':workers-heartbeat', static::$workerId.':'.static::$lastBeat);
-            return;
-        } catch(\Throwable $e) {
-            Logger::log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
-            return;
-        }
-
-    }
-
-    /**
-     * Validate a task and return decoded array from json
-     *
-     * @access public
-     * @param string $message
-     * @return array|mixed
-     */
-    public static function validateTask(string $message) {
-
-        # First, let's extract the worker data
-        try {
-
-            $task = json_decode($message, true);
-
-            # If the task is not correct json, no make sense to continue.
-            if(!$task) {
-                throw new \Exception('Invalid Task Content (Not a json string): ' . $message);
-            }
-
-            if(!isset($task['workerTask'])) {
-                throw new \Exception('Invalid Task Content (workerTask not set): ' . $message);
-            }
-
-            $workerExecutable = explode('->', $task['workerTask']);
-
-            if(count($workerExecutable) < 2) {
-                throw new \Exception('Invalid Task Content (invalid workerTask `'.$task['workerTask'].'`): ' . $message);
-            }
-
-            $task['class'] = $workerExecutable[0];
-            $task['method'] = $workerExecutable[1];
-
-            # Because there is no error, the task status is 'ok'
-            $task['status'] = 'ok';
-
-            return $task;
-
-        } catch (\Throwable $e) {
-
-            # The status error assuming that this task will never repeat.
-            return [
-                'status' => 'error',
-                'message' => $e->getMessage(),
-            ];
-        }
-    }
-
-    /**
      * Run the Message queue listening, catching, executing functionality.
      * This method will catch message from message queue, move to his own list.
      * After execution message will be deleted.
      *
      * @static
      * @access public
+     * @param callable $callback
+     * @param int|null $interval
      * @return void
      */
-    public static function run() {
-        
+    public static function run(callable $callback, ?int $interval = 0) : void {
+
         Logger::Log('Starting Consumer for '.static::$taskQueue.' ...', Logger::INFO, __FILE__, __LINE__);
+
+        $lastCalledBack = time();
 
         # Loop to catch a message and execute.
         # If there are no message, this will wait 0.5 second.
         while(True) {
 
             try {
-            # Catch a message if any and move to own list.
-            $message = static::$redis->rPopLPush(static::$taskQueue, static::$taskQueue . ':worker:' . static::$workerId);
+
+                # Catch a message from list
+                $message = static::$redis->lPop(static::$taskQueue);
+
+                if(!empty($message)) {
+                    static::$messages[] = $message;
+                }
+
             } catch(\Throwable $e)  {
                 Logger::log($e->getCode() . ' _ ' . $e->getMessage(), Logger::WARNING, $e->getFile(), $e->getLine());
                 $message = NULL;
+                echo "Error: ".$e->getMessage() ."\n";
                 sleep(1);
             }
 
-            if($message) {
-                
-                # Debug
-                # echo $message . "\n";
 
-                try {
-
-                    # Command template: php source_code.php {json_encoded_message} {worker_id} > /dev/null 2>&1 &
-                    $cmd = '' . Config::get()['Executables']['php'] . " /src/cli/exec.php runWorker '" . $message . "' ".static::$workerId." > /dev/null 2>&1 & ";
-
-                    # Debug
-                    # Logger::log($cmd, Logger::INFO, __FILE__, __LINE__);
-
-                    # Run the worker process in background mode.
-                    exec($cmd);
-
-                    # From now this process is free. The 'runWorker' started to work in background mode and care about task execution.
-
-                } catch (\Throwable $e) {
-                    Logger::Log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
-                    # echo $e->getMessage() . "\n";
-                }
-
-            } else {
-
-                # Let's wait for 0.5 Second
-                usleep(1000000 / 2);
-
+            if (time() - $lastCalledBack >= $interval and !empty(static::$messages)) {
+                $callback(static::$messages);
+                static::$messages = [];
+                $lastCalledBack = time();
             }
 
-            static::heartBeat();
+            usleep(1);
+
         }
 
     }
@@ -344,7 +248,7 @@ class Consumer {
             static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
             Logger::Log('Unable to execute worker task. Message: '.$workerData['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message/task will be deleted from Redis.', Logger::ERROR, __FILE__, __LINE__);
 
-        # fail status: task will attempt again until reach the attempts limit.
+            # fail status: task will attempt again until reach the attempts limit.
         } elseif($workerData['status'] == 'fail') {
 
             # We have to check, if this task execution reached attempts limit, then we have to remove this task.
@@ -353,7 +257,7 @@ class Consumer {
                 static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
                 Logger::Log('Worker task reached attempts limit : TaskId: '.$workerData['taskId'].'. Message: '.$workerData['message'].'. Queue Message: `'.$message.'`. Queue name: '.static::$taskQueue.'. This message will be deleted from Redis.', Logger::ERROR, __FILE__, __LINE__);
 
-            # Let's move this task again to main queue
+                # Let's move this task again to main queue
             } else {
 
                 # We have to take last attempted message with attempts count
@@ -369,7 +273,7 @@ class Consumer {
                 Logger::Log($workerData['message'] .'. Worker task execution is failed and will be moved back to main Queue. Message: '.$attempted_message, Logger::ERROR, __FILE__, __LINE__);
             }
 
-        # ok status: The task is complete, we can remove this task.
+            # ok status: The task is complete, we can remove this task.
         } elseif($workerData['status'] == 'ok') {
             static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
             Logger::Log('Complete Worker Task! Removing from task queue: ' . static::$taskQueue . ' : Id: ' . $workerId, Logger::INFO, __FILE__, __LINE__);
@@ -379,6 +283,6 @@ class Consumer {
 
         return $workerData;
 
-     }
+    }
 
 }

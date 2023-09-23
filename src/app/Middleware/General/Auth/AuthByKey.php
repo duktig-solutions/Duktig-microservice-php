@@ -2,7 +2,7 @@
 /**
  * Middleware class to validate access Key
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <software@duktig.dev>
  * @license see License.md
  * @version 1.0.0
  */
@@ -20,13 +20,10 @@ use System\Config;
 class AuthByKey {
 
 	/**
-     * Authentication by key
-     *
-     * @access public
-	 * @param Request $request
-	 * @param Response $response
+	 * @param \System\HTTP\Request $request
+	 * @param \System\HTTP\Response $response
 	 * @param array $middlewareData
-	 * @return array|void
+	 * @return array|bool
 	 */
     public function check(Request $request, Response $response, array $middlewareData) {
 
@@ -48,6 +45,7 @@ class AuthByKey {
         # Exit the application
         $response->sendFinal();
 
+        return false;
     }
     
 }

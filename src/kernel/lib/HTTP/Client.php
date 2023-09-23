@@ -3,7 +3,6 @@
  * HTTP Client Class to Send and Receive data via HTTP Protocol
  *
  * @version 2.0 (Send files functionality added)
- * @todo move this to from \Lib\Http\Client -> \Lib\HTTP\Client
  */
 namespace Lib\HTTP;
 
@@ -51,11 +50,12 @@ class Client {
 
 			$curlOptions[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
 
+            // @todo Figure out this
 			if(is_array($data)) {
 				$requestData = $data;
 				//$curlOptions[CURLOPT_POSTFIELDS] = http_build_query($data);
 			} else {
-				$requestData[] = $data;
+				$requestData = $data;
 				//$curlOptions[CURLOPT_POSTFIELDS] = $data;
 			}
 
@@ -71,7 +71,7 @@ class Client {
 			}
 
 			$curlOptions[CURLOPT_POSTFIELDS] = $requestData;
-			}
+		}
 
 		# Initialize headers
 		if(!empty($headers)) {

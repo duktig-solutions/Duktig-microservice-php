@@ -8,7 +8,7 @@
  */
 namespace Lib;
 
-use Kernel\lib\HTTP\Client;
+use \Lib\HTTP\Client;
 use System\Config;
 
 class LocationByIP {

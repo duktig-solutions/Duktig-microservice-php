@@ -4,34 +4,69 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.1
- *
- * @todo Some of values should generate with encryption algorithm to avoid duplication
- * @todo rename this to DataGenerator
+ * @version 1.3.0
  */
 namespace Lib;
 
+use Exception;
+
 /**
- * Class Generator
+ * Class DataGenerator
  *
  * @package Lib
  */
-class Generator {
+class DataGenerator {
 
     /**
-     * Create random generated number
+     * Create random UUID
+     *
+     * Examples: b10bb1a0-0afd-11ec-a08f-1b3182194747
      *
      * @static
      * @access public
-     * @param  int $length
-     * @return int
+     * @return string
+     * @throws Exception
      */
-    public static function createNumber(int $length) : int {
+    public static function createUUID() : string {
 
-        $min = 1 . str_repeat(0, $length - 1);
-        $max = str_repeat(9, $length);
-        return mt_rand($min, $max);
+        $charId = strtolower(sha1(uniqid(random_int(1, 10000), true)));
+        $hyphen = chr(45); // '-'
 
+        return substr($charId, 0, 8) . $hyphen .
+               substr($charId, 8, 4) . $hyphen .
+               substr($charId, 12, 4) . $hyphen .
+               substr($charId, 16, 4) . $hyphen .
+               substr($charId, 20, 12);
+
+    }
+
+
+    /**
+     * Create random generated Integer number
+     * Due to the new PHP function random_int() this method will return exactly the result of that function.
+     *
+     * @static
+     * @access public
+     * @param int $min
+     * @param int $max
+     * @return int
+     * @throws Exception
+     */
+    public static function createIntegerNumber(int $min = 1, int $max = 10) : int {
+        return random_int($min, $max);
+    }
+
+    /**
+     * Create random generated Float number
+     *
+     * @static
+     * @access public
+     * @param  float $min
+     * @param  float $max
+     * @return float
+     */
+    public static function createFloatNumber(float $min = 1.00, float $max = 10.00) : float {
+        return ($min + lcg_value()*(abs($max - $min)));
     }
 
     /**
@@ -347,6 +382,62 @@ class Generator {
 
         return $str;
 
+    }
+
+    /**
+     * Given a $centre (latitude, longitude) co-ordinates and a
+     * distance $radius (miles), returns a random point (latitude, longitude)
+     * which is within $radius miles of $centre.
+     *
+     * @static
+     * @access public
+     * @param  array $centre Numeric array of floats. First element is
+     *                       latitude, second is longitude.
+     * @param  float $radius The radius (in miles).
+     * @return array         Numeric array of floats (lat/lng). First
+     *                       element is latitude, second is longitude.
+     */
+    public static function createLatLng(array $centre, float $radius) : array {
+
+        // Miles
+        $radius_earth = 3959;
+
+        // Pick random distance within $distance;
+        $distance = lcg_value() * $radius;
+
+        // Convert degrees to radians.
+        $centre_rads = array_map('deg2rad', $centre);
+
+        // First suppose our point is the northern pole.
+        // Find a random point $distance miles away
+        $lat_rads = (pi() / 2) - $distance / $radius_earth;
+        $lng_rads = lcg_value() * 2 * pi();
+
+        // ($lat_rads, $lng_rads) is a point on the circle which is
+        // $distance miles from the northern pole. Convert to Cartesian
+        $x1 = cos($lat_rads) * sin($lng_rads);
+        $y1 = cos($lat_rads) * cos($lng_rads);
+        $z1 = sin($lat_rads);
+
+        // Rotate that sphere so that the northern pole is now at $centre.
+
+        // Rotate in x axis by $rot = (pi() / 2) - $centre_rads[0];
+        $rot = (pi() / 2) - $centre_rads[0];
+        $x2 = $x1;
+        $y2 = $y1 * cos($rot) + $z1 * sin($rot);
+        $z2 = -$y1 * sin($rot) + $z1 * cos($rot);
+
+        // Rotate in z axis by $rot = $centre_rads[1]
+        $rot = $centre_rads[1];
+        $x3 = $x2 * cos($rot) + $y2 * sin($rot);
+        $y3 = -$x2 * sin($rot) + $y2 * cos($rot);
+        $z3 = $z2;
+
+        // Finally convert this point to polar co-ords
+        $lng_rads = atan2($x3, $y3);
+        $lat_rads = asin($z3);
+
+        return array_map( 'rad2deg', array($lat_rads, $lng_rads));
     }
 
 }

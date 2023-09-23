@@ -5,7 +5,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.1.0
  */
 namespace System;
 
@@ -45,7 +45,7 @@ Class Env {
             }
 
             // Comment line. ignore
-            if(substr($line, 0, 1) == '#') {
+            if(str_starts_with($line, '#')) {
                 continue;
             }
 
@@ -66,11 +66,77 @@ Class Env {
                 putenv("$item=$value");
             }
 
+            if(strtolower(trim($value)) == 'false') {
+                $value = false;
+            } elseif(strtolower(trim($value)) == 'true') {
+                $value = true;
+            } else {
+                $value = trim($value);
+            }
+
             static::$vars[$item] = $value;
 
         }
 
         return static::$vars;
+    }
+
+    /**
+     * Parse ini or .env file content to array
+     *
+     * Example of content:
+     *
+     * project_name=Duktig.io
+     * autoload=false
+     *
+     * @static
+     * @access public
+     * @param string $content
+     * @return array
+     */
+    public static function content2Array(string $content) : array {
+
+        if(empty(trim($content))) {
+            return [];
+        }
+
+        $result = [];
+
+        $lines = explode("\n", $content);
+
+        foreach ($lines as $line) {
+
+            $line = trim($line);
+
+            // Empty line. ignore
+            if(empty($line)) {
+                continue;
+            }
+
+            // Ignoring the Comment line in .env file content.
+            if(substr($line, 0, 1) == '#') {
+                continue;
+            }
+
+            // Ignoring the Comment line in ini file content.
+            if(substr($line, 0, 1) == ';') {
+                continue;
+            }
+
+            $eqPos = strpos($line, '=');
+
+            if($eqPos === false) {
+                $item = $line;
+            } else {
+                $item = substr($line, 0, $eqPos);
+            }
+
+            $result[$item] = trim(substr($line, $eqPos+1));
+
+        }
+
+        return $result;
+
     }
 
     /**

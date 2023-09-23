@@ -3,7 +3,7 @@
  * Message/Queue Testing Producer
  * A Producer pushes a tasks to Redis
  *
- * Usage: php ./cli/exec.php development-mq-producer-test --redis-config MessageQueue
+ * Usage: php ./src/cli/exec.php development-mq-producer-test --redis-config MessageQueue
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
@@ -75,6 +75,8 @@ class TestProducer {
             $redis->auth($config['password']);
         }
 
+        $redis->select($config['database']);
+
         $i = 1;
 
         while (true) {
@@ -101,6 +103,10 @@ class TestProducer {
             $taskId = mt_rand(10, 99).uniqid().mt_rand(10, 99).str_pad($i, 8, '0', STR_PAD_LEFT);
 
             $message = json_encode([
+
+                'destination' => 'data_a_',
+                'value' => mt_rand(1, 100),
+
                 'workerTask' => $workerTask,
                 'parameters' => [
                     'taskNumber' => $taskNumber,
@@ -111,14 +117,15 @@ class TestProducer {
                 'taskId' => $taskId
             ],JSON_NUMERIC_CHECK);
 
-            echo $taskId . ' : ' . $i . ' : '  . $expectingResult . "\n";
+            //echo 'Published Task: ' . $taskId . ' Num: ' . $i . ' Expected: '  . $expectingResult . "\n";
+            echo 'Published Task: ' . $taskNumber . "\n";
 
             $redis->lPush($config['queueName'], $message);
             $i++;
 
             // 1 second = 1000000 microsecond
-            usleep(250000); // 0.25 Second
-            //sleep(1);
+            //usleep(250000); // 0.25 Second
+            usleep(100000); // 0.100 Second
         }
     }
 

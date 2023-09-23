@@ -6,7 +6,6 @@
  * 1 Millisecond = 1000 Microsecond
  * 1 Microsecond = 1000 Nanosecond
  *
- * @todo finalize this
  */
 namespace Lib;
 
@@ -56,7 +55,7 @@ class Benchmarking {
 
 		static::checkPoint('Finish');
 
-		$finalResult = [];
+		$pointsResult = [];
 
 		$firstPoint = static::$points[0];
 		$maxTime = [
@@ -101,60 +100,82 @@ class Benchmarking {
 				$point['memP'] = static::ByteToMem($point['mem'] - static::$initMem);
 			}
 
-			$finalResult[] = $point;
+            $pointsResult[] = $point;
 		}
 
-		$strLen = 12;
-		$padLen = 13;
-		$linePad  = 82;
+		# Final Result
+        return [
+            'points' => $pointsResult,
+            'summary' => [
 
-		# Header
+                # Total duration of whole benchmarking
+                'total_duration' => static::NanoToTime(static::$points[count(static::$points) -1]['nas'] - static::$points[0]['nas']),
 
-		echo " " . str_pad('-', $linePad, '-') . "\n";
+                # The checkpoint that takes maximum time to finish
+                'max_time_name' => $maxTime['pointName'],
+                'max_time' => static::NanoToTime($maxTime['pointTime']),
 
-		echo " 1 Second = 1000 Millisecond\n";
-		echo " 1 Millisecond = 1000 Microsecond\n";
-		echo " 1 Microsecond = 1000 Nanosecond\n";
-
-		echo " " . str_pad('-', $linePad, '-') . "\n";
-
-		echo " | " .
-			 str_pad("Checkpoint", $padLen, ' ') . " | " .
-			 str_pad("From Start", $padLen, ' ') . " | " .
-			 str_pad("From Prev", $padLen, ' ') . " | " .
-			 str_pad("Mem Start", $padLen, ' ') . " | " .
-			 str_pad("Mem Prev", $padLen, ' ') . " | \n";
-
-		echo " " . str_pad('-', $linePad, '-') . "\n";
-
-		foreach ($finalResult as $point) {
-			echo " | " .
-				 str_pad(substr($point['nam'], 0, $strLen), $padLen, ' ') . " | " .
-				 str_pad($point['nasF'], $padLen, ' ') . " | " .
-				 str_pad($point['nasP'], $padLen, ' ') . " | " .
-				 str_pad($point['memF'], $padLen, ' ') . " | " .
-				 str_pad($point['memP'], $padLen, ' ') . " | \n";
-		}
-
-		echo " " . str_pad('-', $linePad, '-') . "\n";
-
-		$report = [
-			'Total Duration: ' . static::NanoToTime(static::$points[count(static::$points) -1]['nas'] - static::$points[0]['nas']),
-			'Maximum time P2P name : ' . $maxTime['pointName'],
-			'Maximum time P2P: ' . static::NanoToTime($maxTime['pointTime']),
-			'Maximum mem P2P name : ' . $maxMem['pointName'],
-			'Maximum mem P2P: ' . static::ByteToMem($maxMem['pointMem'])
-		];
-
-		print_r($report);
-
-		return $finalResult;
+                # The checkpoint that takes maximum memory use
+                'max_mem_name' => $maxMem['pointName'],
+                'max_mem' => static::ByteToMem($maxMem['pointMem'])
+            ]
+        ];
 
 	}
 
 	public static function dumpResultsCli() {
 
-		$results = static::getResults();
+        $finalResult = static::getResults();
+
+        $strLen = 12;
+        $padLen = 13;
+        $linePad  = 82;
+
+        echo " " . str_pad('-', $linePad, '-') . "\n";
+
+        echo " 1 Second = 1000 Millisecond\n";
+        echo " 1 Millisecond = 1000 Microsecond\n";
+        echo " 1 Microsecond = 1000 Nanosecond\n";
+
+        echo " " . str_pad('-', $linePad, '-') . "\n";
+
+        echo " | " .
+            str_pad("Checkpoint", $padLen, ' ') . " | " .
+            str_pad("From Start", $padLen, ' ') . " | " .
+            str_pad("From Prev", $padLen, ' ') . " | " .
+            str_pad("Mem Start", $padLen, ' ') . " | " .
+            str_pad("Mem Prev", $padLen, ' ') . " | \n";
+
+        echo " " . str_pad('-', $linePad, '-') . "\n";
+
+        foreach ($finalResult['points'] as $point) {
+            echo " | " .
+                str_pad(substr($point['nam'], 0, $strLen), $padLen, ' ') . " | " .
+                str_pad($point['nasF'], $padLen, ' ') . " | " .
+                str_pad($point['nasP'], $padLen, ' ') . " | " .
+                str_pad($point['memF'], $padLen, ' ') . " | " .
+                str_pad($point['memP'], $padLen, ' ') . " | \n";
+        }
+
+        echo " " . str_pad('-', $linePad, '-') . "\n";
+
+        $report = [
+            'Total Duration:        ' . str_pad($finalResult['summary']['total_duration'], 55, ' ') .'|',
+            'Maximum time P2P name: ' . str_pad($finalResult['summary']['max_time_name'], 55, ' ') .'|',
+            'Maximum time P2P:      ' . str_pad($finalResult['summary']['max_time'], 55, ' ') .'|',
+            'Maximum mem P2P name:  ' . str_pad($finalResult['summary']['max_mem_name'], 55, ' ') .'|',
+            'Maximum mem P2P:       ' . str_pad($finalResult['summary']['max_mem'], 55, ' ') .'|'
+        ];
+
+        foreach($report as $line) {
+            echo " | " . $line . "\n";
+        }
+
+        echo " " . str_pad('-', $linePad, '-') . "\n";
+
+
+
+        //print_r($report);
 
 	}
 

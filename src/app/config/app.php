@@ -138,6 +138,24 @@ return [
 
     ],
 
+    'JWT' => [
+        'iss' => 'DMD1',
+        'aud' => 'DMD2',
+        'sub' => 'DMD3',
+        'jti' => 'DMD4',
+
+        # Not before
+        'nbf' => '-1 day',
+
+        # Issued at
+        'iat' => time(),
+
+        # Token expiration time
+        'exp' => '+1 days',
+
+        'secretKey' => '63F6B159256D2DA6BBB687FA22A4A52AAFC301007E1BB388937112C13037C518'
+    ],
+
 	# Authentication by key for Developers
 	'AuthDevelopers' => [
 

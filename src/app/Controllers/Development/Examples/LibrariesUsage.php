@@ -17,7 +17,7 @@ use System\HTTP\Response;
 
 # Using System libraries
 use Lib\Valid;
-use Lib\Generator;
+use Lib\DataGenerator;
 
 # Using Application custom created Libraries
 use App\Lib\Development\Examples\ExampleLibClass;
@@ -46,8 +46,8 @@ class LibrariesUsage {
 		# and the second will be created as an object and use.
 
 		# Using `Generator` library as static class methods.
-		$id = Generator::createNumber(1);
-		$email = Generator::createEmail();
+		$id = DataGenerator::createNumber(1);
+		$email = DataGenerator::createEmail();
 
 		# Using `Valid` Library
 		# Checking if generated data is valid using static methods of Class.
