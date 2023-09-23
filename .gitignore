@@ -12,4 +12,3 @@ vendor
 docker-deployment/database-mysql/volume-data/
 volume-data
 .DS_Store
-

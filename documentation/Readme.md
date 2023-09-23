@@ -1,0 +1,64 @@
+# Duktig PHP Microservice - Development documentation
+
+>NOTE: The documentation of project is under development process.
+
+## Table of content
+
+- Overview:
+    - [About project](../Readme.md) 
+    - [Requirements](overview/requirements.md)
+    - [Changelog](overview/change-log.md)
+    - [Coding standards](overview/coding-standards.md) 
+    - [F.Q.Q](overview/faq.md)
+    - [Getting Started](overview/getting-started.md)
+- Installation:
+    - [Configuration and environment variables](installation/env-configuration.md)
+    - [Local development deployment](installation/local-dev-deployment.md)
+- Development:
+    - HTTP and CLI Routing
+    - HTTP Workflow
+    - CLI workflow
+    - Middleware
+    - Controllers
+    - Models
+    - Libraries
+    - Workers
+    - Error handling
+    - Logging
+    - Events Publish/Subscribe
+    - Message/Queue
+- Libraries:
+    - [Json Web token Auth](kernel/libraries/auth/jwt.md)
+    - [Password](kernel/libraries/auth/password.md)
+    - Redis
+    - [MySQL](kernel/libraries/db/mysqli.md)
+    - [MySQL Utility](kernel/libraries/db/mysqliutility.md)
+    - [PostgreSQL](kernel/libraries/db/postgresql.md)
+    - Event
+    - Event publisher
+    - Http Client info
+    - [Http Client](kernel/libraries/http/client.md)
+    - Benchmarking
+    - Date
+    - Data Generator
+    - Location by ip
+    - [Data validator](kernel/libraries/valid.md)
+    - [Data Structures validator](kernel/libraries/validator.md)
+- Code examples:
+    - CLI (command line interface
+    - Data validation
+    - Events Publish/Subscribe
+    - Message/queue
+    - Benchmarking
+    - Data caching
+- Tutorials:
+    - CRUD development
+    - Events Publish/Subscribe
+    - Message/queue
+    - Database backup
+    - Workers
+- Cron jobs:
+    - [Applications log archiver](cron-jobs/application-logs.md)
+    - [Database backup](cron-jobs/databases-backup.md)
+- References:
+    - [Predefined constants](references/predefined-constants.md)    

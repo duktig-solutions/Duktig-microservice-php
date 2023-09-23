@@ -8,7 +8,6 @@
 ![Pub/Sub, Message/Queue, Cache](https://img.shields.io/badge/Pub/Sub,%20Message/Queue,%20Cache-Redis-red?style=flat "Pub/Sub, Message/Queue, Cache")
 
 
-
 ## Let's start right now!
 
 Deploy this project in your local environment with **docker-compose**, develop some features and build Docker image.
