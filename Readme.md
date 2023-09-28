@@ -1,4 +1,4 @@
-![Image](documentation/img/logo.png "Duktig PHP Framework")
+![Image](documentation/img/Logo.png "Duktig PHP Framework")
 
 **Duktig PHP Framework is Docker friendly, Fast and Lightweight, specially written for Microservices development**
 
