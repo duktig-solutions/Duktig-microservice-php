@@ -10,6 +10,7 @@
  */
 namespace App\Lib\Accounts\Account;
 
+use Exception;
 use \System\Config;
 use \Lib\HTTP\ClientInfo;
 
@@ -23,7 +24,7 @@ class Auth extends \Lib\Auth\Jwt {
      * @param array $account
 	 * @param \System\HTTP\Request $request
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function Authorize(array $account, \System\HTTP\Request $request) : array {
 		
@@ -98,9 +99,9 @@ class Auth extends \Lib\Auth\Jwt {
 	 * @static
 	 * @access public
 	 * @param array $account
-	 * @param string deviceId
+	 * @param string $deviceId
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function AccessToken(array $account, string $deviceId) : string {
 
@@ -117,7 +118,7 @@ class Auth extends \Lib\Auth\Jwt {
 				# The subject of JWT
 				'sub' => $config['sub'],
 
-				# JWT ID - each token should have it's own Id by user and device id.
+				# JWT ID - each token should have its own Id by user and device id.
 				# Each token related to user but also to device. 
 				'jti' => \Lib\Auth\Password::encrypt($account['userId'].'__'.$config['payload_secure_encryption_key'] . $deviceId),
 
@@ -147,7 +148,7 @@ class Auth extends \Lib\Auth\Jwt {
 	 * @param array $account
 	 * @param string $deviceId
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public static function RefreshToken(array $account, string $deviceId) : string {
 

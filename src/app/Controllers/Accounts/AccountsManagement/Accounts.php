@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Accounts\AccountsManagement;
 
+use Exception;
 use Lib\Validator;
 use System\HTTP\Request;
 use System\HTTP\Response;
@@ -25,11 +26,11 @@ class Accounts {
 	/**
 	 * Get User Accounts
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getAll(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -63,11 +64,11 @@ class Accounts {
 	/**
 	 * Get user account by id
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getByIdStr(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -117,7 +118,7 @@ class Accounts {
 	 * @param Request $request
 	 * @param Response $response
 	 * @param array $middlewareData
-	 * @throws \Exception
+	 * @throws Exception
 	 * @return bool
 	 */
 	public function create(Request $request, Response $response, array $middlewareData) : bool {
@@ -187,7 +188,7 @@ class Accounts {
 	 * @param Request $request
 	 * @param Response $response
 	 * @param array $middlewareData
-	 * @throws \Exception
+	 * @throws Exception
 	 * @return bool
 	 */
 	/*
@@ -304,7 +305,7 @@ class Accounts {
 	 * @param Request $request
 	 * @param Response $response
 	 * @param array $middlewareData
-	 * @throws \Exception
+	 * @throws Exception
 	 * @return bool
 	 */
 	public function patch(Request $request, Response $response, array $middlewareData) : bool {
@@ -375,7 +376,7 @@ class Accounts {
 
 		# If there is email specified, let's check if not registered.
 		if(!empty($request->input('email'))) {
-			if($userModel->emailExistsById($request->input('email'), $userId) == true) {
+			if($userModel->emailExistsById($request->input('email'), $userId)) {
 				$validation['email'] = ['Email address is already registered'];
 			}
 		}
@@ -423,11 +424,11 @@ class Accounts {
 	 * Terminate user account with `DELETE` Request
 	 *
 	 * @access public 
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
-	 * @throws \Exception
 	 * @return bool
+	 *@throws Exception
 	 */
 	public function delete(Request $request, Response $response, array $middlewareData) : bool {
 
@@ -448,7 +449,7 @@ class Accounts {
 			return false;
 		}
 
-		# Let's check, if this is own account
+		# Let's check, if this its own account
 		if((int) $userId === (int) $middlewareData['account']['userId']) {
 
 			$response->sendJson([

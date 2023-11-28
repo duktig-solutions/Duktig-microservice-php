@@ -2,7 +2,7 @@
 
 ## Libraries - Data validator
 
-Version 1.2.0
+Version 1.3.0
 
 Data validation class library.
 
@@ -30,6 +30,7 @@ Class: `Valid`
           - [Date-Time ISO](#date-time-iso)
           - [Digits](#digits)
           - [Email](#email)
+          - [Phone](#phone)
           - [Float range](#float-range)
           - [HTTP host](#http-host)
           - [ID](#id)
@@ -344,6 +345,32 @@ $isValidEmailAddress = \Lib\Valid::email(123);
 $isValidEmailAddress = \Lib\Valid::email('47.25');
 $isValidEmailAddress = \Lib\Valid::email('abc@');
 $isValidEmailAddress = \Lib\Valid::email('abc@1_');
+```
+
+#### Phone
+
+Check if the given value is a valid phone number with E.164 format
+
+`static bool phoneNumberE164(mixed $data)`
+
+Arguments:
+
+- `mixed` Data to check
+
+Return value:
+
+- `bool` True if the given value is valid phone number
+- `bool` False if the given value is not valid phone number
+
+```php
+// this will return true 
+$isValidPhone = \Lib\Valid::phoneNumberE164('+37495565003');
+
+// this will return false because the value is not a valid phone number 
+$isValidPhone = \Lib\Valid::phoneNumberE164('hello');
+$isValidPhone = \Lib\Valid::phoneNumberE164('+37495565abc');
+$isValidPhone = \Lib\Valid::phoneNumberE164('+374');
+$isValidPhone = \Lib\Valid::phoneNumberE164('125236525456');
 ```
 
 #### Float range

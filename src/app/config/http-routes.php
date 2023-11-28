@@ -1,7 +1,7 @@
 <?php
 /**
  * Application HTTP Routing configuration file.
- * See structure and explanation in first sections.
+ * See structure and explanation in the first sections.
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
@@ -20,21 +20,21 @@ return [
 
         # Route
         # Here you can describe route paths for request.
-        # Each route path items can contain exact matching words i.e. /user or variables.
+        # Each item in route path can contain exact matching words i.e. /user or variables.
         # Variables can be:
-        #   {id}  - only ID number
+        #   {id} - only ID number
         #   {num} - only numeric
         #   {any} - type of string
         #
         # For example, this route path accepts only ID integer for second item: /example/123 (correct). /example/something (not correct).
-        # If the route path not matches, the system will response with Error 404 (Resource not found).
+        # If the route path does not match, the system will respond with Error 404 (Resource not found).
         '/__example/{id}/posts/{any}' => [
 
             # Middleware
-            # With The middleware option you can set any number of middleware methods before the controller starts.
-            # For instance, you can make middleware methods to: Authorize client, Validate Request data, then continue to controller.
+            # With The middleware option, you can set any number of middleware methods before the controller starts.
+            # For instance, you can make middleware methods to: Authorize a client, Validate Request data, then continue to controller.
             # The middleware functionality also can be used to get response data from cache instead of Controller -> Model -> Database.
-            # The format of middleware configuration is: ClassName->methodName where the middleware classes located in /app/middleware directory.
+            # The format of middleware configuration is: ClassName->methodName where the middleware classes are located in /app/middleware directory.
             # Note: If you not have any middleware functionality for this route, you can just pass this section as empty.
             'middleware' => [
                 '___ExampleMiddlewareClass->exampleMiddlewareMethod',
@@ -43,12 +43,12 @@ return [
 
             # Controller
             # Controllers runs as regular controllers in MVC Pattern.
-            # The format of controller configuration is: ClassName->methodName where the controller classes located in /app/controllers directory.
-            # Note: You can put authorization, caching, data validation functionality inside a controller method instead of creating a dedicated middleware for it.
+            # The format of controller configuration is: ClassName->methodName where the controller classes are located in /app/controllers directory.
+            # Note: You can put authorization, caching, data validation functionality inside a controller method instead of creating dedicated middleware for it.
             'controller' => '___ExampleControllerClass->exampleControllerMethod',
 
 			# Required permission(s) to access this resource. 
-			# Listed as "Microservice->Perm1, Perm2
+			# Listed as Microservice->Perm1, Perm2
 			# NOTICE: If this item in array is missed, this will assume any type of User can access to this resource.
 
 			# WARNING !!! The array "permissionsRequired" works paired with middleware you're specified.
@@ -63,8 +63,8 @@ return [
 					# Permissions defined in app/config/constants.php
 				//	PERMISSIONS['Accounts']['Account']['patch'],
 					
-					# It is also possible to add more than one permission to requirement list
-					# So the system will check more than one permission to allow access a resource
+					# It is also possible to add more than one permission to a requirement list,
+					# So the system will check more than one permission to allow accessing a resource
 				//	PERMISSIONS['Accounts']['Account']['delete']
 				]
 			],
@@ -105,7 +105,7 @@ return [
 
 		    # This Route configured to cache response data by system
 		    # Just putting the configuration name here and all will work automatically.
-			# In the application configuration this directive defined in "Redis" section.
+			# In the application configuration, this directive is defined in the "Redis" section.
 		    'cacheConfig' => 'SystemCaching'
 	    ],
 
@@ -116,7 +116,7 @@ return [
 		    	'Development\Examples\DataCaching->responseFromCache',
 		    ],
 		    'controller' => 'Development\Examples\DataCaching->httpTestManualCaching'
-		    # As you see, this Route not have configured caching.
+		    # As you see, this Route not has configured caching.
 		    # The caching will work programmatically by Middleware and Controller.
 	    ],
 

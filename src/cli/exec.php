@@ -28,7 +28,7 @@ require_once (DUKTIG_ROOT_PATH . 'vendor/autoload.php');
 Env::load(DUKTIG_ROOT_PATH.'.env');
 
 /**
- * Because this is command line interface,
+ * Because this is a command line interface,
  * the process can run without time limitation.
  */
 set_time_limit(0);

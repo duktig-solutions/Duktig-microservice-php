@@ -2,11 +2,11 @@
 declare(strict_types=1); 
 /**
  * HTTP entrypoint for Web Servers such as Apache, Nginx.
- * To set up the environment with web server you have to set ./www as web public directory.
+ * To set up the environment with web server, you have to set ./www as web public directory.
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.1.0
  */
 namespace System\HTTP;
 
@@ -14,7 +14,7 @@ use Exception;
 use System\Config;
 use System\Env;
 
-# Define project root path
+# Define a project root path
 define('DUKTIG_ENV', 'http');
 define('DUKTIG_ROOT_PATH', realpath(__DIR__ . '/../') . '/');
 define('DUKTIG_APP_PATH', realpath(DUKTIG_ROOT_PATH . 'app') . '/');
@@ -31,6 +31,20 @@ Env::load(DUKTIG_ROOT_PATH.'.env');
 # Initialize Request/Response
 $request = new Request();
 $response = new Response();
+
+# Check the request host in case of injection
+if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], explode(',', Config::get()['AllowedHosts']))) {
+
+    $response->sendJson([
+        'status' => 'error',
+        'message'=>'Host not allowed'
+        ],
+        400
+    );
+
+    $response->sendFinal();
+
+}
 
 set_exception_handler(function($e) use($response) {
 
@@ -86,7 +100,7 @@ try {
 	# If no route match/found to run, Routing will automatically send Error 404
 	Router::init($request, $response);
 
-	# Finally, send response to client.
+	# Finally, send response to a client.
     $response->sendFinal();
 
 } catch(\Throwable $e) {

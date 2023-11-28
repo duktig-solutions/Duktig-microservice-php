@@ -21,12 +21,16 @@ class Roles extends BaseAccount {
 	/**
 	 * Each model can contain it's own database table name(s).
 	 *
-	 * @access private
+	 * @access protected
 	 * @var string
 	 */
-	private $table = 'roles';
+	protected $table = 'roles';
 
-    public function fetchAll() {
+    /**
+     * @throws \Exception
+     */
+    public function fetchAll(): array
+    {
         return $this->fetchAllAssoc("Select * from ".$this->table." order by roleName ");
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-use \System\Env;
+use System\Env;
 
 /**
  * Application Main Configuration file.
@@ -16,13 +16,16 @@ return [
     'ProjectName' => Env::get('PROJECT_NAME'),
 
 	# Microservice ID (Aka System id) for each instance.
-	# i.e. Accounts | Reports | DataReception | Notes, etc ...
+	# I.e., Accounts | Reports | DataReception | Notes, etc ...
 	'Microservice' => Env::get('MICROSERVICE_ID'),
+
+    // Allowed hosts
+    'AllowedHosts' => Env::get('ALLOWED_HOSTS'),
 
     # Log errors. All type of error logs located in: /app/log
     'LogErrors' => Env::get('LOG_ERRORS'),
 
-    # Display errors configuration flag for php.ini
+    # Display errors a configuration flag for php.ini
     'DisplayErrors' => Env::get('DISPLAY_ERRORS'),
 
     # Default date time zone for application
@@ -31,7 +34,7 @@ return [
     'DateTimezone' => Env::get('DATE_TIME_ZONE'),
 
     # Application mode can be: production | development and others
-    # If it is production mode, detailed error messages will not be displayed in Response json.
+    # If it is a production mode, detailed error messages will not be displayed in Response json.
     'Mode' => Env::get('RUN_MODE'),
 
     # If application is under maintenance any Request will be
@@ -39,7 +42,7 @@ return [
     'UnderMaintenance' => Env::get('UNDER_MAINTENANCE'),
 
     # Enable or disable CLI mode.
-    # In some cases you can temporarily disable CLI functionality.
+    # In some cases, you can temporarily disable CLI functionality.
     # Set this to "0" to stop Cli route parsing and functionality.
     'DisableCLI' => Env::get('DISABLE_CLI'),
 
@@ -123,7 +126,7 @@ return [
             'database' => Env::get('REDIS_CACHING_DATABASE'),
             'read_write_timeout' => Env::get('REDIS_CACHING_READ_WRITE_TIMEOUT'),
             'password' => Env::get('REDIS_CACHING_PASSWORD'),
-            'cache_expiration_seconds' => Env::get('REDIS_CACHING_EXPIRATION_SECS') // (5 minute = 300 seconds)
+            'cache_expiration_seconds' => Env::get('REDIS_CACHING_EXPIRATION_SECS') // (5 minutes = 300 seconds)
 		]
     ],
 
@@ -195,9 +198,9 @@ return [
 		# Notice: The last slash is important if you specify a path.
 		'DatabasesBackupDir' => '',
 
-		# How many copies will keep the backup.
-		# for instance, setting number 7 will assume that the backup will remove old backups after 7 copies.
-		# And the 7 means to keep backed up databases for 7 days and remove the old 8th.
+		# How many copies will keep the backup?
+		# For instance, setting number 7 will assume that the backup will remove old backups after 7 copies.
+		# And the 7 means to keep backed-up databases for 7 days and remove the old 8th.
 		'DatabasesBackupSteps' => 7
 	],
 

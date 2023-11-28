@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.5.0
+ * @version 1.6.0
  */
 namespace Lib;
 
@@ -138,6 +138,14 @@ class Validator {
 				}
 
 				break;
+
+            case 'phone':
+
+                if(!Valid::phoneNumberE164($value)) {
+                    $errorMessage = 'Required valid phone number' . $errorMessageSuffix;
+                }
+
+                break;
 
 			case 'id':
 				

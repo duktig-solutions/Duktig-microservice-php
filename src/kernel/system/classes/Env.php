@@ -35,6 +35,7 @@ Class Env {
 
         $fileContent = file($filename);
 
+        # Load from Env file
         foreach ($fileContent as $line) {
 
             $line = trim($line);
@@ -45,7 +46,7 @@ Class Env {
             }
 
             // Comment line. ignore
-            if(str_starts_with($line, '#')) {
+            if(substr($line, 0, 1) == '#') {
                 continue;
             }
 
@@ -76,6 +77,21 @@ Class Env {
 
             static::$vars[$item] = $value;
 
+        }
+
+        # Load from Environment variable
+        # This will overwrite existing values in $vars list if already exists
+        foreach(getenv() as $item => $value) {
+
+            if(strtolower(trim($value)) == 'false') {
+                $value = false;
+            } elseif(strtolower(trim($value)) == 'true') {
+                $value = true;
+            } else {
+                $value = trim($value);
+            }
+
+            static::$vars[$item] = $value;
         }
 
         return static::$vars;

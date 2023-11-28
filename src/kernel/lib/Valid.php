@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.2.0
+ * @version 1.3.0
  */
 Namespace Lib;
 
@@ -64,7 +64,7 @@ class Valid {
      *
 	 * @static
      * @access public
-     * @param mixed
+     * @param mixed $data
      * @return string|bool false
      */
     public static function creditCard($data) {
@@ -324,6 +324,45 @@ class Valid {
 		return false;
 
 	} // End func email
+
+    /**
+     * Validate phone number with E.164 standard
+     * E.164 is the international telephone numbering plan that ensures each device on the PSTN has a globally unique number.
+     * This number allows phone calls and text messages can be correctly routed to individual phones in different countries.
+     * E.164 numbers are formatted [+] [country code] [subscriber number including area code] and can have a maximum of fifteen digits.
+     *
+     * Examples of E.164 Numbers
+     *
+     * E.164 Format  Country Code Country    Subscriber Number
+     * +14155552671  1            US         4155552671
+     * +442071838750 44           GB         2071838750
+     * +551155256325 55           BR         1155256325
+     *
+     * @static
+     * @access public
+     * @param mixed $data
+     * @return bool
+    */
+    public static function phoneNumberE164($data) : bool {
+
+        if(!is_scalar($data)) {
+            return false;
+        }
+
+        if(strlen($data) < 10) {
+            return false;
+        }
+
+        // Regex pattern for validating phone numbers
+        $pattern = '/^\+[1-9]\d{1,14}$/';
+
+        // Perform the regex match
+        $isValid = preg_match($pattern, $data);
+
+        // Return the validation result
+        return $isValid === 1;
+
+    }
 
 	/**
 	 * Check if valid float value in given range

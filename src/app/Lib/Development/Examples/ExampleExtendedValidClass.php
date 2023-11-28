@@ -16,7 +16,7 @@ namespace App\Lib\Development\Examples;
 class ExampleExtendedValidClass extends \Lib\Valid {
 
 	/**
-	 * Example method for extended library
+	 * Example method for an extended library
 	 *
 	 * @access public
 	 * @param int $a

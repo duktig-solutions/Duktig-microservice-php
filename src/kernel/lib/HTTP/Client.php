@@ -22,12 +22,12 @@ class Client {
 	 * @access public
 	 * @param string $url
 	 * @param string $method
-	 * @param mixed array | string | null $data
-	 * @param mixed array | null $headers
-	 * @param mixed array | null $files
+	 * @param array|string|null $data
+	 * @param array|null $headers
+	 * @param array|null $files
 	 * @return mixed
 	 */
-	public static function sendRequest(string $url, string $method = 'GET', $data = '',  ?array $headers = [], ?array $files = []) : array {
+	public static function sendRequest(string $url, string $method = 'GET', array|string|null $data = '', ?array $headers = [], ?array $files = []) : array {
 
 		# Initialize the CURL
 		$handle = curl_init();
@@ -46,18 +46,19 @@ class Client {
 		# Set POST/PUT/DELETE Data if not GET request
 		if($method != 'GET') {
 
-			$requestData = [];
-
 			$curlOptions[CURLOPT_CUSTOMREQUEST] = strtoupper($method);
 
-            // @todo Figure out this
-			if(is_array($data)) {
-				$requestData = $data;
-				//$curlOptions[CURLOPT_POSTFIELDS] = http_build_query($data);
+
+            $requestData = $data;
+
+            /*
+             * @todo Figure out this
+            if(is_array($data)) {
+            	$curlOptions[CURLOPT_POSTFIELDS] = http_build_query($data);
 			} else {
-				$requestData = $data;
-				//$curlOptions[CURLOPT_POSTFIELDS] = $data;
+				$curlOptions[CURLOPT_POSTFIELDS] = $data;
 			}
+            */
 
 			# Files attachment
 			if(!empty($files)) {
@@ -123,7 +124,7 @@ class Client {
 	 * @param array|null $files
 	 * @return void
 	 */
-	public static function sendRequestAsync(string $url, string $method = 'GET', $data = '', ?array $headers = [], ?array $files = []) : void {
+	public static function sendRequestAsync(string $url, string $method = 'GET', array|string|null $data = '', ?array $headers = [], ?array $files = []) : void {
 
 		# Command to execute
 		$cmd = Config::get('app')['Executables']['curl'];

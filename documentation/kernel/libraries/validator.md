@@ -768,6 +768,13 @@ See all rules listed bellow
         - `email` Required a valid email address
         - `email:!required` Required a valid email address or empty string
 
+- `phone`
+    - Requirement: Valid phone number
+    - Pattern: ***phone:{not-required}***
+    - Pattern examples:
+        - `phone` Required a valid phone number
+        - `phone:!required` Required a valid phone number or empty string
+
 - `id`
     - Requirement: Valid ID (Integer Number > 0)
     - Pattern: ***id:{not-required}***

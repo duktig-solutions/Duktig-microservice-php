@@ -238,7 +238,7 @@ class DataGenerator {
     }
 
     /**
-     * Create random sentence by given text.
+     * Create a random sentence by given text.
      *
      * @static
      * @access public

@@ -112,10 +112,23 @@ $validation = Validator::validateJson(
 );
 ```
 
+`phone` - validate a phone number with E.164 format
+
+```php
+<?php
+
+$validation = Validator::validateJson(
+  $request->rawInput(),
+  [
+    'phone' => 'phone'
+  ]
+);
+```
+
 *File: kernel/lib/Validator.php*
 
 
-**New Validation methods in `Valid` library to validate for Latitude/Longitude and Date Time ISO: 8601**
+**New Validation methods in `Valid` library to validate for Latitude/Longitude, Date Time ISO: 8601 and Phone number with E.164 format**
 
 ```php
 <?php
@@ -129,6 +142,11 @@ if(Valid::longitude($value)) {
 }
 
 if(Valid::dateTimeIso($value)) {
+  // code here
+}
+
+
+if(Valid::phoneNumberE164($value)) {
   // code here
 }
 

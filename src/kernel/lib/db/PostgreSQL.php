@@ -317,7 +317,7 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return resource
+     * @return \PgSql\Result
      * @throws Exception
      */
     final public function query(string $queryString, ?array $params = NULL) {
