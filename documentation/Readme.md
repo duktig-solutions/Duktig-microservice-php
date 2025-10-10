@@ -16,7 +16,7 @@
     - [Configuration and environment variables](installation/env-configuration.md)
     - [Local development deployment](installation/local-dev-deployment.md)
 - Development:
-    - HTTP and CLI Routing
+    - [HTTP and CLI Routing](development/http-and-cli-routing.md)
     - HTTP Workflow
     - CLI workflow
     - Middleware
