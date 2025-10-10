@@ -30,6 +30,15 @@ You should see: `pong` response ;)
 
 That's it! Now you can read Examples and Tutorials for future steps.
 
+## Unit Tests
+
+Run already written unit tests.
+
+```shell
+cd ./src
+./vendor/bin/phpunit --configuration phpunit.xml --testdox
+```
+
 ## Project Features
 
 ### Simple setup
@@ -141,6 +150,6 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 
 Author: `Duktig Solutions` [framework@duktig.solutions](mailto:framework@duktig.solutions)
 
-[![Twitter](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20Twitter%20)](https://twitter.com/DuktigS)
+[![X](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20X%20)](https://twitter.com/DuktigS)
 
 >Project Development Idea from 04 April 2019
