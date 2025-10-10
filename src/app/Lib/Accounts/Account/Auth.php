@@ -13,6 +13,7 @@ namespace App\Lib\Accounts\Account;
 use Exception;
 use \System\Config;
 use \Lib\HTTP\ClientInfo;
+use System\HTTP\Request;
 
 class Auth extends \Lib\Auth\Jwt {
 
@@ -22,11 +23,11 @@ class Auth extends \Lib\Auth\Jwt {
      * @static
      * @access public
      * @param array $account
-	 * @param \System\HTTP\Request $request
+	 * @param Request $request
      * @return array
      * @throws Exception
      */
-    public static function Authorize(array $account, \System\HTTP\Request $request) : array {
+    public static function Authorize(array $account, Request $request) : array {
 		
 		# Assuming this can be an IP Address provided by Nginx Proxy pass
 		if(!empty($request->headers('X-Real-Ip'))) {
@@ -54,7 +55,7 @@ class Auth extends \Lib\Auth\Jwt {
             'refreshTokenExpires' => date('Y-m-d H:i:s', strtotime(Config::get()['JWT']['refresh_token']['exp']))
         ];
         
-        \Lib\Auth\TokenStorage::set(
+        \Lib\Auth\Storage::setAuthData(
             $account['userId'],
             $tokenStorageKey, 
             $tokenStorageData, 

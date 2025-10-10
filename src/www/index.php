@@ -6,13 +6,15 @@ declare(strict_types=1);
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.1.0
+ * @version 1.1.1
  */
 namespace System\HTTP;
 
-use Exception;
 use System\Config;
+use System\Ehandler;
 use System\Env;
+use Exception;
+use Throwable;
 
 # Define a project root path
 define('DUKTIG_ENV', 'http');
@@ -54,7 +56,7 @@ set_exception_handler(function($e) use($response) {
     # Reset Response data, Set new data and output.
     $response->reset();
     $response->sendJson(
-        \System\Ehandler::getDetailed($e->getMessage(), $e->getCode()),
+        Ehandler::getDetailed($e->getMessage(), $e->getCode()),
         500
     );
     $response->sendFinal();
@@ -70,7 +72,7 @@ set_error_handler(
     
         // # This will return true, if not notice
         // # In case if this is not a notice, we throw an Exception
-        if(\System\Ehandler::processError($message, $code, $file, $line)) {
+        if(Ehandler::processError($message, $code, $file, $line)) {
             throw new Exception($message . " - ".$file.":".$line);
         }
 
@@ -103,14 +105,14 @@ try {
 	# Finally, send response to a client.
     $response->sendFinal();
 
-} catch(\Throwable $e) {
+} catch(Throwable $e) {
     
-    \System\Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
+    Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
 
     # Reset Response data, Set new data and output.
     $response->reset();
     $response->sendJson(
-        \System\Ehandler::getDetailed($e->getMessage(), $e->getCode()),
+        Ehandler::getDetailed($e->getMessage(), $e->getCode()),
         500
     );
     $response->sendFinal();

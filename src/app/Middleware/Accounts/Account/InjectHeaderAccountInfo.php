@@ -19,7 +19,8 @@ use System\Config;
  */
 class InjectHeaderAccountInfo {
 
-    public function injectFromHeaders(Request $request, Response $response, array $middlewareData) {
+    public function injectFromHeaders(Request $request, Response $response, array $middlewareData): false|array
+    {
         
         $data = json_decode($request->headers('X-Account-Info'), true);
 

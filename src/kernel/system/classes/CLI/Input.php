@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.2
  */
 namespace System\CLI;
 
@@ -102,7 +102,8 @@ class Input {
      * @param string|null $default
      * @return array|mixed|string
      */
-    public function args(?int $arg = Null, ?string $default = '') {
+    public function args(?int $arg = Null, ?string $default = ''): mixed
+    {
 
         if(is_null($arg)) {
             return $this->args;
@@ -124,7 +125,8 @@ class Input {
      * @param string|null $default
      * @return array|mixed|string
      */
-    public function parsed(?string $arg = Null, ?string $default = '') {
+    public function parsed(?string $arg = Null, ?string $default = ''): mixed
+    {
 
         if(is_null($arg)) {
             return $this->parsedArgs;
@@ -144,7 +146,8 @@ class Input {
      * @access public
      * @return string
      */
-    public function stdin() {
+    public function stdin(): string
+    {
         return trim(fgets(STDIN));
     }
 

@@ -30,7 +30,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Workers\Development;
 
@@ -42,7 +42,7 @@ namespace App\Workers\Development;
 Class TestWorker {
 
     private string $logFile;
-    private $pid;
+    private int|false $pid;
 
     public function __construct() {
         $this->logFile = DUKTIG_APP_PATH . 'log/mq-analyze.txt';
@@ -112,7 +112,8 @@ Class TestWorker {
         return True;
     }
 
-    private function Log($resultStr) {
+    private function Log($resultStr): void
+    {
         file_put_contents($this->logFile, $resultStr."\n", FILE_APPEND);
     }
 }

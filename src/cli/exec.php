@@ -5,10 +5,11 @@ declare(strict_types=1);
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace System\CLI;
 
+use System\Ehandler;
 use \System\Env;
 use \System\Logger;
 use \System\Config;
@@ -47,7 +48,7 @@ set_error_handler(function($code, $message, $file, $line) use ($output) {
 
     # This will return true, if not notice
     # In case if this is not a notice, we are throwing an Exception
-    if(\System\Ehandler::processError($message, $code, $file, $line)) {
+    if(Ehandler::processError($message, $code, $file, $line)) {
         $output->stderr("\nError! " . $message);
     }
 
@@ -67,15 +68,15 @@ try {
 
     # Initialize Route
     # If no route match/found to run, Routing will automatically exit with error
-    \System\CLI\Router::init($input, $output);
+    Router::init($input, $output);
 
 } catch(\Throwable $e) {
 
-    \System\Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
+    Ehandler::processError($e->getMessage(), 0, $e->getFile(), $e->getLine());
 
 	# In some cases, the process can be locked.
 	# Let's try to unlock
-	\System\CLI\Router::unlockProcess();
+	Router::unlockProcess();
 
     $output->stderr($e->getMessage());
 

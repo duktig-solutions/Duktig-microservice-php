@@ -4,9 +4,11 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace System\CLI;
+
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class Output
@@ -27,7 +29,7 @@ class Output {
      * @param bool $newLine = true
      * @return void
      */
-    public function stdout($outputString, bool $newLine = true) : void {
+    public function stdout(mixed $outputString, bool $newLine = true) : void {
 
         fwrite(STDOUT, (string) $outputString);
 

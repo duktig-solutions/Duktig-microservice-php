@@ -4,12 +4,14 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.2
  */
 namespace System\HTTP;
 
+use Exception;
 use \Lib\Valid;
 use \System\Config;
+use \System\Logger;
 
 /**
  * Class Router
@@ -43,20 +45,21 @@ class Router {
 	 * @access protected
 	 * @var mixed
 	 */
-	protected static $route = NULL;
+	protected static mixed $route = NULL;
 
-	/**
-	 * Initialize route
-	 * This method gets configured routes from /app/config/http-routes.php and tries to parse/compare with Request paths.
-	 * i.e. Compare/parse configured "/users/{id}/posts/{num}" with request "users/15/posts/69"
-	 * If the route matches, static::$route will set.
-	 *
-	 * @static
-	 * @access public
-	 * @param Request $request
-	 * @param Response $response
-	 * @return bool
-	 */
+    /**
+     * Initialize route
+     * This method gets configured routes from /app/config/http-routes.php and tries to parse/compare with Request paths.
+     * i.e. Compare/parse configured "/users/{id}/posts/{num}" with request "users/15/posts/69"
+     * If the route matches, static::$route will set.
+     *
+     * @static
+     * @access public
+     * @param Request $request
+     * @param Response $response
+     * @return bool
+     * @throws \Exception
+     */
 	public static function init(Request $request, Response $response) : bool {
 
 		# set Request and Response object for next steps
@@ -67,7 +70,7 @@ class Router {
 		# Get Route Configuration by Request type. i.e. POST
 		$routesConfig = Config::get('http-routes')[static::$request->method()];
 		
-		# Case when there are no any configuration for given request
+		# Case when there is no any configuration for given request
 		if(empty($routesConfig)) {
 
 			static::$response->sendJson([
@@ -78,36 +81,54 @@ class Router {
 			return false;
 		}
 
-		# Walk through each route and try to compare/parse
-		foreach($routesConfig as $uri => $route) {
+        # First, let's check, if this is the root path: / or nothing.
+        if(static::$request->paths() === ['/'] or empty(static::$request->paths())) {
 
-			# Make array with route elements
-			$routePaths = explode('/', trim($uri, '/'));
+            if(isset($routesConfig['/'])) {
+                static::$route = $routesConfig['/'];
+            }
 
-			# Compare route with request paths
-			$comparedResult = static::compareRoutes($routePaths, static::$request->paths());
+        } else {
 
-			// OK! Route matches
-			if($comparedResult !== false) {
-				static::$route = $route;
-				break;
-			}
+            # Walk through each route and try to compare/parse
+            foreach ($routesConfig as $uri => $route) {
 
-		}
+                # Make array with route elements
+                $routePaths = explode('/', trim($uri, '/'));
+
+                # Compare route with request paths
+                $comparedResult = static::compareRoutes($routePaths, static::$request->paths());
+
+                // OK! Route matches
+                if ($comparedResult !== false) {
+                    static::$route = $route;
+                    break;
+                }
+
+            }
+        }
 
 		# Check, if route detected previously
 		if(is_null(static::$route)) {
 
-			static::$response->sendJson([
-				'status' => 'error',
-				'message' => 'Resource not found'
-			], 404);
+            # Need to log error 404 cases?
+            if(Config::get()['LogError404Cases'] ?? false) {
+                Logger::Log('Page Not Found. Error 404: '.static::$request->uri(), Logger::ERROR);
+            }
+
+            if(static::$request->paths(0) == trim('api', '/')) {
+
+                static::$response->sendJson([
+                    'status' => 'error',
+                    'message' => 'Resource not found'
+                ], 404);
+            }
 
 			return false;
 		}
 		
 		# Some route found. Let's execute it.
-		# If route has middleware, then execute
+		# If the route has middleware, then execute
 		$middlewareResult = static::executeRouteMiddleware();
 
 		# If the middleware result is false, we cannot continue to controller.
@@ -171,7 +192,7 @@ class Router {
 				continue;
 			}
 
-			# check if route is equal to path (i.e. /users/ -> /users/ )
+			# check if route is equal to a path (i.e. /users/ -> /users/ )
 			if($routePaths[$i] != $requestPaths[$i]) {
 				return false;
 			}
@@ -190,7 +211,7 @@ class Router {
 	 * @access protected
 	 * @return mixed
 	 */
-	protected static function executeRouteMiddleware() {
+	protected static function executeRouteMiddleware(): mixed {
 
 		# By default, the result is empty array
 		$result = [];
@@ -223,18 +244,19 @@ class Router {
 
 	}
 
-	/**
-	 * Finally Execute Route Controller
-	 *
-	 * @static
-	 * @access protected
-	 * @param array $middlewareResult
-	 * @return void
-	 */
+    /**
+     * Finally, Execute Route Controller
+     *
+     * @static
+     * @access protected
+     * @param array $middlewareResult
+     * @return void
+     * @throws Exception
+     */
 	protected static function executeRouteController(array $middlewareResult) : void {
 
-		# Let's check, if this route configured with caching
-		# If so, the Response object will care about next functionality.
+		# Let's check, if this route configured with caching,
+		# If so, the Response object will care about the next functionality.
 		if(static::isRouteCacheable()) {
 			
 			# We get a cache key and cache configuration of route for response functionality.
@@ -246,10 +268,14 @@ class Router {
 
 		$ctrlConfig = explode('->', static::$route['controller']);
 
+        if(count($ctrlConfig) < 2) {
+            throw new Exception('Invalid HTTP route Controller configuration: ' . static::$route['controller']);
+        }
+
 		$className = "\\App\\Controllers\\$ctrlConfig[0]";
 		$methodName = $ctrlConfig[1];
 
-		# Create New Controller Object and execute
+		# Create a new Controller Object and execute
 		$ctrlObject = new $className();
 		$ctrlObject->$methodName(static::$request, static::$response, $middlewareResult);
 
@@ -263,7 +289,7 @@ class Router {
 	 * @access public
 	 * @return mixed
 	 */
-	public static function getRoute() {
+	public static function getRoute(): mixed {
 		return static::$route;
 	}
 

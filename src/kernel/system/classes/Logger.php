@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.2
  */
 namespace System;
 
@@ -42,6 +42,7 @@ class Logger  {
 	/**
 	 * Return log types
 	 *
+     * @static
 	 * @access public
 	 * @return array
 	 */
@@ -68,7 +69,7 @@ class Logger  {
     public static function Log(string $message, string $type = 'INFO', ?string $file = NULL, ?int $line = NULL, ?string $logFile = 'app.log') : void {
 
         $message = date('Y-m-d H:i:s') . " _| " .
-	          Config::get()['Microservice'] . " _| " .
+	          Config::get()['ServiceId'] . " _| " .
 	          $type . " _| " .
 	          $message;
 
@@ -77,7 +78,7 @@ class Logger  {
         }
 
 	    if(!is_null($line)) {
-		    $message .= " _| " . $line;
+		    $message .= ":" . $line;
 	    }
 
 	    $message .= "\n";
@@ -88,7 +89,15 @@ class Logger  {
 
     }
 
-    public static function CleanLogFile(?string $logFile = 'app.log') {
+    /**
+     * Clean log file
+     *
+     * @statuc
+     * @access public
+     * @param string|null $logFile
+     * @return void
+     */
+    public static function CleanLogFile(?string $logFile = 'app.log'): void {
 
         $filePath = DUKTIG_APP_PATH . 'log/'.$logFile;
 
@@ -101,6 +110,7 @@ class Logger  {
 	/**
 	 * Parse Log line and return array
 	 *
+     * @static
 	 * @access public
 	 * @param string $line
 	 * @return array
@@ -109,7 +119,7 @@ class Logger  {
 
 	    $result = [
 		    'date' => '',
-		    'microservice' => '',
+		    'service_id' => '',
 		    'type' => static::INFO,
 		    'message' => $line,
 		    'file' => '',
@@ -127,7 +137,7 @@ class Logger  {
 	    $result['date'] = trim($splitLine[0]);
 
 	    if(isset($splitLine[1])) {
-		    $result['microservice'] = trim($splitLine[1]);
+		    $result['service_id'] = trim($splitLine[1]);
 	    }
 
 	    if(isset($splitLine[2])) {

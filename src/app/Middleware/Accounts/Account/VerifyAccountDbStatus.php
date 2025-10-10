@@ -2,8 +2,9 @@
 /**
  * Verify user status from Database and inject account information into middleware data
  * Used For Account controller
- * 
- * @deprecated Now we getting user status and role info from TokenStorage
+ *
+ * @version 1.0.1
+ * @deprecated Now we're getting user status and role info from TokenStorage
  */
 namespace App\Middleware\Accounts\Account;
 
@@ -19,15 +20,15 @@ use App\Models\Accounts\Account\Account as AccountModel;
 class VerifyAccountDbStatus {
 
     /**
-     * Verify user account status in Dataabse and inject account data into middleware
+     * Verify user account status in Database and inject account data into middleware
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return array|bool
 	 * @throws \Exception 
      */
-    public function getVerify(Request $request, Response $response, array $middlewareData) {
+    public function getVerify(Request $request, Response $response, array $middlewareData): bool|array {
         
         # Fields: userId, roleId, notEditableFields
         $userModel = new AccountModel();

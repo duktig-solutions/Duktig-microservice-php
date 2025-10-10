@@ -5,10 +5,8 @@
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
- * @version 1.0.0
- *
- * @todo this is a file in documentation event-publisher.md
- */ 
+ * @version 1.0.1
+ */
 namespace Lib\Events;
 
 # PHPRedis Extension
@@ -45,20 +43,21 @@ class IntermediateEvents {
      * Redis object
      * 
      * @access protected
-     * @var RedisClient
+     * @var ?RedisClient $redis = null
      */
-    protected static RedisClient $redis;
+    protected static ?RedisClient $redis = null;
 
     /**
      * Connect to Redis server as a token storage
-     * 
+     *
      * @access protected
      * @return void
+     * @throws RedisException
      */
     protected static function connectStorage() : void {
 
-        # Get connection from application config and merge with defaults
-        static::$config = array_merge(static::$config, Config::get()['Redis']['GeneralEventsRedis']);
+        # Get connection from application Config and merge with defaults
+        static::$config = array_merge(static::$config, Config::get()['Redis']['EventsPubSub']);
         
         # Connect to Redis
         static::$redis = new RedisClient();
@@ -85,7 +84,7 @@ class IntermediateEvents {
      */
     protected static function pingStorage(): bool {
 
-        if(is_null(static::$redis)) {
+        if (!(static::$redis instanceof RedisClient)) {
             static::connectStorage();
             return true;
         }

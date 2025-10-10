@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.2
  */
 namespace System\HTTP;
 
@@ -183,7 +183,7 @@ class Response {
         # Set the Content-type anyway
         $this->responseData['status'] = $status;
         $this->responseData['headers']['Content-Type'] = 'application/json';
-        $this->responseData['data'] = json_encode($responseData, JSON_NUMERIC_CHECK);
+        $this->responseData['data'] = json_encode($responseData); // JSON_NUMERIC_CHECK
 
     }
 
@@ -254,12 +254,7 @@ class Response {
 			$statusHeader = "Status: $status $statusMessage";
 		} else {
 			// Define Server Protocol.
-			if(isset($_SERVER['SERVER_PROTOCOL'])) {
-				$serverProtocol = $_SERVER['SERVER_PROTOCOL'];
-			} else {
-				$serverProtocol = 'HTTP/1.0';
-			}
-
+            $serverProtocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
 			$statusHeader = "$serverProtocol $status $statusMessage";
 		}
 
@@ -272,7 +267,7 @@ class Response {
 			}
 		}
 
-		# Will set cache data if enabled and the status is not error.
+		# Will set cache data if enabled and the status is not an error.
 		if($this->cachingEnabled and $this->responseData['status'] < 400) {
 			$this->cacheLib->setArray($this->cacheKey, $this->responseData);
 		}
@@ -299,13 +294,13 @@ class Response {
 
 		$responseData = $this->cacheLib->getArray($key);
 
-		# If there are data from cache, let's send response.
+		# If there are data from cache, let's send a response.
 		if(!empty($responseData)) {
 
 			# Replace the response data
 			$this->responseData = $responseData;
 
-			# Add special Header to tell client about cached content
+			# Add a special Header to tell a client about cached content
             $this->header('X-Content-Cached', 'Yes');
 
 			# No need to cache already cached data.
@@ -351,7 +346,7 @@ class Response {
      * @access public
      * @return void
      */
-    public function reset() {
+    public function reset(): void {
 
         $this->responseData = [
             'status' => 200,

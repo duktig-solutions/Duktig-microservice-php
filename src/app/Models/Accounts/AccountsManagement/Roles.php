@@ -19,12 +19,12 @@ use App\Models\Accounts\BaseAccount;
 class Roles extends BaseAccount {
 
 	/**
-	 * Each model can contain it's own database table name(s).
+	 * Each model can contain its own database table name(s).
 	 *
 	 * @access protected
 	 * @var string
 	 */
-	protected $table = 'roles';
+	protected string $table = 'roles';
 
     /**
      * @throws \Exception

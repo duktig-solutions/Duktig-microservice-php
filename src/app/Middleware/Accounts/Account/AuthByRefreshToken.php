@@ -22,13 +22,14 @@ class AuthByRefreshToken {
 	/**
 	 * Authenticate refresh token
 	 *
-	 * @param \System\HTTP\Request $request
-	 * @param \System\HTTP\Response $response
+	 * @param Request $request
+	 * @param Response $response
 	 * @param array $middlewareData
 	 * @return array|bool
 	 * @throws \Exception
 	 */
-	public function check(Request $request, Response $response, array $middlewareData) {
+	public function check(Request $request, Response $response, array $middlewareData): bool|array
+    {
 		
 		# Get jwt from Headers with Token key name from config
 		$jwt = $request->headers(Config::get()['JWT']['refresh_token']['RefreshTokenKey']);
@@ -145,7 +146,7 @@ class AuthByRefreshToken {
 		# Now try to get a token data from TokenStorage
         # Notice! This token data expiration is the same as refreshToken expiration.
         # In case of Admin removes this token, a user cannot access to verify or refresh the token eve if it wasn't expired.
-        $storedToken = \Lib\Auth\TokenStorage::get(
+        $storedToken = \Lib\Auth\Storage::get(
 			$decodedJWT['payload']['account']['userId'], 
 			$decodedJWT['payload']['account']['userId'].'_'.sha1($decodedJWT['payload']['account']['deviceId'])
 		);

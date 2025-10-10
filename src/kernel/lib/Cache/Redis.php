@@ -5,7 +5,7 @@
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
- * @version 1.0.1
+ * @version 1.0.2
  */
 namespace Lib\Cache;
 
@@ -55,7 +55,7 @@ class Redis {
 
         # Connect to Redis
         $this->redis = new RedisClient();
-        $this->redis->connect($this->config['host'], $this->config['port'], 0);
+        $this->redis->connect($this->config['host'], $this->config['port']);
 
         # Auth if password specified
         if ($this->config['password'] != '') {
@@ -82,7 +82,7 @@ class Redis {
      * @return void
      * @throws RedisException
      */
-	public function set(string $key, $data, ?int $expiresInSeconds = null): void
+	public function set(string $key, mixed $data, ?int $expiresInSeconds = null): void
     {
         
         $this->redis->set($key, $data);
@@ -110,7 +110,8 @@ class Redis {
      * @return void
      * @throws RedisException
      */
-    public function setArray(string $key, array $data, ?int $expiresInSeconds = null) {
+    public function setArray(string $key, array $data, ?int $expiresInSeconds = null): void
+    {
 
         $data = json_encode($data, JSON_NUMERIC_CHECK);
         $this->set($key, $data, $expiresInSeconds);
@@ -123,7 +124,8 @@ class Redis {
 	 * @param string $key
 	 * @return mixed
 	 */
-	public function get(string $key) {
+	public function get(string $key): mixed
+    {
 		return $this->redis->get($key);
 	}
 
@@ -133,7 +135,8 @@ class Redis {
      * @param string $key
      * @return mixed
      */
-    public function getArray(string $key) {
+    public function getArray(string $key): mixed
+    {
 
         $data = $this->get($key);
 

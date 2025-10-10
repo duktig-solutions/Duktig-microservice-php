@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.1
+ * @version 1.0.2
  */
 namespace Lib\Db;
 
@@ -118,6 +118,7 @@ class MySQLi {
      * @param string $table
      * @param array $data
      * @return int
+     * @throws Exception
      */
     final public function insert(string $table, array $data) : int {
 
@@ -127,7 +128,10 @@ class MySQLi {
         $types = $this->prepareBindParamTypes($data);
         $stmt->bind_param($types, ...array_values($data));
 
-        $stmt->execute();
+        if(!$stmt->execute()) {
+            throw New Exception($stmt->error);
+        }
+
         $insertId = $this->mysqli->insert_id;
         $stmt->close();
 
@@ -257,7 +261,7 @@ class MySQLi {
      * @return false|mysqli_result
      * @throws Exception
      */
-    final public function query(string $queryString, ?array $params = NULL) {
+    final public function query(string $queryString, ?array $params = NULL): bool|mysqli_result {
 
     	try {
 		    $stmt = $this->mysqli->prepare($queryString);
@@ -284,11 +288,11 @@ class MySQLi {
     }
 
     /**
-     * Execute Asynchronous queries and return a results array.
-     * Results will be sorted in array with queries order.
-     * i.e. 5th element in result array is the result of 5th query.
+     * Execute Asynchronous queries and return a result array.
+     * Results will be sorted in an array with query order.
+     * i.e., 5th element in a result array is the result of 5th query.
      *
-     * If a query not have defined "config" array,
+     * If a query not has defined "Config" array,
      * the library first initialization configuration will be used to connect.
      *
      * Warning! MySQL Query strings should be escaped before.
@@ -297,16 +301,16 @@ class MySQLi {
      *
      * [
      *  [
-     *      'config' => array of connection config,
+     *      'Config' => array of connection Config,
      *      'query' => 'mysql query string'
      *  ],
      *  [
-     *      'config' => array of connection config,
+     *      'Config' => array of connection Config,
      *      'query' => 'mysql query string'
      *  ]
      * ]
      *
-     * Another example without config
+     * Another example without Config
      *
      * [
      *  [
@@ -330,12 +334,7 @@ class MySQLi {
         # Initialize each query connection
         foreach ($queries as $index => $queryData) {
 
-            if(isset($queryData['config'])) {
-                $config = $queryData['config'];
-            } else {
-                $config = $this->config;
-            }
-
+            $config = $queryData['Config'] ?? $this->config;
             $connLinks[$index] = $this->connect($config);
             $connLinks[$index]->query($queryData['query'], MYSQLI_ASYNC);
 
@@ -404,7 +403,7 @@ class MySQLi {
     }
 
     /**
-     * Fetch record and return Assoc array
+     * Fetch a record and return Assoc array
      *
      * @final
      * @access public
@@ -428,7 +427,7 @@ class MySQLi {
     }
     
     /**
-     * Fetch Records as assoc array by Where conditions
+     * Fetch Records as an assoc array by Where conditions
      *
      * @final
      * @access public
@@ -493,7 +492,7 @@ class MySQLi {
     }
 
 	/**
-	 * Fetch Record as assoc array by Where conditions
+	 * Fetch Record as an assoc array by Where conditions
 	 *
 	 * @final
 	 * @access public
@@ -525,7 +524,7 @@ class MySQLi {
 	}
 
     /**
-	 * Fetch Record specified fields as assoc array by Where conditions
+	 * Fetch Record specified fields as an assoc array by Where conditions
 	 *
 	 * @final
 	 * @access public
@@ -579,7 +578,7 @@ class MySQLi {
      * @param bool $autoCommit = false
      * @return void
      */
-    final public function beginTrans(bool $autoCommit = false) {
+    final public function beginTrans(bool $autoCommit = false) : void {
         $this->mysqli->autocommit($autoCommit);
         $this->mysqli->begin_transaction();
     }
@@ -590,7 +589,7 @@ class MySQLi {
      * @access public
      * @return void
      */
-    final public function commitTrans() {
+    final public function commitTrans() : void {
         $this->mysqli->commit();
         $this->mysqli->autocommit(true);
     }
@@ -601,7 +600,7 @@ class MySQLi {
      * @access public
      * @return void
      */
-    final public function rollbackTrans() {
+    final public function rollbackTrans() : void {
         $this->mysqli->rollback();
     }
 

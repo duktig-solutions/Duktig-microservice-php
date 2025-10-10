@@ -6,9 +6,8 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.1.0
+ * @version 1.1.1
  * @requires phpredis extension
- * @todo finalize with function argument types, comments...
  */
 namespace System\MessageQueue;
 
@@ -72,9 +71,10 @@ class HealthInspector {
      * @static
      * @access public
      * @param array $config
-     * @return mixed
+     * @return void
      */
-    public static function inspect(array $config) {
+    public static function inspect(array $config): void
+    {
 
         static::$config = $config;
 
@@ -83,7 +83,7 @@ class HealthInspector {
 
         static::$redis = new Redis();
 
-        static::$redis->connect($config['host'], $config['port'], 0);
+        static::$redis->connect($config['host'], $config['port']);
 
         if (static::$config['password'] != '') {
             static::$redis->auth($config['password']);
@@ -119,7 +119,8 @@ class HealthInspector {
      * @access private
      * @return bool|int|Redis
      */
-    private static function getQueueCount() {
+    private static function getQueueCount(): bool|int|Redis
+    {
         return static::$redis->lLen(static::$taskQueue);
     }
 
@@ -130,7 +131,8 @@ class HealthInspector {
      * @access private
      * @return bool|int|Redis
      */
-    private static function getWorkersCountFromHeartBeat() {
+    private static function getWorkersCountFromHeartBeat(): bool|int|Redis
+    {
         return static::$redis->lLen(static::$heartBeatList);
     }
 
@@ -141,7 +143,8 @@ class HealthInspector {
      * @access private
      * @return array|Redis
      */
-    private static function getWorkersFromHeartBeat() {
+    private static function getWorkersFromHeartBeat(): array|Redis
+    {
         return static::$redis->lRange(static::$heartBeatList, 0, -1);
     }
 
@@ -194,7 +197,8 @@ class HealthInspector {
      * @access private
      * @return array|Redis
      */
-    private static function getWorkersFromWorkersQueueList() {
+    private static function getWorkersFromWorkersQueueList(): array|Redis
+    {
         return static::$redis->keys(static::$taskQueue . ':worker:*');
     }
 
@@ -203,10 +207,11 @@ class HealthInspector {
      *
      * @static
      * @access private
-     * @param $workerId
+     * @param string $workerId
      * @return array|Redis
      */
-    private static function getWorkerTasksFromWorkersQueueList($workerId) {
+    private static function getWorkerTasksFromWorkersQueueList(string $workerId): array|Redis
+    {
         return static::$redis->lRange(static::$taskQueue.':worker:'.$workerId, 0, -1);
     }
 
@@ -218,7 +223,8 @@ class HealthInspector {
      * @param $workerId
      * @return bool|int|Redis
      */
-    private static function getWorkerTasksQueueCountFromWorkersQueueList($workerId) {
+    private static function getWorkerTasksQueueCountFromWorkersQueueList($workerId): bool|int|Redis
+    {
         return static::$redis->lLen(static::$taskQueue.':worker:'.$workerId);
     }
 
@@ -229,7 +235,8 @@ class HealthInspector {
      * @access private
      * @return int|Redis
      */
-    private static function getDbSize() {
+    private static function getDbSize(): int|Redis
+    {
         return static::$redis->dbSize();
     }
 
@@ -278,7 +285,8 @@ class HealthInspector {
      * @access private
      * @return void
      */
-    private static function inspectTasksQueue() {
+    private static function inspectTasksQueue(): void
+    {
         
         $tasksCount = static::$redis->lLen(static::$taskQueue);
 

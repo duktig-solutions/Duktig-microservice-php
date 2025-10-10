@@ -23,7 +23,7 @@ class Accounts extends BaseAccount
      * @access protected
      * @var array
      */
-    protected $whitelist = [
+    protected array $whitelist = [
         'userId',
 		'roleId',
 		'status',
@@ -62,7 +62,8 @@ class Accounts extends BaseAccount
 	 * @return array
 	 * @throws \Exception
 	 */
-	public function fetchRows($offset, $limit) {
+	public function fetchRows($offset, $limit): array
+    {
 
 		return $this->fetchAllAssoc(
 			"select 

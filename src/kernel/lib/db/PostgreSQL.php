@@ -4,11 +4,16 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.2
+ * @version 1.1.1
+ *
+ * @ChangeLog
+ * - 1.1.0: Config value to set time zone
  */
 namespace Lib\Db;
 
 use Exception;
+use PgSql\Connection;
+use PgSql\Result;
 use Throwable;
 
 /**
@@ -47,11 +52,13 @@ class PostgreSQL {
     /**
      * Class destructor
      *
+     * When developing this code:
+     * @listening Hungarian Dance Radio and planning to Visit Stuttgart, Germany (Feb 2022)
+     *
      * @access public
      */
     public function __destruct() {
 
-        # When developing this code: listening - Hungarian Dance Radio and planning to Visit Stuttgart Germany (Feb 2022)
         $this->close();
 
     }
@@ -62,9 +69,10 @@ class PostgreSQL {
      * @final
      * @access protected
      * @param array $config
-     * @return false|resource
+     * @return Connection|false
      */
-    final protected function connect(array $config) {
+    final protected function connect(array $config) : Connection|false
+    {
 
         # Set port if defined
         if ($config['port'] != '') {
@@ -84,6 +92,10 @@ class PostgreSQL {
         } catch(Throwable $e) {
             \System\Logger::Log($e->getMessage(), \System\Logger::CRITICAL, __FILE__, __LINE__);
             return false;
+        }
+
+        if(!empty($config['timezone'])) {
+            pg_query($conn, "SET TIMEZONE TO '".$config['timezone']."';");
         }
 
         return $conn;
@@ -148,7 +160,7 @@ class PostgreSQL {
      * @return string|boolean|null
      * @throws Exception
      */
-    final public function insert(string $table, array $data, ?string $returnInsertIdFieldName = null) {
+    final public function insert(string $table, array $data, ?string $returnInsertIdFieldName = null): bool|string|null {
         
         $sql = "INSERT INTO ".$this->escape($table)." (";
         $valuesStr = "";
@@ -195,7 +207,7 @@ class PostgreSQL {
      * @return boolean|array
      * @throws Exception
      */
-    final public function insertBatch(string $table, array $fields, array $data, ?string $returnInsertIdFieldName = null) {
+    final public function insertBatch(string $table, array $fields, array $data, ?string $returnInsertIdFieldName = null): bool|array {
 
         $sql = "INSERT INTO ".$this->escape($table)." (";
         $valuesStr = "";
@@ -317,10 +329,11 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return \PgSql\Result
+     * @return Result
      * @throws Exception
      */
-    final public function query(string $queryString, ?array $params = NULL) {
+    final public function query(string $queryString, ?array $params = NULL): Result
+    {
 
         try {
             if(is_null($params)) {
@@ -349,7 +362,7 @@ class PostgreSQL {
      * @return false|int
      * @throws Exception
      */
-    public function queryWithAffectedRows(string $queryString, ?array $params = NULL) {
+    public function queryWithAffectedRows(string $queryString, ?array $params = NULL): bool|int {
 
         $result = $this->query($queryString, $params);
 
@@ -370,13 +383,9 @@ class PostgreSQL {
      * @throws Exception
      * @return bool|array
      */
-    final public function fetchAllAssoc(string $queryString, ?array $params = NULL) {
+    final public function fetchAllAssoc(string $queryString, ?array $params = NULL): bool|array {
 
         $result = $this->query($queryString, $params);
-
-        if (!$result) {
-            return false;
-        }
 
         return pg_fetch_all($result);
 
@@ -392,20 +401,16 @@ class PostgreSQL {
      * @throws Exception
      * @return array|boolean
      */
-    final public function fetchAssoc(string $queryString, ?array $params = NULL) {
+    final public function fetchAssoc(string $queryString, ?array $params = NULL): bool|array {
 
         $result = $this->query($queryString, $params);
 
-        if (!$result) {
-            return [];
-        }
-    
         return pg_fetch_assoc($result);
 
     }
 
     /**
-     * Fetch Records as assoc array by Where conditions
+     * Fetch Records as an assoc array by Where conditions
      *
      * @final
      * @access public
@@ -414,7 +419,7 @@ class PostgreSQL {
      * @return array|boolean
      * @throws Exception
      */
-    final public function fetchAllAssocByWhere(string $table, array $where) {
+    final public function fetchAllAssocByWhere(string $table, array $where): bool|array {
 
         $sql = "SELECT * FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
@@ -443,7 +448,7 @@ class PostgreSQL {
      * @return array|boolean
      * @throws Exception
      */
-    final public function fetchAllFieldsAssocByWhere(string $table, array $fields, array $where) {
+    final public function fetchAllFieldsAssocByWhere(string $table, array $fields, array $where): bool|array {
 
         $sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
@@ -462,7 +467,7 @@ class PostgreSQL {
     }
 
     /**
-     * Fetch Record as assoc array by Where conditions
+     * Fetch Record as an assoc array by Where conditions
      *
      * @final
      * @access public
@@ -471,7 +476,7 @@ class PostgreSQL {
      * @return array|boolean
      * @throws Exception
      */
-	final public function fetchAssocByWhere(string $table, array $where) {
+	final public function fetchAssocByWhere(string $table, array $where): bool|array  {
 
         $sql = "SELECT * FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
@@ -490,7 +495,7 @@ class PostgreSQL {
 	}
 
     /**
-     * Fetch Record specified fields as assoc array by Where conditions
+     * Fetch Record specified fields as an assoc array by Where conditions
      *
      * @final
      * @access public
@@ -500,7 +505,7 @@ class PostgreSQL {
      * @return array|boolean
      * @throws Exception
      */
-	final public function fetchFieldsAssocByWhere(string $table, array $fields, array $where) {
+	final public function fetchFieldsAssocByWhere(string $table, array $fields, array $where): bool|array {
 
         $sql = "SELECT ".implode(',', $fields)." FROM ".$this->escape($table)." ";
         $sql .= ' WHERE ';
@@ -525,7 +530,7 @@ class PostgreSQL {
      * @param mixed $value
      * @return string
      */
-    final public function escape($value) : string {
+    final public function escape(mixed $value) : string {
         return pg_escape_string($this->conn, $value);
     }
 
@@ -535,7 +540,7 @@ class PostgreSQL {
      * @access public
      * @return void
      */
-    final public function beginTrans() {
+    final public function beginTrans(): void {
         pg_query($this->conn, "BEGIN");
     }
 
@@ -545,7 +550,7 @@ class PostgreSQL {
      * @access public
      * @return void
      */
-    final public function commitTrans() {
+    final public function commitTrans(): void {
         pg_query($this->conn, "COMMIT");
     }
 
@@ -555,10 +560,9 @@ class PostgreSQL {
      * @access public
      * @return void
      */
-    final public function rollbackTrans() {
+    final public function rollbackTrans(): void {
         pg_query($this->conn, "ROLLBACK");
     }
-
 
 }
 

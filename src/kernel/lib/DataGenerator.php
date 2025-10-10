@@ -4,11 +4,12 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.3.0
+ * @version 1.4.2
  */
 namespace Lib;
 
 use Exception;
+use Random\RandomException;
 
 /**
  * Class DataGenerator
@@ -29,17 +30,19 @@ class DataGenerator {
      */
     public static function createUUID() : string {
 
-        $charId = strtolower(sha1(uniqid(random_int(1, 10000), true)));
-        $hyphen = chr(45); // '-'
-
-        return substr($charId, 0, 8) . $hyphen .
-               substr($charId, 8, 4) . $hyphen .
-               substr($charId, 12, 4) . $hyphen .
-               substr($charId, 16, 4) . $hyphen .
-               substr($charId, 20, 12);
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0x0fff) | 0x4000,
+            random_int(0, 0x3fff) | 0x8000,
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0xffff)
+        );
 
     }
-
 
     /**
      * Create random generated Integer number
@@ -99,7 +102,7 @@ class DataGenerator {
         $str = static::createName($min, $max, false, '-.');
         $is_num = mt_rand(0, 1);
 
-        if($is_num and strlen($str) < $max and strpos($str, '.') === false and strpos($str, '-') === false) {
+        if($is_num and strlen($str) < $max and !str_contains($str, '.') and !str_contains($str, '-')) {
             $str .= mt_rand(11, 999);
         }
 
@@ -140,6 +143,23 @@ class DataGenerator {
     }
 
     /**
+     * Create random phone number
+     *
+     * @static
+     * @access public
+     * @return string
+     * @throws Exception
+     */
+    public static function createPhoneNumber() : string {
+
+        $countryCode = random_int(1, 999);
+        $areaCode = random_int(10, 999);
+        $lineNumber = random_int(100000, 9999999);
+
+        return '+' . $countryCode . $areaCode . $lineNumber;
+    }
+
+    /**
      * Create random generated domain name
      *
      * @static
@@ -169,19 +189,47 @@ class DataGenerator {
     }
 
     /**
+     * @throws RandomException
+     */
+    public static function createCouponCode(int $length = 8) : string {
+
+        $chars_alpha_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $chars_numbers = "0123456789";
+
+        $chars = $chars_alpha_upper;
+        $chars .= $chars_numbers;
+
+        $i = 0;
+
+        $str = '';
+
+        while ($i < $length) {
+
+            $num = random_int(0, (strlen($chars) - 1));
+            $random_char = substr($chars, $num, 1);
+            $str .= $random_char;
+            $i++;
+
+        }
+
+        return $str;
+
+    }
+
+    /**
      * Create random string a-z, A-Z, 0-9, and symbols.
      *
      * @static
      * @access public
-     * @param  int $min
-     * @param  int $max
-     * @param  bool $uppercase = true
-     * @param  bool $numbers = true
-     * @param  bool $symbols = true
-     * @param  string|null $chars_allowed
+     * @param int|null $min = 6
+     * @param int|null $max
+     * @param bool $uppercase = true
+     * @param bool $numbers = true
+     * @param bool $symbols = true
+     * @param string|null $chars_allowed
      * @return string
      */
-    public static function createString(int $min = 6, int $max = 12, bool $uppercase = true, bool $numbers = true, bool $symbols = true, string $chars_allowed = NULL) : string {
+    public static function createString(?int $min = 6, ?int $max = 12, ?bool $uppercase = true, ?bool $numbers = true, ?bool $symbols = true, ?string $chars_allowed = NULL) : string {
 
         $chars_alpha = "abcdefghijklmnopqrstuvwxyz";
         $chars_alpha_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -206,7 +254,7 @@ class DataGenerator {
             $chars .= $chars_allowed;
         }
 
-        srand((double)microtime()*1000000);
+        //srand(microtime()*1000000);
 
         $i = 0;
 
@@ -220,7 +268,7 @@ class DataGenerator {
 
             $random_char = substr($chars, $num, 1);
 
-            if(strpos($chars_symbols, $random_char) === false) {
+            if(!str_contains($chars_symbols, $random_char)) {
                 $str .= $random_char;
                 $i++;
             } else {
@@ -245,7 +293,7 @@ class DataGenerator {
      * @param string|null $str
      * @return string
      */
-    public static function createSentence(string $str = NULL) : string {
+    public static function createSentence(?string $str = NULL) : string {
 
         if(is_null($str)) {
             $str = "{Hello!|Hi!|Hola!} {maybe|actually|fortunately} this is {your|our|my} {best|nice|well|cool|lucky} {chance|option|case|moment} {to|for} {make|take|get|generate|create|give|catch|bring} a random {sentence|string|expression}.";

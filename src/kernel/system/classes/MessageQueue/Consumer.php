@@ -7,7 +7,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 2.1.0
+ * @version 2.1.1
  * @requires phpredis extension
  */
 namespace System\MessageQueue;
@@ -47,7 +47,7 @@ class Consumer {
      * @requires phpredis extension
      * @var Redis object
      */
-    private static \Redis $redis;
+    private static Redis $redis;
 
     /**
      * Task Queue name to get messages
@@ -93,10 +93,10 @@ class Consumer {
         while(static::$connected == false) {
 
             try {
-                static::$redis->connect($config['host'], $config['port'], 0);
+                static::$redis->connect($config['host'], $config['port']);
                 static::$connected = true;
                 Logger::Log('Connected to Redis Database for: '.$config['queueName'].' successfuly.', Logger::INFO, __FILE__, __LINE__);
-            } catch(\Throwable $e) {
+            } catch(Throwable $e) {
                 Logger::log('Retrying to connect Redis... ' . $step, Logger::INFO, __FILE__, __LINE__);
                 $step++;
                 sleep(1);
@@ -116,8 +116,8 @@ class Consumer {
 
     /**
      * Run the Message queue listening, catching, executing functionality.
-     * This method will catch message from message queue, move to his own list.
-     * After execution message will be deleted.
+     * This method will catch a message from the message queue, move to his own list.
+     * After an execution message will be deleted.
      *
      * @static
      * @access public
@@ -132,19 +132,19 @@ class Consumer {
         $lastCalledBack = time();
 
         # Loop to catch a message and execute.
-        # If there are no message, this will wait 0.5 second.
+        # If there are no messages, this will wait 0.5 seconds.
         while(True) {
 
             try {
 
-                # Catch a message from list
+                # Catch a message from the list
                 $message = static::$redis->lPop(static::$taskQueue);
 
                 if(!empty($message)) {
                     static::$messages[] = $message;
                 }
 
-            } catch(\Throwable $e)  {
+            } catch(Throwable $e)  {
                 Logger::log($e->getCode() . ' _ ' . $e->getMessage(), Logger::WARNING, $e->getFile(), $e->getLine());
                 $message = NULL;
                 echo "Error: ".$e->getMessage() ."\n";
@@ -173,6 +173,7 @@ class Consumer {
      * @param int $workerId
      * @return array
      * @throws Exception
+     * @todo finalize this method
      */
     public static function execute(string $message, int $workerId) : array {
 
@@ -189,7 +190,7 @@ class Consumer {
                     [event] => user_signin_success
                     [data] => Array
                         (
-                            [userId] => CUQr8bL7TGAyjG6ifOoWjUKBsHJOIu
+                            [uid] => ecdd2559-9e05-4af3-b4e4-f1154a32d792
                             [email] => james56@example.com
                             [ip_address] => 192.168.0.109
                         )
@@ -227,13 +228,13 @@ class Consumer {
 
             if(!$workerObject->$methodName($parameters)) {
                 $workerData['status'] = 'fail';
-                throw new \Exception('Worker task `'.$workerData['workerTask'].'` not returned true.');
+                throw new Exception('Worker task `'.$workerData['workerTask'].'` not returned true.');
             }
 
             # Work complete!
             $workerData['status'] = 'ok';
 
-        } catch(\Throwable $e) {
+        } catch(Throwable $e) {
 
             if($workerData['status'] == 'ok') {
                 $workerData['status'] = 'error';
@@ -278,11 +279,20 @@ class Consumer {
             static::$redis->lRem(static::$taskQueue . ':worker:' . $workerId, $message, 1);
             Logger::Log('Complete Worker Task! Removing from task queue: ' . static::$taskQueue . ' : Id: ' . $workerId, Logger::INFO, __FILE__, __LINE__);
         } else {
-            throw new \Exception('Worker task not returned actual result. Message: '.$message.'. Consumer: '.static::$taskQueue, Logger::ERROR);
+            throw new Exception('Worker task not returned actual result. Message: '.$message.'. Consumer: '.static::$taskQueue, Logger::ERROR);
         }
 
         return $workerData;
 
+    }
+
+    /**
+     * @param string $message
+     * @return array
+     * @todo finalize this
+     */
+    public static function validateTask(string $message) : array {
+        return json_decode($message, true);
     }
 
 }

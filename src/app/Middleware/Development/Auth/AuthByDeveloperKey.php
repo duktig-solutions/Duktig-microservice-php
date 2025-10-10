@@ -28,7 +28,7 @@ class AuthByDeveloperKey {
 	 * @param array $middlewareData
 	 * @return array|false
      */
-	public function check(Request $request, Response $response, array $middlewareData) {
+	public function check(Request $request, Response $response, array $middlewareData): false|array {
 		
 		# Get Auth config
 		$config = Config::get()['AuthDevelopers'];

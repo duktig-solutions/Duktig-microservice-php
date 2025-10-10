@@ -4,7 +4,7 @@
  * 
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 namespace App\Models\Accounts;
@@ -20,12 +20,12 @@ class BaseAccount extends \Lib\Db\MySQLi
 {
 
     /**
-     * Each model can contain it's own database table name(s).
+     * Each model can contain its own database table name(s).
      *
      * @access protected
      * @var string
      */
-    protected $table = 'Users';
+    protected string $table = 'Users';
 
     /**
      * User accessible fields to return
@@ -33,7 +33,7 @@ class BaseAccount extends \Lib\Db\MySQLi
      * @access protected
      * @var array
      */
-    protected $whitelist = [
+    protected array $whitelist = [
         'userId',
         'displayName',
         'firstName',
@@ -96,7 +96,8 @@ class BaseAccount extends \Lib\Db\MySQLi
      * Insert user account
      *
      * @param array $data
-     * @return void
+     * @return int
+     * @throws \Exception
      */
     public function insertRow(array $data) : int {
 
@@ -119,7 +120,8 @@ class BaseAccount extends \Lib\Db\MySQLi
 
     }
 
-    public function updateRow($data, $where) {
+    public function updateRow($data, $where): int
+    {
 
         $default = [
             'dateUpdated' => date('Y-m-d H:i:s'),

@@ -2,7 +2,7 @@
 /**
  * HTTP Client Class to Send and Receive data via HTTP Protocol
  *
- * @version 2.0 (Send files functionality added)
+ * @version 2.1 (Send files functionality added, Parse response headers)
  */
 namespace Lib\HTTP;
 
@@ -15,7 +15,7 @@ use System\Config;
  */
 class Client {
 
-	/**
+    /**
 	 * Send request and get response data
 	 *
 	 * @static
@@ -35,8 +35,9 @@ class Client {
 		# Define CURL Options
 		$curlOptions = [
 			// CURLINFO_HEADER_OUT => 1,
+            CURLOPT_HEADER => 1,
 			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_USERAGENT => 'Duktig.Microservice HTTP Client',
+			CURLOPT_USERAGENT => $headers['X-User-Agent'] ?? 'Duktig.Microservice HTTP Client',
 
 			# This is not secure, but now need to avoid certification issue
 			CURLOPT_SSL_VERIFYHOST => 0,
@@ -93,12 +94,18 @@ class Client {
 
 		# Set Error/Info
 		$info = (object) curl_getinfo($handle);
+
+        // After curl_exec
+        $header_size = curl_getinfo($handle, CURLINFO_HEADER_SIZE);
+        $responseHeadersStr = substr($result, 0, $header_size);
+        $result = substr($result, $header_size);
 		$error = curl_error($handle);
 
-		# Close The CURL Connection
+        # Close The CURL Connection
 		curl_close($handle);
 
 		return [
+            'headers' => static::parseResponseHeaders($responseHeadersStr),
 			'result' => $result,
 			'info' => $info,
 			'error' => $error
@@ -111,7 +118,7 @@ class Client {
 	 *
 	 * Command will look like:
 	 *   curl -X POST -H 'Content-Type: application/json' \
-	 *   -d '{"batch":[{"secret":"testsecret","userId":"some_user","event":"PHP Fork Queued Event","properties":null,"timestamp":"2013-01-30T14:34:50-08:00","context":{"library":"analytics-php"},"action":"track"}],"secret":"testsecret"}' \
+	 *   -d '{"batch":[{"secret":"testsecret","uid":"some_user","event":"PHP Fork Queued Event","properties":null,"timestamp":"2013-01-30T14:34:50-08:00","context":{"library":"analytics-php"},"action":"track"}],"secret":"testsecret"}' \
 	 *   -F 'fileX=@/path/to/fileX' -F 'fileY=@/path/to/fileY' \
 	 *  'https://api.segment.com/v1/import' > /dev/null 2>&1 &
 	 *
@@ -168,5 +175,41 @@ class Client {
 		exec($cmd);
 
 	}
+
+    /**
+     * Parse Response Headers
+     *
+     * @static
+     * @access private
+     * @param string $headers
+     * @return array
+     */
+    private static function parseResponseHeaders(string $headers) : array {
+
+        $responseHeaders = [];
+        $headersTmp = explode("\n", $headers);
+
+        if(!empty($headersTmp)) {
+            foreach ($headersTmp as $headerLine) {
+
+                $headerLine = trim($headerLine);
+
+                if(empty($headerLine)) {
+                    continue;
+                }
+
+                $pos = strpos($headerLine, ':');
+
+                if($pos !== false) {
+                    $responseHeaders[
+                    substr($headerLine, 0, $pos)
+                    ] = trim(substr($headerLine, $pos+1));
+                }
+
+            }
+        }
+
+        return $responseHeaders;
+    }
 
 }

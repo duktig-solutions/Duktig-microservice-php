@@ -2,7 +2,7 @@
 /**
  * @author David A. <software@duktig.dev>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 namespace App\Models\Accounts\Profiles;
@@ -23,7 +23,7 @@ class Profiles extends BaseAccount
      * @access protected
      * @var array
      */
-    protected $whitelist = [
+    protected array $whitelist = [
         'userId',
 		'displayName',
         'firstName',
@@ -31,12 +31,13 @@ class Profiles extends BaseAccount
 		'photo'
     ];
 
-	/**
-	 * Fetch profiles by ids array
-	 *
-	 * @param array $a_ids
-	 * @return array
-	 */
+    /**
+     * Fetch profiles by ids array
+     *
+     * @param array $a_ids
+     * @return array
+     * @throws \Exception
+     */
 	public function fetchAllByIds(array $a_ids) : array {
 
         return $this->fetchAllAssoc(
@@ -59,7 +60,7 @@ class Profiles extends BaseAccount
      * @todo check account status
 	 */
 	public function fetchById(int $userId) : array {
-		return $this->fetchFieldsAssocByWhere($this->table, $this->whitelist, ['userId' => $userId, 'status' => USER_STATUS_ACTIVE]);
+		return $this->fetchFieldsAssocByWhere($this->table, $this->whitelist, ['userId' => $userId, 'status' => STATUS_ACTIVE]);
 	}
 
 }

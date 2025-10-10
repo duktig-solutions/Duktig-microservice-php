@@ -4,7 +4,7 @@
  * 
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace System\CLI;
 
@@ -43,7 +43,7 @@ class Router {
 	 * @access private
 	 * @var mixed
 	 */
-	private static $route = NULL;
+	private static mixed $route = NULL;
 
 	/**
 	 * Running file descriptor
@@ -101,8 +101,8 @@ class Router {
         $routesConfig = Config::get('cli-routes');
 
         if(empty($routesConfig)) {
-            Logger::Log('The configuration of CLI routes is empty. Unable to handle the process. See ./app/config/cli-routes.php', Logger::ERROR);
-            $output->stderr('The configuration of CLI routes is empty. Unable to handle the process. See ./app/config/cli-routes.php');
+            Logger::Log('The configuration of CLI routes is empty. Unable to handle the process. See ./app/Config/cli-routes.php', Logger::ERROR);
+            $output->stderr('The configuration of CLI routes is empty. Unable to handle the process. See ./app/Config/cli-routes.php');
 		}
 
 		if(!isset($routesConfig[$input->route()])) {
@@ -280,7 +280,7 @@ class Router {
 	 * @access public
 	 * @return mixed
 	 */
-	public static function getRoute() {
+	public static function getRoute(): mixed {
 		return static::$route;
 	}
 

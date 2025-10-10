@@ -2,9 +2,9 @@
 /**
  * Get User location by IP from given resources
  * 
- * This library uses `IPTolocation` directive from application configuration.
+ * This library uses `IPToLocation` directive from application configuration.
  *
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace Lib;
 
@@ -20,11 +20,11 @@ class LocationByIP {
         # $ipAddress = '68.171.212.74'; // United States
 
         # Case if IP Address from local network 
-        if(substr($ipAddress, 0, 8) == '192.168.') {
+        if(str_starts_with($ipAddress, '192.168.')) {
             return 'Local Network';
         }
 
-        $resource = Config::get('app')['IPTolocation']['resource'];        
+        $resource = Config::get('app')['IPToLocation']['resource'];
                         
         $response = Client::sendRequest($resource . $ipAddress, 'GET');
 

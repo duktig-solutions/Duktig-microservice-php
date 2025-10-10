@@ -4,7 +4,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.3.0
+ * @version 1.3.1
  */
 Namespace Lib;
 
@@ -36,7 +36,7 @@ class Valid {
 	} // end func alpha
 
 	/**
-	 * Check string is alpha-numeric
+	 * Check string is alphanumeric
 	 * with underscores and dashes.
 	 *
 	 * @static
@@ -44,7 +44,7 @@ class Valid {
 	 * @param mixed $data
 	 * @return bool
 	 */
-	public static function alphaNumeric($data) : bool {
+	public static function alphaNumeric(mixed $data) : bool {
 
 		if(!is_scalar($data)) {
 			return false;
@@ -67,7 +67,8 @@ class Valid {
      * @param mixed $data
      * @return string|bool false
      */
-    public static function creditCard($data) {
+    public static function creditCard(mixed $data): bool|string
+    {
 
         if(!is_scalar($data)) {
             return false;
@@ -131,7 +132,7 @@ class Valid {
 	 * @param  string $format = 'Y-m-d'
 	 * @return bool
 	 */
-	public static function date($data, string $format = 'Y-m-d') : bool {
+	public static function date(mixed $data, string $format = 'Y-m-d') : bool {
 
 		if(!is_scalar($data)) {
 			return false;
@@ -158,7 +159,7 @@ class Valid {
 	 * @param string $format
 	 * @return bool
 	 */
-	public static function dateBetween($data, string $startDate, string $endDate, string $format = 'Y-m-d') : bool {
+	public static function dateBetween(mixed $data, string $startDate, string $endDate, string $format = 'Y-m-d') : bool {
 
 		# For the first, let's check, if this is valid date.
 		if(!static::date($data, $format)) {
@@ -187,7 +188,7 @@ class Valid {
 	 * @param string $format
 	 * @return bool
 	 */
-	public static function dateEqualOrAfter($data, string $checkDate, string $format = 'Y-m-d') : bool {
+	public static function dateEqualOrAfter(mixed $data, string $checkDate, string $format = 'Y-m-d') : bool {
 
 		# For the first, let's check, if this is valid date.
 		if(!static::date($data, $format)) {
@@ -206,7 +207,7 @@ class Valid {
 	}
 
 	/**
-	 * Check if the given date is equal or before required date
+	 * Check if the given date is equal or before the required date
 	 *
 	 * @static
 	 * @access public
@@ -215,9 +216,9 @@ class Valid {
 	 * @param string $format
 	 * @return bool
 	 */
-	public static function dateEqualOrBefore($data, string $checkDate, string $format = 'Y-m-d') : bool {
+	public static function dateEqualOrBefore(mixed $data, string $checkDate, string $format = 'Y-m-d') : bool {
 
-		# For the first, let's check, if this is valid date.
+		# For the first, let's check, if this is a valid date.
 		if(!static::date($data, $format)) {
 			return false;
 		}
@@ -243,7 +244,7 @@ class Valid {
 	 * @param  mixed $data
 	 * @return bool
 	 */
-	public static function dateIso($data) : bool {
+	public static function dateIso(mixed $data) : bool {
 
 		if(!is_scalar($data)) {
 			return false;
@@ -269,7 +270,7 @@ class Valid {
      * @param  mixed $dataTime
      * @return bool
      */
-    public static function dateTimeIso($dataTime) : bool {
+    public static function dateTimeIso(mixed $dataTime) : bool {
 
         if(!is_scalar($dataTime)) {
             return false;
@@ -293,7 +294,7 @@ class Valid {
 	 * @param mixed $data
 	 * @return bool
 	 */
-	public static function digits($data) : bool {
+	public static function digits(mixed $data) : bool {
 
 		if(!is_scalar($data)) {
 			return false;
@@ -315,7 +316,7 @@ class Valid {
 	 * @param mixed $data
 	 * @return bool
 	 */
-	public static function email($data) : bool {
+	public static function email(mixed $data) : bool {
 
 		if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
 			return true;
@@ -328,7 +329,7 @@ class Valid {
     /**
      * Validate phone number with E.164 standard
      * E.164 is the international telephone numbering plan that ensures each device on the PSTN has a globally unique number.
-     * This number allows phone calls and text messages can be correctly routed to individual phones in different countries.
+     * This number allows phone calls and text messages to be correctly routed to individual phones in different countries.
      * E.164 numbers are formatted [+] [country code] [subscriber number including area code] and can have a maximum of fifteen digits.
      *
      * Examples of E.164 Numbers
@@ -338,12 +339,20 @@ class Valid {
      * +442071838750 44           GB         2071838750
      * +551155256325 55           BR         1155256325
      *
+     * @listening to Barry White music in Spotify - "Sho'You Right"
+     * 23 Nov 2023
+     * Assuming this project will get live ;)
+     *
+     * @listening to Christmas songs in Spotify
+     * 19 Dec 2024
+     * This project is already live :)
+     *
      * @static
      * @access public
      * @param mixed $data
      * @return bool
     */
-    public static function phoneNumberE164($data) : bool {
+    public static function phoneNumberE164(mixed $data) : bool {
 
         if(!is_scalar($data)) {
             return false;
@@ -374,7 +383,7 @@ class Valid {
 	 * @param float|null $max
 	 * @return bool
 	 */
-	public static function floatRange($value, ?float $min = NULL, ?float $max = NULL) : bool {
+	public static function floatRange(mixed $value, ?float $min = NULL, ?float $max = NULL) : bool {
 
 		if(!is_numeric($value)) {
 			return false;
@@ -409,7 +418,7 @@ class Valid {
 	 * @param mixed $data
 	 * @return bool
 	 */
-	public static function httpHost($data) : bool {
+	public static function httpHost(mixed $data) : bool {
 
 		return filter_var($data, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME);
 
@@ -424,7 +433,7 @@ class Valid {
 	 * @param mixed $data
 	 * @return bool
 	 */
-	public static function id($data) : bool {
+	public static function id(mixed $data) : bool {
 
 		# Convert to int or false
 		$number = ($data == (int) $data) ? (int) $data : false;
@@ -453,7 +462,7 @@ class Valid {
 	 * @param int|null $max
 	 * @return boolean
 	 */
-	public static function intRange($value, ?int $min = NULL, ?int $max = NULL) : bool {
+	public static function intRange(mixed $value, ?int $min = NULL, ?int $max = NULL) : bool {
 
 		if(!is_numeric($value)) {
 			return false;
@@ -481,14 +490,14 @@ class Valid {
 	}
 
 	/**
-	 * Check is correct IP Address
+	 * Check the correct IP Address
 	 *
 	 * @static
 	 * @access public
 	 * @param mixed $data
 	 * @return bool
 	 */
-	public static function ipAddress($data) : bool {
+	public static function ipAddress(mixed $data) : bool {
 
 		if(!is_scalar($data)) {
 			return false;
@@ -515,7 +524,8 @@ class Valid {
 	 * @param mixed $string
 	 * @return bool|string
      */
-	public static function jsonString($string) {
+	public static function jsonString(mixed $string): bool|string
+    {
 
 		$initialErrorMessage = 'Required valid json string';
 
@@ -530,7 +540,7 @@ class Valid {
 		$jsonErrorMessage = json_last_error_msg();
 
 		# Check the result of decoding
-		# If it is decoded to actual object and there is no json error, then OK!
+		# If it is decoded to an actual object and there is no json error, then OK!
 		if(is_object($result) and $jsonErrorCode == JSON_ERROR_NONE) {
 			return true;
 		}
@@ -558,7 +568,7 @@ class Valid {
 	 * @param  int $max
 	 * @return int
 	 */
-	public static function passwordStrength($data, int $min = 6, int $max = 128) : int {
+	public static function passwordStrength(mixed $data, int $min = 6, int $max = 128) : int {
 
 		if(!is_scalar($data)) {
 			return -1;
@@ -591,7 +601,7 @@ class Valid {
 	 * @param  int|null $max
 	 * @return bool
 	 */
-	public static function stringLength($data, ?int $min = NULL, ?int $max = NULL) : bool {
+	public static function stringLength(mixed $data, ?int $min = NULL, ?int $max = NULL) : bool {
 
 		if(!is_scalar($data)) {
 			return false;
@@ -620,13 +630,13 @@ class Valid {
      *     FILTER_FLAG_QUERY_REQUIRED - URL must have a query string (like "example.php?name=David&age=39")
      * @return bool
      */
-    public static function url($data, ?int $flag = NULL) : bool {
+    public static function url(mixed $data, ?int $flag = NULL) : bool {
 
-	    if (filter_var($data, FILTER_VALIDATE_URL, $flag)) {
-		    return true;
-	    } else {
-		    return false;
-	    }
+        if(!is_null($flag)) {
+            return filter_var($data, FILTER_VALIDATE_URL, $flag);
+        } else {
+            return filter_var($data, FILTER_VALIDATE_URL);
+        }
 
     } // End func url
 
@@ -638,7 +648,7 @@ class Valid {
 	 * @param mixed $lat
 	 * @return bool
 	 */
-	public static function latitude($lat) : bool {
+	public static function latitude(mixed $lat) : bool {
 		return preg_match('/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/', $lat);
 	}
 
@@ -650,7 +660,7 @@ class Valid {
 	 * @param mixed $lng
 	 * @return bool
 	 */
-	public static function longitude($lng) : bool {
+	public static function longitude(mixed $lng) : bool {
 		return preg_match('/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $lng);
 	}
 

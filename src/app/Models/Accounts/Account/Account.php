@@ -25,7 +25,7 @@ class Account extends BaseAccount
      * @access protected
      * @var array
      */
-    protected $whitelist = [
+    protected array $whitelist = [
         'userId',
 		'email',
 		'firstName',

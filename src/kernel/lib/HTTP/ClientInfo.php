@@ -4,9 +4,9 @@
  *   
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0 
+ * @version 1.0.1
  */
-namespace Lib\Http;
+namespace Lib\HTTP;
 
 /**
  * class ClientInfo
@@ -20,7 +20,15 @@ class ClientInfo {
      */
     public static function ipAddress() : string {
 
-		if(getenv('HTTP_CLIENT_IP')) {
+        if (isset($_SERVER['X_REAL_IP'])) {
+            return $_SERVER['X_REAL_IP'];  // From Nginx X-Real-IP header
+        } elseif (isset($_SERVER['X_FORWARDED_FOR'])) {
+            return strtok($_SERVER['X_FORWARDED_FOR'], ',');  // First IP in the list
+        }
+
+        if(getenv('HTTP_X_REAL_IP')) {
+            return getenv('HTTP_X_REAL_IP');
+        } elseif(getenv('HTTP_CLIENT_IP')) {
 			return getenv('HTTP_CLIENT_IP');
         } elseif(getenv('HTTP_X_FORWARDED_FOR')) {
 			return getenv('HTTP_X_FORWARDED_FOR');

@@ -5,7 +5,7 @@
  * 
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */  
 
 namespace Lib\Events;
@@ -65,7 +65,7 @@ class Event {
         }
         
         $this->channel = $channel;
-        $this->service = Config::get()['Microservice'];
+        $this->service = Config::get()['ServiceId'];
 
     }
     
@@ -77,7 +77,7 @@ class Event {
      * @param mixed $value
      * @return void
      */
-    public function set(string $item, $value) {
+    public function set(string $item, mixed $value): void {
         $this->data[$item] = $value;
     }
 
@@ -85,7 +85,7 @@ class Event {
      * Set value as an Array
      * This will merge current data value with this new
      * 
-     * Listening TRANCE 2021 VOL 3 [FULL ALBUM]
+     * @Listening TRANCE 2021 VOL 3 [FULL ALBUM]
      * https://www.youtube.com/watch?v=v4IbgT4_aps
      * Location: Dubai, UAE - 27 June 2021
      * 
@@ -93,12 +93,12 @@ class Event {
      * @param array $data
      * @return void
      */
-    public function setArr(array $data) {
+    public function setArr(array $data): void {
         $this->data = array_merge($this->data, $data);
     }
 
     /**
-     * Return Event Data as a Json String including the system name.
+     * Return Event Data as a JSON String including the system name.
      * 
      * @access public
      * @return string
@@ -107,7 +107,7 @@ class Event {
         
         return json_encode([
             'service' => $this->service,
-            'time' => date('Y-m-d H:i:s'),
+            'published_time' => date('Y-m-d H:i:s'),
             'event' => $this->eventName,
             'data' => $this->data
         ], JSON_NUMERIC_CHECK);
@@ -121,7 +121,7 @@ class Event {
      * @return void
      * @throws RedisException
      */
-    public function publish() {
+    public function publish(): void {
         \Lib\Events\IntermediateEvents::publish($this->channel, $this->getDataJson());
     }
 

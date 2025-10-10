@@ -2,7 +2,9 @@
 /**
  * Date Utility class
  *
- * @version 1.1.0
+ * @author David A. <framework@duktig.solutions>
+ * @license see License.md
+ * @version 1.1.1
  */
 namespace Lib;
 
@@ -81,9 +83,10 @@ class Date {
      * @param string $secondDateStart
      * @param string $secondDateEnd
      * @param bool $returnTotalPeriod
-     * @return mixed
+     * @return array|bool
      */
-    public static function datesIntersects(string $firstDateStart, string $firstDateEnd, string $secondDateStart, string $secondDateEnd, ?bool $returnTotalPeriod = false) {
+    public static function datesIntersects(string $firstDateStart, string $firstDateEnd, string $secondDateStart, string $secondDateEnd, ?bool $returnTotalPeriod = false): array|bool
+    {
 
         $firstDateStart = strtotime($firstDateStart);
         $firstDateEnd = strtotime($firstDateEnd);

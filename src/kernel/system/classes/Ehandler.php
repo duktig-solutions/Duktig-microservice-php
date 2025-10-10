@@ -4,16 +4,19 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.2
  */
 namespace System;
+
+use Exception;
+use Throwable;
 
 /**
  * Class Ehandler
  *
  * @package Kernel\System\Classes
  */
-class Ehandler extends \Exception implements \Throwable {
+class Ehandler extends Exception implements Throwable {
 
 	/**
      * Return Error group by code
@@ -25,35 +28,13 @@ class Ehandler extends \Exception implements \Throwable {
      */
     protected static function getErrorGroupName(int $errCode) : string {
 
-        switch($errCode) {
-            case E_NOTICE:
-            case E_USER_NOTICE:
-                $errGroup = Logger::INFO;
-                break;
-            case E_WARNING:
-            case E_USER_WARNING:
-            case E_CORE_WARNING:
-            case E_COMPILE_WARNING:
-                $errGroup = Logger::WARNING;
-                break;
-            case E_ERROR:
-            case E_USER_ERROR:
-            case E_CORE_ERROR:
-            case E_COMPILE_ERROR:
-            case E_RECOVERABLE_ERROR:
-            case E_PARSE:
-            case E_STRICT:
-                $errGroup = Logger::ERROR;
-                break;
-            case 0:
-                $errGroup = Logger::EXCEPTION;
-                break;
-            default:
-                $errGroup = Logger::UNKNOWN;
-                break;
-        } // end switch
-
-        return $errGroup;
+        return match ($errCode) {
+            E_NOTICE, E_USER_NOTICE => Logger::INFO,
+            E_WARNING, E_USER_WARNING, E_CORE_WARNING, E_COMPILE_WARNING => Logger::WARNING,
+            E_ERROR, E_USER_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_RECOVERABLE_ERROR, E_PARSE => Logger::ERROR,
+            0 => Logger::EXCEPTION,
+            default => Logger::UNKNOWN,
+        };
 
 	}
 

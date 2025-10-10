@@ -1,11 +1,11 @@
 <?php
 /**
  * Events Publisher class
- * This class uses to publish General Events to Instance based on Redis Databse
+ * This class uses to publish General Events to Instance based on Redis Database
  * 
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.1.0
+ * @version 1.1.1
  */  
 
 namespace System\Events;
@@ -36,9 +36,9 @@ class Publisher {
      * 
      * @static
      * @access private
-     * @var Redis
+     * @var null|Redis
      */
-    private static Redis $eventsRedis;
+    private static ?Redis $eventsRedis = null;
 
     /**
      * General Events Redis Configuration name 
@@ -47,10 +47,10 @@ class Publisher {
      * @access private
      * @var string
      */
-    private static string $eventsRedisConfigName = 'GeneralEventsRedis';
+    private static string $eventsRedisConfigName = 'EventsPubSub';
 
     /**
-     * How many times to try reconnect
+     * How many times to try to reconnect
      * 
      * @static
      * @access private 
@@ -84,7 +84,7 @@ class Publisher {
      */
     private static function connect() : bool {
 
-        static::$serviceName = Config::get()['Microservice'];
+        static::$serviceName = Config::get()['ServiceId'];
 
         ini_set("default_socket_timeout", '-1');
 
@@ -190,8 +190,44 @@ class Publisher {
             'service' => static::$serviceName,
             'published_time' => date('Y-m-d H:i:s'),
             'data' => $data
-        ], JSON_NUMERIC_CHECK);
-        
+        ]);
+
+        # Publish an event to channel
+        try {
+            static::$eventsRedis->publish(static::$channelToPublish, $publishingData);
+        } catch(Throwable $e) {
+            Logger::log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
+            return false;
+        }
+
+        return true;
+
+    }
+
+    /**
+     * @throws RedisException
+     */
+    public static function publishFromService(string $serviceName, string $event, string $publishedTime, array $data, ?string $channelToPublish = null, ?string $eventsRedisConfigName = null) : bool {
+
+        if(!is_null($eventsRedisConfigName)) {
+            static::$eventsRedisConfigName = $eventsRedisConfigName;
+        }
+
+        if(!is_null($channelToPublish)) {
+            static::$channelToPublish = $channelToPublish;
+        }
+
+        if(!static::pingConnection()) {
+            return false;
+        }
+
+        $publishingData = json_encode([
+            'event' => $event,
+            'service' => $serviceName,
+            'published_time' => $publishedTime,
+            'data' => $data
+        ]);
+
         # Publish an event to channel
         try {
             static::$eventsRedis->publish(static::$channelToPublish, $publishingData);

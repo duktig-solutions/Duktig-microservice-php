@@ -35,7 +35,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.1
+ * @version 1.0.2
  */
 namespace Lib\Auth;
 
@@ -112,9 +112,8 @@ class Jwt {
      * @access public
      * @param string $jwt
      * @param array $config
-     * @return bool|mixed|string
-     * @throws Exception
      * @return array
+     * @throws Exception
      */
     public static function decode(string $jwt, array $config) : array {
 
@@ -138,7 +137,7 @@ class Jwt {
         if(count($tokens) != 3) {
 
             $result['status'] = 'error';
-            $result['message'] = $defaultErrorMessage;
+            $result['message'] = 'Token contains less then 3 parts';
 
             return $result;
         }
@@ -148,11 +147,11 @@ class Jwt {
         $payload = json_decode(static::base64UrlDecode($tokens[1]), true);
         $signature = static::base64UrlDecode($tokens[2]);
 
-        # Check jwt parts after decode
+        # Check jwt parts after decoding
         if(!$head or !$payload or !$signature) {
 
             $result['status'] = 'error';
-            $result['message'] = $defaultErrorMessage;
+            $result['message'] = 'Unable to decode token header, payload or signature';
 
             return $result;
         }
@@ -161,7 +160,7 @@ class Jwt {
         if(empty($head['alg'])) {
 
             $result['status'] = 'error';
-            $result['message'] = $defaultErrorMessage;
+            $result['message'] = 'Token alg is empty';
 
             return $result;
 
@@ -171,7 +170,7 @@ class Jwt {
         if(!isset(static::$supportedAlgorithms[$head['alg']])) {
 
             $result['status'] = 'error';
-            $result['message'] = $defaultErrorMessage;
+            $result['message'] = 'Token alg is not supported';
 
             return $result;
         }
@@ -193,7 +192,7 @@ class Jwt {
             if(!isset($payload[$plItem])) {
 
                 $result['status'] = 'error';
-                $result['message'] = $defaultErrorMessage;
+                $result['message'] = 'Token payload `'.$plItem.'` is missing';
 
                 return $result;
             }
@@ -208,7 +207,7 @@ class Jwt {
             if(!is_numeric($payload[$plItem]) or strtotime(date('d-m-Y H:i:s', $payload[$plItem])) !== (int) $payload[$plItem]) {
 
                 $result['status'] = 'error';
-                $result['message'] = $defaultErrorMessage;
+                $result['message'] = 'Token `'.$plItem.'` is not valid';
 
                 return $result;
 
@@ -226,7 +225,7 @@ class Jwt {
             if($payload[$plItem] != $config[$plItem]) {
 
                 $result['status'] = 'error';
-                $result['message'] = $defaultErrorMessage;
+                $result['message'] = 'Invalid `'.$plItem.'` in payload';
 
                 return $result;
             }
@@ -237,7 +236,7 @@ class Jwt {
         if (!static::verify($tokens[0].'.'.$tokens[1], $signature, $config['secretKey'], $head['alg'])) {
 
             $result['status'] = 'error';
-            $result['message'] = $defaultErrorMessage;
+            $result['message'] = 'Unable to verify signature';
 
             return $result;
         }
@@ -378,7 +377,7 @@ class Jwt {
             }
 
         } else {
-            # Method not allowed
+            # Method isn't allowed
             throw new Exception('Unknown method ' . $method . ' to sing swt');
         }
 
@@ -404,7 +403,7 @@ class Jwt {
      * @param $data
      * @return bool|string
      */
-    protected static function base64UrlDecode($data) {
+    protected static function base64UrlDecode($data): bool|string {
         return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
     }
 

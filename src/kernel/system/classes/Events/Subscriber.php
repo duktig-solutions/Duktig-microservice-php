@@ -5,15 +5,17 @@
  * 
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.0.1
+ * @version 1.0.2
  */  
 
 namespace System\Events;
 
 # Use of Redis configuration
+use Exception;
 use System\Config;
 use System\Logger;
 use \Redis;
+use Throwable;
 
 /**
  * Class Event
@@ -84,7 +86,7 @@ class Subscriber {
             static::$eventsRedisConfig = Config::get()['Redis'][static::$eventsRedisConfigName];
 
             if (!static::$eventsRedisConfig) {
-                throw new \Exception('Cannot find redis configuration by '.static::$eventsRedisConfigName);
+                throw new Exception('Cannot find redis configuration by '.static::$eventsRedisConfigName);
             }
 
             static::$eventsRedis = new Redis();
@@ -118,7 +120,7 @@ class Subscriber {
                         
             return true;
 
-        } catch(\Throwable $e) {
+        } catch(Throwable $e) {
             Logger::Log($e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
             return false;
         }
@@ -180,14 +182,14 @@ class Subscriber {
         # No internet connection in Home office.
         # Listening : Paul Oakenfold/2001 - Ibiza/Part-2 - 05_U2_beautiful_day_the_perfecto_mix
         try {
-            Logger::log('Subscribing to Redis Events chunnels '.implode(',', static::$subscribeToChannels).'.', Logger::INFO, __FILE__, __LINE__);
+            Logger::log('Subscribing to Redis Events channels '.implode(',', static::$subscribeToChannels).'.', Logger::INFO, __FILE__, __LINE__);
             self::$eventsRedis->subscribe(static::$subscribeToChannels, $callback);
-        } catch(\Throwable $e) {
+        } catch(Throwable $e) {
             Logger::log('Unable to subscribe Redis Channel - ' . $e->getMessage(), Logger::ERROR, $e->getFile(), $e->getLine());
             return false;
         }
 
-        Logger::log('Subscribed to Redis Events chunnels '.implode(',', static::$subscribeToChannels).' successfully.', Logger::INFO, __FILE__, __LINE__);
+        Logger::log('Subscribed to Redis Events channels '.implode(',', static::$subscribeToChannels).' successfully.', Logger::INFO, __FILE__, __LINE__);
         return true;
 
     }

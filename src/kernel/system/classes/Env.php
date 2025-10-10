@@ -5,7 +5,7 @@
  *
  * @author David A. <framework@duktig.solutions>
  * @license see License.md
- * @version 1.1.0
+ * @version 1.1.2
  */
 namespace System;
 
@@ -46,7 +46,7 @@ Class Env {
             }
 
             // Comment line. ignore
-            if(substr($line, 0, 1) == '#') {
+            if(str_starts_with($line, '#')) {
                 continue;
             }
 
@@ -102,7 +102,7 @@ Class Env {
      *
      * Example of content:
      *
-     * project_name=Duktig.io
+     * PRODUCT_NAME=Duktig.Microservices
      * autoload=false
      *
      * @static
@@ -130,12 +130,12 @@ Class Env {
             }
 
             // Ignoring the Comment line in .env file content.
-            if(substr($line, 0, 1) == '#') {
+            if(str_starts_with($line, '#')) {
                 continue;
             }
 
             // Ignoring the Comment line in ini file content.
-            if(substr($line, 0, 1) == ';') {
+            if(str_starts_with($line, ';')) {
                 continue;
             }
 
@@ -161,10 +161,11 @@ Class Env {
      * @static
      * @access public
      * @param string|null $item
-     * @param mixed $default
+     * @param null|string $default
      * @return mixed
      */
-    public static function get(?string $item = null, $default = '') {
+    public static function get(?string $item = null, null|string $default = ''): mixed
+    {
 
         if(!is_null($item)) {
             return static::$vars[$item] ?? $default;
