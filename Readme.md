@@ -151,5 +151,6 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 Author: `Duktig Solutions` [support@duktig.solutions](mailto:support@duktig.solutions)
 
 [![X](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20X%20)](https://twitter.com/DuktigS)
+[![LinkedIn](https://img.shields.io/badge/Company_Page-LinkedIn-blue?style=flat&logo=LinkedIn&logoColor=Blue)](https://www.linkedin.com/company/duktig-solutions)
 
 >Project Development Idea from 04 April 2019
