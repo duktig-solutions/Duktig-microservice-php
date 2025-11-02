@@ -2,7 +2,7 @@
 /**
  * DataCaching middleware class to handle Response data caching.
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
  * @version 1.0.0

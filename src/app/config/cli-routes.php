@@ -3,7 +3,7 @@
  * Application CLI Routes configuration file.
  * See structure and explanation bellow.
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

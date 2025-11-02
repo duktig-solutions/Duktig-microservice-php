@@ -6,7 +6,7 @@
  * - Use Application custom library
  * - Use Application custom library extended from system library
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

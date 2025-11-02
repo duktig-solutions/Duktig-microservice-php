@@ -4,7 +4,7 @@
  *
  * Works with Redis Database List.
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.1.1
  * @requires phpredis extension

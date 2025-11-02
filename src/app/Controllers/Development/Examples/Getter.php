@@ -6,7 +6,7 @@
  * - Response with all request data
  * - Send Http request in CLI mode
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

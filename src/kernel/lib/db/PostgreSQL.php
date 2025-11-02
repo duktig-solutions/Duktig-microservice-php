@@ -2,7 +2,7 @@
 /**
  * PostgreSQL Class library
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.1.1
  *
@@ -94,7 +94,9 @@ class PostgreSQL {
             return false;
         }
 
-        if(!empty($config['timezone'])) {
+        if(!empty($config['time_zone'])) {
+            pg_query($conn, "SET TIMEZONE TO '".$config['time_zone']."';");
+        } elseif(!empty($config['timezone'])) {
             pg_query($conn, "SET TIMEZONE TO '".$config['timezone']."';");
         }
 
@@ -180,7 +182,7 @@ class PostgreSQL {
         if(!is_null($returnInsertIdFieldName)) {
             $sql .= " RETURNING " . $this->escape($returnInsertIdFieldName);
         } 
-        
+
         $result = $this->query($sql, array_values($data));
 
         if(!$result) {
@@ -329,7 +331,7 @@ class PostgreSQL {
      * @access public
      * @param string $queryString
      * @param array|null $params
-     * @return Result
+     * @return \PgSql\Result
      * @throws Exception
      */
     final public function query(string $queryString, ?array $params = NULL): Result
@@ -387,6 +389,10 @@ class PostgreSQL {
 
         $result = $this->query($queryString, $params);
 
+        if (!$result) {
+            return false;
+        }
+
         return pg_fetch_all($result);
 
     }
@@ -404,6 +410,10 @@ class PostgreSQL {
     final public function fetchAssoc(string $queryString, ?array $params = NULL): bool|array {
 
         $result = $this->query($queryString, $params);
+
+        if (!$result) {
+            return [];
+        }
 
         return pg_fetch_assoc($result);
 

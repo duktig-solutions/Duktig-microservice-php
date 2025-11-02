@@ -2,7 +2,7 @@
 /**
  * Data validation class library
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.3.1
  */

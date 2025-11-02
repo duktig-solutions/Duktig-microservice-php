@@ -5,7 +5,7 @@
  *
  * Usage: php ./src/cli/exec.php development-mq-producer-test --redis-config MessageQueue
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

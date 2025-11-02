@@ -4,7 +4,7 @@
  *
  * Usage: php ./cli/exec.php development-mq-consumer-health-inspector --redis-config MessageQueue
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

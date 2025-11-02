@@ -3,7 +3,7 @@
  * Events Subscriber class
  * This class uses to subscribe General Events Instance based on Redis Database
  * 
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.2
  */  
@@ -12,10 +12,10 @@ namespace System\Events;
 
 # Use of Redis configuration
 use Exception;
+use Throwable;
+use \Redis;
 use System\Config;
 use System\Logger;
-use \Redis;
-use Throwable;
 
 /**
  * Class Event

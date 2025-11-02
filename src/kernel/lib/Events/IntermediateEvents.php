@@ -2,7 +2,7 @@
 /*
  * Class to send and Receive intermediate data center Events
  * 
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
  * @version 1.0.1

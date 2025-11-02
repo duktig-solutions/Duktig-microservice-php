@@ -5,17 +5,15 @@
  *
  * Usage: php ./src/cli/exec.php development-mq-consumer --redis-config MessageQueue
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Controllers\Development\MessageQueue;
 
 use System\CLI\Input;
 use System\CLI\Output;
-use System\MessageQueue\Consumer as ConsumerProcess;
 use System\Config;
-use System\Logger;
 use System\MessageQueue\Consumer as TasksConsumer;
 
 class Consumer {
@@ -43,13 +41,15 @@ class Consumer {
 
     }
 
-    private function checkAlert($destination, $value) {
+    private function checkAlert($destination, $value): void
+    {
         if($value > 95) {
             echo " !!! Alert: ". $destination . " : " . $value ."\n";
         }
     }
 
-    private function processMessages($messages) {
+    private function processMessages($messages): void
+    {
 
         if(empty($messages)) {
             return;

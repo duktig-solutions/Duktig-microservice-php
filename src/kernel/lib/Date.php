@@ -2,9 +2,9 @@
 /**
  * Date Utility class
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 1.1.1
+ * @version 1.2.0
  */
 namespace Lib;
 
@@ -85,7 +85,7 @@ class Date {
      * @param bool $returnTotalPeriod
      * @return array|bool
      */
-    public static function datesIntersects(string $firstDateStart, string $firstDateEnd, string $secondDateStart, string $secondDateEnd, ?bool $returnTotalPeriod = false): array|bool
+    public static function datesIntersects(string $firstDateStart, string $firstDateEnd, string $secondDateStart, string $secondDateEnd, ?bool $returnTotalPeriod = false) : array|bool
     {
 
         $firstDateStart = strtotime($firstDateStart);
@@ -109,6 +109,43 @@ class Date {
             'start' => date('Y-m-d H:i:s', $start),
             'end' => date('Y-m-d H:i:s', $end)
         ];
+
+    }
+
+    /**
+     * Return human-readable passed time duration
+     * Can be used by for php strtotime() as argument function
+     *
+     * @static
+     * @access public
+     * @param int $time
+     * @return string
+     */
+    public static function timeAgo(int $time) : string {
+
+        $diff = max(0, time() - $time);
+
+        if ($diff < 60) {
+            return "$diff sec ago";
+        } elseif ($diff < 3600) {
+            $min = floor($diff / 60);
+            return "$min min ago";
+        } elseif ($diff < 86400) {
+            $hr = floor($diff / 3600);
+            return "$hr hour" . ($hr > 1 ? "s" : "") . " ago";
+        } elseif ($diff < 604800) {
+            $day = floor($diff / 86400);
+            return "$day day" . ($day > 1 ? "s" : "") . " ago";
+        } elseif ($diff < 2592000) {
+            $week = floor($diff / 604800);
+            return "$week week" . ($week > 1 ? "s" : "") . " ago";
+        } elseif ($diff < 31536000) {
+            $month = floor($diff / 2592000);
+            return "$month month" . ($month > 1 ? "s" : "") . " ago";
+        } else {
+            $year = floor($diff / 31536000);
+            return "$year year" . ($year > 1 ? "s" : "") . " ago";
+        }
 
     }
 

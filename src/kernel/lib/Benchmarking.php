@@ -6,6 +6,7 @@
  * 1 Millisecond = 1000 Microsecond
  * 1 Microsecond = 1000 Nanosecond
  *
+ * @version 1.0.1
  */
 namespace Lib;
 
@@ -29,7 +30,7 @@ class Benchmarking {
 	 * @access public
 	 * @return void
 	 */
-	public static function checkPoint($name) : void {
+	public static function checkPoint(string $name) : void {
 
 		static::$initMem = is_null(static::$initMem) ? memory_get_usage() : static::$initMem;
 
@@ -123,7 +124,7 @@ class Benchmarking {
 
 	}
 
-	public static function dumpResultsCli() {
+	public static function dumpResultsCli(): void {
 
         $finalResult = static::getResults();
 
@@ -172,10 +173,6 @@ class Benchmarking {
         }
 
         echo " " . str_pad('-', $linePad, '-') . "\n";
-
-
-
-        //print_r($report);
 
 	}
 

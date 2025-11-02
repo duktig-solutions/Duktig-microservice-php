@@ -1,7 +1,7 @@
 <?php
 /**
  * Class to manage User Auth storage using Redis Server
- *  
+ *
  * @author David A. <software@duktig.dev>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
@@ -11,31 +11,31 @@
  *          Haha, it is now 31 Dec 2024 Listening to nice Christmas songs...
  *
  * Data structure of users token storage
- * 
+ *
  * Each user has a HASH list of devices logged in
  * and each device token as separate KEY value with expiration time.
- * 
+ *
  * Example of each Device Login token
- * 
+ *
  * KEY: $sessionId1 (example: J34x1iXqyqWkIh60zxwGxzWiyYHKFw_57ffdeb2b93236cd8d7506db08f9fe59806366bb)
  * VALUE: $storageData1 - Json encoded information about user session containing deviceId
  * KEY: $sessionId2 (example: J34x1iXqyqWkIh60zxwGxzWiyYHKFw_df85g7s8d6gf6d78dfg687f68g7f86d86fgfg86)
  * VALUE: $storageData2 - Json encoded information about user session containing deviceId
- * 
+ *
  * and the HASH list of sessions
- * 
+ *
  * HASH $uid (example: ecdd2559-9e05-4af3-b4e4-f1154a32d792)
  *      KEY1: $sessionId1 (example: J34x1iXqyqWkIh60zxwGxzWiyYHKFw_57ffdeb2b93236cd8d7506db08f9fe59806366bb)
  *      VALUE1: $storageData1 (example: OK)
  *      KEY2: $sessionId2 (example: J34x1iXqyqWkIh60zxwGxzWiyYHKFw_df85g7s8d6gf6d78dfg687f68g7f86d86fgfg86)
  *      VALUE2: $storageData2 (example: OK)
  *      ...
- * 
+ *
  * Configuration of Tokens Storage for this functionality defined in:
  * /app/Config/app.php
- * 
+ *
  * Redis -> AuthStorage
- * 
+ *
  */
 namespace Lib\Auth;
 
@@ -68,7 +68,7 @@ class Storage {
 
     /**
      * Redis object
-     * 
+     *
      * @access protected
      * @var RedisClient|null
      */
@@ -85,7 +85,7 @@ class Storage {
 
         # Get connection from application Config and merge with defaults
         static::$config = array_merge(static::$config, Config::get()['Redis']['AuthStorage']);
-        
+
         # Connect to Redis
         static::$redis = new RedisClient();
         static::$redis->connect(static::$config['host'], static::$config['port']);
@@ -591,13 +591,13 @@ class Storage {
 
         # Get Session Data
         $sessionData = static::$redis->hGetAll('sess_'.$sessionId);
-        
+
         if(!$sessionData) {
-            
+
             # This value removed or expired,
             # Lets anyway try to delete from user HASH
             self::$redis->hDel($uid.'_sessions', $sessionId);
-            
+
             return false;
         }
 
@@ -644,13 +644,13 @@ class Storage {
 
         # Set login Data
         # With this data we're always keeping fresh the user roleId and status
-        # When user access to server, the token verification functionality 
+        # When user access to server, the token verification functionality
         # should look for user roleId and status right from here.
         static::$redis->hMSet(
             $uid.'_login',
             array_merge($accountData, $data)
         );
-        
+
         return true;
     }
 
@@ -713,12 +713,12 @@ class Storage {
 
         # Now, if all is correct let's return combined array
         return array_merge($sessionData, $loginData, ['uid' => $uid, 'sessionId' => $sessionId]);
-        
+
     }
 
     /**
      * Delete specified token by uid and sessionId
-     * 
+     *
      * @access public
      * @param string $uid
      * @param string $sessionId
@@ -735,7 +735,7 @@ class Storage {
         # Delete from KEY
         self::$redis->unlink('sess_'.$sessionId);
 
-        # Delete from HASH        
+        # Delete from HASH
         self::$redis->hDel($uid.'_sessions', $sessionId);
 
     }
@@ -783,21 +783,21 @@ class Storage {
 
         # Loop trough each item to ckeck existence
         foreach($items as $sessionId => $itemValue) {
-            
+
             # Try to get Item as KEY
             $storageData = self::$redis->get($sessionId);
-            
+
             # Item not exists as a KEY
             # We have to remove it
             if(!$storageData) {
                 self::$redis->hDel($uid, $sessionId);
                 $deletedCount++;
             }
-            
+
         }
 
         return $deletedCount;
-        
+
     }
 
 }

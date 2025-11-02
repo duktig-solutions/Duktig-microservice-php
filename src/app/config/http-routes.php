@@ -3,11 +3,11 @@
  * Application HTTP Routing configuration file.
  * See structure and explanation in the first sections.
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */
-//echo $_SERVER['REQUEST_URI']; exit();
+
 return [
 
 	# Example: Template of Route configuration

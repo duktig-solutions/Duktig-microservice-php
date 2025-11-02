@@ -2,13 +2,11 @@
 /**
  * CLI Class to output to console
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.1
  */
 namespace System\CLI;
-
-use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class Output

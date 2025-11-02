@@ -3,7 +3,7 @@
  * Environment variables loader from .env file.
  * This will check all variables in .env file and set/load only once that are not set by Docker/System.
  *
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.1.2
  */

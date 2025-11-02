@@ -3,7 +3,7 @@
  * Intermediate Data center Event Class
  * This class uses as an Event data structure template to Publish an events
  * 
- * @author David A. <framework@duktig.solutions>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.1
  */  
