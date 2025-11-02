@@ -148,7 +148,7 @@ The version in Duktig defined with three numbers which looks like: `x.x.x` i.e. 
 
 ## Credits
 
-Author: `Duktig Solutions` [framework@duktig.solutions](mailto:framework@duktig.solutions)
+Author: `Duktig Solutions` [support@duktig.solutions](mailto:support@duktig.solutions)
 
 [![X](https://img.shields.io/twitter/follow/DuktigS?label=News%20on%20X%20)](https://twitter.com/DuktigS)
 

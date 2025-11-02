@@ -86,7 +86,7 @@ $table = 'users';
 
 $record = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40
 ];
 
@@ -120,8 +120,8 @@ $fields = [
 ];
 
 $records = [
-    ['David', 'framework@duktig.solutions', 40],
-    ['Hakob', 'hakob.ayvazyan@gmail.com', 15]
+    ['David', 'support@duktig.solutions', 46],
+    ['Hakob', 'hakob.ayvazyan@gmail.com', 21]
 ];
 
 // this will return array with new inserted Ids
