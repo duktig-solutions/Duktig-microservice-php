@@ -48,7 +48,7 @@ $requiredValues = ['name', 'email', 'age'];
 
 // this will return empty string (pass the validation) because one of required value exists.
 $dataToValidate = [
-    'email' => 'framework@duktig.solutions'
+    'email' => 'support@duktig.solutions'
 ];
 
 $validationResult = \Lib\Validator::validateAtLeastOneValue($dataToValidate, $requiredValues);
@@ -96,7 +96,7 @@ $validationRules = [
 // data structure to validate
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40,
     'documents' => [
         'passport' => 'yes',
@@ -109,7 +109,7 @@ $validationResult = \Lib\Validator::validateDataStructure($dataToValidate, $vali
 
 // invalid data structure to validate
 $dataToValidate = [
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40,
     'documents' => [
         'passport' => 'abc',
@@ -160,7 +160,7 @@ $validationRules = [
 // valid data because all values are valid with required rules
 $dataToValidate = [
     'amount' => 5,
-    'email' => 'framework@duktig.solutions'
+    'email' => 'support@duktig.solutions'
 ];
  
 // this will return en empty array
@@ -308,7 +308,7 @@ $validationRules = [
 
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40
 ];
 
@@ -322,7 +322,7 @@ $validationResult = \Lib\Validator::validateDataStructure($dataToValidate, $vali
 // In case if there are no matching keys, the array with error message will be returned.
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
 ];
 
 $validationResult = \Lib\Validator::validateDataStructure($dataToValidate, $validationRules, $extraRules);
@@ -344,10 +344,10 @@ Array
 )
 */
 
-// In case if there are any extra key/value the validation will not passed.
+// In case if there are any extra key/value the validation will not be passed.
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40,
     'message' => 'Hello!'
 ];
@@ -379,7 +379,7 @@ $validationRules = [
 
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40
 ];
 
@@ -393,7 +393,7 @@ $validationResult = \Lib\Validator::validateDataStructure($dataToValidate, $vali
 // In case if there are any extra key/value in data structure, the array with error message will be returned
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40,
     'message' => 'Hello!'
 ];
@@ -424,7 +424,7 @@ $validationRules = [
 
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40,
     'message' => 'Hello!'
 ];
@@ -470,7 +470,7 @@ Return value:
 ```php
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40
 ];
 
@@ -489,13 +489,13 @@ $validationResult = \Lib\Validator::validateExactKeysValues($dataToValidate, $it
 // Missing value
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
 ];
 
 // Extra value
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 40,
     'message' => 'Hello!'
 ];
@@ -526,7 +526,7 @@ Return value:
 
 ```php
 // Validation data: Json string instead of Array Data structure
-$jsonStringToValidate = '{"name":"David","email":"framework@duktig.solutions","age":40}';
+$jsonStringToValidate = '{"name":"David","email":"support@duktig.solutions","age":46}';
 
 // validation rules
 $validationRules = [
@@ -570,8 +570,8 @@ This method accepts multidimensional data with rules as listed in code bellow:
 // Validation data: Json string instead of Array Data structure
 $jsonStringToValidate = '{
     "name": "David",
-    "email": "framework@duktig.solutions",
-    "age": 40,
+    "email": "support@duktig.solutions",
+    "age": 46,
     "documents": {
          "passport": "Yes",
          "driverLicense": "No"
@@ -662,8 +662,8 @@ Return value:
 // Data to validate
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
-    'age' => 40
+    'email' => 'support@duktig.solutions',
+    'age' => 46
 ];
 
 // Note: In this example, the main goal is to validate if there are any extra values  
@@ -681,8 +681,8 @@ $validationResult = \Lib\Validator::validateNoExtraValues($dataToValidate, $item
 // Extra value
 $dataToValidate = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
-    'age' => 40,
+    'email' => 'support@duktig.solutions',
+    'age' => 46,
     'message' => 'Hello!'
 ];
 
@@ -984,7 +984,7 @@ Return value:
 
 ```php
 // Validate if the given value is valid email address
-$validationResult = \Lib\Validator::validateRule('framework@duktig.solutions', 'email');
+$validationResult = \Lib\Validator::validateRule('support@duktig.solutions', 'email');
 
 // Validate if the given value is string with length 5-6
 $validationResult = \Lib\Validator::validateRule('Hello', 'string_length:5:10');

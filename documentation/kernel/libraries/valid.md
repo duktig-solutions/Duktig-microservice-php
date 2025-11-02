@@ -338,7 +338,7 @@ Return value:
 
 ```php
 // this will return true 
-$isValidEmailAddress = \Lib\Valid::email('framework@duktig.solutions');
+$isValidEmailAddress = \Lib\Valid::email('support@duktig.solutions');
 
 // this will return false because the value is not valid email address 
 $isValidEmailAddress = \Lib\Valid::email(123);

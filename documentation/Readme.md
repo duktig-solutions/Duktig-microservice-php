@@ -17,8 +17,8 @@
     - [Local development deployment](installation/local-dev-deployment.md)
 - Development:
     - [HTTP and CLI Routing](development/http-and-cli-routing.md)
-    - HTTP Workflow
-    - CLI workflow
+    - [HTTP Workflow](development/http-workflow.md)
+    - [CLI workflow](development/cli-workflow.md)
     - Middleware
     - Controllers
     - Models
@@ -39,7 +39,7 @@
     - Event publisher
     - Http Client info
     - [Http Client](kernel/libraries/http/client.md)
-    - Benchmarking
+    - [Benchmarking](kernel/libraries/benchmarking.md)
     - Date
     - Data Generator
     - Location by ip

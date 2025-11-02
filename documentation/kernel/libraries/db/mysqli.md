@@ -149,13 +149,13 @@ $table = 'users';
 
 $record = [
     'name' => 'David',
-    'email' => 'framework@duktig.solutions',
+    'email' => 'support@duktig.solutions',
     'age' => 39
 ];
 
 $where = [
     'id' => 13,
-    'email' => 'framework@duktig.solutions'
+    'email' => 'support@duktig.solutions'
 ];
 
 // this will return affected rows count
@@ -182,7 +182,7 @@ $table = 'users';
 
 $where = [
     'id' => 13,
-    'email' => 'framework@duktig.solutions'
+    'email' => 'support@duktig.solutions'
 ];
 
 // this will return affected rows count
@@ -209,7 +209,7 @@ Let's execute query with **select** statement and get rows from table.
 
 ```php
 $params = [
-    'framework@duktig.solutions'
+    'support@duktig.solutions'
 ];
 
 // Execute query to get one row
@@ -497,7 +497,7 @@ Return value:
 ```php
 // define where condition
 $where = [
-    'email' => 'framework@duktig.solutions'
+    'email' => 'support@duktig.solutions'
 ];
 
 // fetch row as assoc array by where condition
@@ -509,11 +509,11 @@ The where condition parameters will be converted to query string with "and" oper
 ```php
 $where = [
    'id' => 55,
-   'email' => 'framework@duktig.solutions',
+   'email' => 'support@duktig.solutions',
    'status' => 2 
 ];
 
-// the query of this method will convert to: select * from users where id = 55 and email = 'framework@duktig.solutions' and status = '2';
+// the query of this method will convert to: select * from users where id = 55 and email = 'support@duktig.solutions' and status = '2';
 $result = $this->fetchAssocByWhere('users', $where);
 ```
 
@@ -542,7 +542,7 @@ $fields = [
 ];
 
 $where = [
-    'email' => 'framework@duktig.solutions'
+    'email' => 'support@duktig.solutions'
 ];
 
 // fetch row as assoc array by where condition
@@ -554,11 +554,11 @@ The where condition parameters will be converted to query string with "and" oper
 ```php
 $where = [
    'id' => 55,
-   'email' => 'framework@duktig.solutions',
+   'email' => 'support@duktig.solutions',
    'status' => 2 
 ];
 
-// the query of this method will convert to: select id, firstName, lastName from users where id = 55 and email = 'framework@duktig.solutions' and status = '2';
+// the query of this method will convert to: select id, firstName, lastName from users where id = 55 and email = 'support@duktig.solutions' and status = '2';
 $result = $this->fetchFieldsAssocByWhere('users', $fields, $where);
 ```
 
