@@ -695,11 +695,11 @@ class Valid {
      *
      * @static
      * @access public
-     * @param string $uid
+     * @param mixed $uid
      * @return bool
      * @since version 1.5.0
      */
-    public static function uid(string $uid) : bool {
+    public static function uid(mixed $uid) : bool {
         return (bool) preg_match(
             '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i',
             $uid

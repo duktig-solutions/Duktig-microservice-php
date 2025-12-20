@@ -781,6 +781,13 @@ See all rules listed bellow
     - Pattern examples:
         - `id` Required a valid ID (Integer Number > 0)
         - `id:!required` Required a valid ID (Integer Number > 0) or empty string
+
+- `uid`
+    - Requirement: Valid UID (String like: 03b1f406-aa16-47b5-9d86-40c2adc9dc67)
+    - Pattern: ***uid:{not-required}***
+    - Pattern examples:
+        - `uid` Required a valid UID (String like: 03b1f406-aa16-47b5-9d86-40c2adc9dc67)
+        - `uid:!required` Required a valid UID or empty string
             
 - `digits` 
     - Requirement: Digits 0-9

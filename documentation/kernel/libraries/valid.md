@@ -33,6 +33,7 @@ Class: `Valid`
           - [Phone](#phone)
           - [Float range](#float-range)
           - [HTTP host](#http-host)
+          - [UID](#uid)
           - [ID](#id)
           - [Int range](#int-range)
           - [IP Address](#ip-address)
@@ -373,6 +374,23 @@ $isValidPhone = \Lib\Valid::phoneNumberE164('+374');
 $isValidPhone = \Lib\Valid::phoneNumberE164('125236525456');
 ```
 
+#### Phone number any
+
+This is a phone number validation method with more relaxed rules mode.
+
+```php
+
+// This will return true
+$isValidPhone = \Lib\Valid::phoneNumberAny('+37495565003');
+$isValidPhone = \Lib\Valid::phoneNumberAny('37495565003');
+$isValidPhone = \Lib\Valid::phoneNumberAny('+1 415 555 2671');
+$isValidPhone = \Lib\Valid::phoneNumberAny('+49 170 1234567');
+$isValidPhone = \Lib\Valid::phoneNumberAny('0049 170 1234567');
+$isValidPhone = \Lib\Valid::phoneNumberAny('(415) 555-2671');
+$isValidPhone = \Lib\Valid::phoneNumberAny('(374) 95 565-003');
+
+```
+
 #### Float range
 
 Check if the given value is float and in specified range
@@ -454,6 +472,32 @@ $isValidId = \Lib\Valid::id(-98);
 ```
 
 > This method allows to check values for user Ids like Autoincrement in MySQL Database table.  
+
+#### UID
+
+Check if the given value is valid UID, such as: 03b1f406-aa16-47b5-9d86-40c2adc9dc67
+
+`static bool uid(mixed $data)`
+
+Arguments:
+
+- `mixed` Data to check
+
+Return value:
+
+- `bool` True if the given value is valid UID string like `03b1f406-aa16-47b5-9d86-40c2adc9dc67`
+- `bool` False if the given value is not a valid UID.
+
+```php
+// this will return true
+$isValidUid = \Lib\Valid::uid('03b1f406-aa16-47b5-9d86-40c2adc9dc67');
+
+// this will return false
+$isValidUid = \Lib\Valid::uid('abc');
+$isValidUid = \Lib\Valid::uid('sd09fsd908f09d-sdf98ds9f8ds9f-ds9f8d89f');
+$isValidUid = \Lib\Valid::uid(0);
+$isValidUid = \Lib\Valid::uid(-98);
+```
 
 #### Int range
 
