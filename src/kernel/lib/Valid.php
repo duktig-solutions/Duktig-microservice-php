@@ -4,7 +4,7 @@
  *
  * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 1.3.1
+ * @version 1.5.0
  */
 Namespace Lib;
 
@@ -373,6 +373,32 @@ class Valid {
 
     }
 
+    /**
+     * Validate any type of phone number
+     *
+     * @static
+     * @access public
+     * @param mixed $data
+     * @return bool
+     * @since version 1.4.0
+     */
+    public static function phoneNumberAny(mixed $data): bool {
+        if (!is_scalar($data)) {
+            return false;
+        }
+
+        $data = trim((string) $data);
+
+        if (strlen($data) < 6) {
+            return false;
+        }
+
+        // Allow formats like: +1234567890, (123) 456-7890, 0049 170 1234567, etc.
+        $pattern = '/^\+?[\d\s\-\(\)]+$/';
+
+        return preg_match($pattern, $data) === 1;
+    }
+
 	/**
 	 * Check if valid float value in given range
 	 *
@@ -663,5 +689,21 @@ class Valid {
 	public static function longitude(mixed $lng) : bool {
 		return preg_match('/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $lng);
 	}
+
+    /**
+     * Validate UID like: 03b1f406-aa16-47b5-9d86-40c2adc9dc67
+     *
+     * @static
+     * @access public
+     * @param string $uid
+     * @return bool
+     * @since version 1.5.0
+     */
+    public static function uid(string $uid) : bool {
+        return (bool) preg_match(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i',
+            $uid
+        );
+    }
 
 }

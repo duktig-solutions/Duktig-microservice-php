@@ -6,6 +6,64 @@ Each release of **Duktig PHP Framework** contains detailed explanation about cha
 
 Changes in this file will be described new to old, for instance, you will see on top of this list every latest changes. 
 
+### Version 1.2.0
+
+**New Validation rules in `Validation` library**
+
+---
+
+
+`uid` - New rule option requires to contain only UID value.
+
+Example: 03b1f406-aa16-47b5-9d86-40c2adc9dc67
+
+
+```php
+<?php
+
+// Validate if string is uid
+$validation = Validator::validateJson(
+  $request->rawInput(),
+  [
+    'uid1' => 'uid',
+    'uid2' => 'uid:!required'
+  ]
+);
+```
+
+**New Validation methods in `Valid` library**
+
+---
+
+```php
+<?php
+
+// Validates is a value is UID
+$value = '03b1f406-aa16-47b5-9d86-40c2adc9dc67';
+
+if(Valid::uid($value)) {
+  // code here
+}
+
+// Validates if a value is any type of phone number
+$value = '+37495565003';
+
+if(Valid::phoneNumberAny($value) {
+  // code here
+}
+
+```
+
+**Simple correction in the HTTP Request library.**
+
+From now, it allows to set default value as an array in the `input()` method.
+
+```php
+// Previously this allowed only scalar values to set as default.
+$parms = $request->input('params', []); 
+```
+
+
 ### Version 1.1.0
 
 **New Validation rules in Validation library**

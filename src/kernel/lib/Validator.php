@@ -4,7 +4,7 @@
  *
  * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 1.6.1
+ * @version 1.7.0
  */
 namespace Lib;
 
@@ -150,6 +150,14 @@ class Validator {
 
                 if(!Valid::id($value)) {
                     $errorMessage = 'Required valid ID number starting from 1' . $errorMessageSuffix;
+                }
+
+                break;
+
+            case 'uid':
+
+                if(!Valid::uid($value)) {
+                    $errorMessage = 'Required valid UID string';
                 }
 
                 break;

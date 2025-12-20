@@ -4,7 +4,7 @@
  *
  * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 2.1.3
+ * @version 2.1.4
  */
 namespace System\HTTP;
 
@@ -230,10 +230,10 @@ class Request {
      *
      * @access public
      * @param string|null $item
-     * @param null|string $default
+     * @param null|array|string $default
      * @return mixed
      */
-	public function input(?string $item = NULL, null|string $default = ''): mixed {
+	public function input(?string $item = NULL, null|array|string $default = ''): mixed {
 
 	    if(is_null($item)) {
 	        return $this->input;
