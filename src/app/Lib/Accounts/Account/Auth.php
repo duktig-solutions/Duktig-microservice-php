@@ -2,7 +2,7 @@
 /**
  * Auth Access/Refresh tokens generator class
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.1.0
  * 

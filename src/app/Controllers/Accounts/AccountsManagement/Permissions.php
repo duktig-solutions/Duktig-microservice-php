@@ -3,7 +3,7 @@
  * Permissions Controller
  * This Controller assumes to get Permissions of all Microservices from Intermediate Data Center.
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

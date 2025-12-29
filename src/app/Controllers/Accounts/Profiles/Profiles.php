@@ -3,7 +3,7 @@
  * Get Accounts data as Profiles list.
  * The case when loading comments from "Comments" microservice and need to get users information by userIds
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

@@ -3,7 +3,7 @@
  * Accounts Controller
  * This controller only available to access for Admin. Checking permissions in Auth middleware.
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @version 1.0.0
  */

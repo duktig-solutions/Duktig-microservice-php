@@ -2,7 +2,7 @@
 /**
  * Class to manage User Auth storage using Redis Server
  *
- * @author David A. <software@duktig.dev>
+ * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
  * @version 1.0.1

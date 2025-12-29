@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Class to send and Receive intermediate data center Events
  * 
  * @author David A. <support@duktig.solutions>
