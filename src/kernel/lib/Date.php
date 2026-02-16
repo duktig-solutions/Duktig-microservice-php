@@ -4,7 +4,7 @@
  *
  * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 1.2.0
+ * @version 1.2.1
  */
 namespace Lib;
 
@@ -125,7 +125,9 @@ class Date {
 
         $diff = max(0, time() - $time);
 
-        if ($diff < 60) {
+        if($diff == 0) {
+            return "now";
+        } elseif ($diff < 60) {
             return "$diff sec ago";
         } elseif ($diff < 3600) {
             $min = floor($diff / 60);

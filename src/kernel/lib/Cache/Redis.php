@@ -5,7 +5,7 @@
  * @author David A. <support@duktig.solutions>
  * @license see License.md
  * @uses PhpRedis extension: https://github.com/phpredis/phpredis
- * @version 1.0.2
+ * @version 1.1.0
  */
 namespace Lib\Cache;
 
@@ -145,6 +145,16 @@ class Redis {
         }
 
         return null;
+    }
+
+    /**
+     * Delete cache item
+     *
+     * @param string $key
+     * @return void
+     */
+    public function del(string $key): void {
+        $this->redis->del($key);
     }
 
 }

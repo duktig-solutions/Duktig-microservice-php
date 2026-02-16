@@ -53,7 +53,7 @@
     - Benchmarking
     - Data caching
 - Tutorials:
-    - CRUD development
+    - [CRUD development](tutorials/crud-development.md)
     - Events Publish/Subscribe
     - Message/queue
     - Database backup
