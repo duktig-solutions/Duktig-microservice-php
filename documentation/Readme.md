@@ -19,7 +19,7 @@
     - [HTTP and CLI Routing](development/http-and-cli-routing.md)
     - [HTTP Workflow](development/http-workflow.md)
     - [CLI workflow](development/cli-workflow.md)
-    - Middleware
+    - [Middleware](development/middleware.md)
     - Controllers
     - Models
     - Libraries
@@ -46,7 +46,7 @@
     - [Data validator](kernel/libraries/valid.md)
     - [Data Structures validator](kernel/libraries/validator.md)
 - Code examples:
-    - CLI (command line interface
+    - CLI (command line interface)
     - Data validation
     - Events Publish/Subscribe
     - Message/queue
@@ -54,6 +54,7 @@
     - Data caching
 - Tutorials:
     - [CRUD development](tutorials/crud-development.md)
+    - [Middleware](tutorials/middleware.md)
     - Events Publish/Subscribe
     - Message/queue
     - Database backup
