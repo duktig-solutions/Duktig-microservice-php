@@ -1,66 +1,119 @@
-# Duktig PHP Microservice - Development documentation
+# Duktig PHP Microservice - Development Documentation
 
->NOTE: The documentation of project is under development process.
+> NOTE: The documentation of project is under development process.
 
-## Table of content
+## Table of Contents
 
-- Overview:
-    - [About project](../Readme.md) 
+- Overview
+    - [About Project](../Readme.md)
+    - [Getting Started](overview/getting-started.md)
     - [Requirements](overview/requirements.md)
     - [Unit Tests](overview/tests.md)
     - [Changelog](overview/change-log.md)
-    - [Coding standards](overview/coding-standards.md) 
-    - [F.Q.Q](overview/faq.md)
-    - [Getting Started](overview/getting-started.md)
-- Installation:
-    - [Configuration and environment variables](installation/env-configuration.md)
-    - [Local development deployment](installation/local-dev-deployment.md)
-- Development:
+    - [Coding Standards](overview/coding-standards.md)
+    - [FAQ](overview/faq.md)
+    - [Architecture Overview](overview/architecture-overview.md)
+    - [Project Structure](overview/project-structure.md)
+    
+- Installation
+    - [Configuration and Environment Variables](installation/env-configuration.md)
+    - [Local Development Deployment](installation/local-dev-deployment.md)
+    - [Production Deployment](installation/production-deployment.md)
+    - Upgrade Guide
+
+- Development
     - [HTTP and CLI Routing](development/http-and-cli-routing.md)
     - [HTTP Workflow](development/http-workflow.md)
-    - [CLI workflow](development/cli-workflow.md)
+    - [CLI Workflow](development/cli-workflow.md)
     - [Middleware](development/middleware.md)
     - Controllers
     - Models
-    - Libraries
+    - Libraries in Application Layer
     - Workers
-    - Error handling
+    - Error Handling
     - Logging
     - Events Publish/Subscribe
-    - Message/Queue
-- Libraries:
-    - [Json Web token Auth](kernel/libraries/auth/jwt.md)
-    - [Password](kernel/libraries/auth/password.md)
-    - Redis
-    - [MySQL](kernel/libraries/db/mysqli.md)
-    - [MySQL Utility](kernel/libraries/db/mysqliutility.md)
-    - [PostgreSQL](kernel/libraries/db/postgresql.md)
-    - Event
-    - Event publisher
-    - Http Client info
-    - [Http Client](kernel/libraries/http/client.md)
-    - [Benchmarking](kernel/libraries/benchmarking.md)
-    - Date
-    - Data Generator
-    - Location by ip
-    - [Data validator](kernel/libraries/valid.md)
-    - [Data Structures validator](kernel/libraries/validator.md)
-- Code examples:
-    - CLI (command line interface)
-    - Data validation
-    - Events Publish/Subscribe
-    - Message/queue
-    - Benchmarking
-    - Data caching
-- Tutorials:
-    - [CRUD development](tutorials/crud-development.md)
+    - Message Queue
+    - Caching Strategy
+    - Validation Strategy
+    - Authentication and Authorization
+    - API Versioning
+
+- Kernel Libraries
+    - Auth
+        - [JSON Web Token (JWT)](kernel/libraries/auth/jwt.md)
+        - [Password](kernel/libraries/auth/password.md)
+        - Token Storage
+        - Auth Key
+    - Database
+        - [MySQL](kernel/libraries/db/mysqli.md)
+        - [MySQL Utility](kernel/libraries/db/mysqliutility.md)
+        - [PostgreSQL](kernel/libraries/db/postgresql.md)
+        - Query Builder
+        - Migrations
+    - Validation
+        - [Data Validator (Valid)](kernel/libraries/valid.md)
+        - [Data Structures Validator](kernel/libraries/validator.md)
+    - HTTP
+        - [HTTP Client](kernel/libraries/http/client.md)
+        - HTTP Client Info
+        - HTTP Request
+        - HTTP Response
+    - Caching
+        - Redis
+    - Events
+        - Event
+        - Event Publisher
+    - Utilities
+        - [Benchmarking](kernel/libraries/benchmarking.md)
+        - Date
+        - Data Generator
+        - Location by IP
+        - File System
+        - Encryption
+
+- Tutorials
+    - [CRUD Development](tutorials/crud-development.md)
     - [Middleware](tutorials/middleware.md)
+    - Authentication and Authorization
+    - Validation
+    - Caching
     - Events Publish/Subscribe
-    - Message/queue
-    - Database backup
+    - Message Queue
     - Workers
-- Cron jobs:
-    - [Applications log archiver](cron-jobs/application-logs.md)
-    - [Database backup](cron-jobs/databases-backup.md)
-- References:
-    - [Predefined constants](references/predefined-constants.md)    
+    - Database Backup
+    - Building a CLI Command
+
+- Code Examples
+    - CLI (Command Line Interface)
+    - Data Validation
+    - Middleware Chain
+    - Authentication and Authorization
+    - Events Publish/Subscribe
+    - Message Queue
+    - Benchmarking
+    - Data Caching
+    - File Upload/Download
+
+- Cron Jobs
+    - [Application Logs Archiver](cron-jobs/application-logs.md)
+    - [Database Backup](cron-jobs/databases-backup.md)
+    - Queue Worker Runner
+    - Cache Cleaner
+
+- References
+    - [Predefined Constants](references/predefined-constants.md)
+    - Environment Variables Reference
+    - HTTP Status and Error Codes
+    - Naming Conventions
+
+- Operations
+    - Monitoring
+    - Health Checks
+    - Backups and Recovery
+    - Incident Response
+
+- Contributing
+    - Contribution Guide
+    - Pull Request Checklist
+    - Documentation Style Guide
