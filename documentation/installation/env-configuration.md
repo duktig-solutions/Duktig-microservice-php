@@ -1,243 +1,382 @@
-# Duktig PHP Microservice - Development documentation
+# Duktig PHP Microservice - Development Documentation
 
-## Configuration
+## Installation - Configuration and Environment Variables
 
-As mentioned before, Duktig PHP Framework is Docker friendly. So ability to use environment variables is mandatory in this case.
+This document explains how to configure the Duktig PHP Microservice framework using environment variables and configuration files.
 
-### Environment variables
+## Table of Contents
 
-Default Environment variables located in `./src/.env` file which you can use to manage your application configuration, 
-such as database connection credentials, secure keys and other. 
+1. [Overview](#overview)
+2. [Environment Variables](#environment-variables)
+3. [Application Configuration](#application-configuration)
+4. [Database Configuration](#database-configuration)
+5. [Constants](#constants)
+6. [Configuration Best Practices](#configuration-best-practices)
+7. [Related Documentation](#related-documentation)
 
-In both, HTTP and CLI modes the project will load variables from file automatically and keep in `Env` static class. 
-In case if variable exists in System/Docker environment, it will be replaced with last one. 
+---
 
->NOTE: Variables defined in Docker containers always have high priority.
- 
-### Application configuration 
+## Overview
 
-The main application configuration values defined in file: `app/config/app.php` as an array.
-Each value of configuration can be hard coded or defined as environment variable.
+The Duktig PHP Framework is Docker-friendly and designed to work with environment variables. This approach allows you to:
 
-For instance:
+- Separate configuration from code
+- Use different settings for development, staging, and production
+- Keep sensitive data (passwords, keys) out of version control
+- Override configuration via Docker environment
+
+---
+
+## Environment Variables
+
+### Environment File Location
+
+Environment variables are defined in: `src/.env`
+
+This file contains configuration values such as:
+- Database connection credentials
+- API keys and secure tokens
+- Service endpoints
+- Application settings
+
+### How Environment Variables Work
+
+The framework loads variables from the `.env` file automatically in both HTTP and CLI modes. Variables are stored in the `Env` static class and can be accessed throughout the application.
+
+**Priority Order**:
+1. System/Docker environment variables (highest priority)
+2. `.env` file variables (lower priority)
+
+> Note: Variables defined in Docker containers always have higher priority and will override `.env` file values.
+
+### Example .env File
+
+```bash
+# Application Settings
+APP_ENV=production
+APP_DEBUG=false
+APP_TIMEZONE=UTC
+
+# Database - MySQL
+MYSQL_HOST=duktig-database-mysql
+MYSQL_PORT=3306
+MYSQL_DATABASE=myapp
+MYSQL_USERNAME=appuser
+MYSQL_PASSWORD=secure_password_here
+
+# Database - PostgreSQL
+POSTGRES_HOST=duktig-database-postgresql
+POSTGRES_PORT=5432
+POSTGRES_DATABASE=myapp
+POSTGRES_USERNAME=appuser
+POSTGRES_PASSWORD=secure_password_here
+
+# Redis Cache
+REDIS_HOST=duktig-database-redis
+REDIS_PORT=6379
+REDIS_PASSWORD=redis_password_here
+
+# JWT Authentication
+JWT_SECRET_KEY=your-secret-key-here
+JWT_TOKEN_LIFETIME=3600
+
+# API Keys
+API_KEY=your-api-key-here
+```
+
+### Accessing Environment Variables in Code
+
+Use the `Env` static class to retrieve environment variables:
 
 ```php
 <?php
-[
-    "variable1" => 'The value is hard coded',
-    "variable2" => Env::get('value_of_environment_variable')
+use System\Env;
+
+// Get environment variable
+$dbHost = Env::get('MYSQL_HOST');
+
+// Get with default value if not set
+$dbPort = Env::get('MYSQL_PORT', 3306);
+
+// Check if variable exists
+if (Env::has('API_KEY')) {
+    $apiKey = Env::get('API_KEY');
+}
+```
+
+---
+
+## Application Configuration
+
+### Configuration File Location
+
+Main application configuration: `src/app/config/app.php`
+
+This file returns an associative array containing all application settings organized by sections.
+
+### Configuration Structure
+
+Configuration values can be:
+- **Hard-coded** - Defined directly in the configuration file
+- **Environment-based** - Loaded from environment variables using `Env::get()`
+
+**Example**:
+
+```php
+<?php
+use System\Env;
+
+return [
+    'ProjectName' => 'My Microservice',
+    
+    'Mode' => Env::get('APP_ENV', 'development'),
+    
+    'DateTimezone' => Env::get('APP_TIMEZONE', 'UTC'),
+    
+    'Debug' => Env::get('APP_DEBUG', false)
+];
+```
+
+### Configuration Sections
+
+The configuration file is divided into logical sections. Each section groups related configuration values.
+
+Common sections include:
+- **Databases** - Database connection configurations
+- **Redis** - Cache and session configurations
+- **Auth** - Authentication settings
+- **JWT** - JSON Web Token settings
+- **CORS** - Cross-Origin Resource Sharing settings
+
+---
+
+## Database Configuration
+
+### Database Configuration Structure
+
+Database configurations are defined in the `Databases` section of `src/app/config/app.php`.
+
+Each database connection has a unique name (instance) and contains connection parameters.
+
+### Example: Hard-Coded Configuration
+
+```php
+<?php
+'Databases' => [
+    
+    // Connection instance name
+    'MyDatabase' => [
+        'driver'   => 'MySQLi',
+        'host'     => 'localhost',
+        'port'     => 3306,
+        'username' => 'root',
+        'password' => 'abc123',
+        'database' => 'myapp',
+        'charset'  => 'utf8mb4'
+    ]
+    
 ]
 ```
 
-Application configuration file divided into sections and each one contains a group of configuration values.
-For instance, Databases configuration values defined in `Databases` section of file.
+### Example: Environment-Based Configuration (Recommended)
 
 ```php
-<?php    
-    # Database Connection Configuration
-    # Each model in /app/models is able to use/start with one connection section.
-    'Databases' => [
+<?php
+use System\Env;
 
-	    # Section name defined by Developer will be used in model file.
-	    'ExampleDatabaseConnectionInstance' => [
-
-		    # This group of configuration values are hard coded in file
-		    'driver' => 'MySQLi',
-		    # Host
-		    'host' => 'localhost',
-		    # Port
-		    'port' => 3306,
-		    # MySQL Username
-		    'username' => 'root',
-		    # MySQL Password
-		    'password' => 'abc123',
-		    # MySQL Database name
-		    'database' => 'Duktig',
-		    # Charset
-		    'charset' => 'utf8'
-	    ],
-	    
-	    [
-            # This group of configuration values defined as environment variables
-		    'driver' => 'MySQLi',
-		    # Host
-		    'host' => Env::get('EXAMPLE_MYSQL_HOST'),
-		    # Port
-		    'port' => Env::get('EXAMPLE_MYSQL_PORT'),
-		    # MySQL Username
-		    'username' => Env::get('EXAMPLE_MYSQL_USER'),
-		    # MySQL Password
-		    'password' => Env::get('EXAMPLE_MYSQL_PASSWORD'),
-		    # MySQL Database name
-		    'database' => Env::get('EXAMPLE_MYSQL_DATABASE'),
-		    # Charset
-		    'charset' => Env::get('EXAMPLE_MYSQL_CHARSET')	    
-        ]       
+'Databases' => [
     
+    // MySQL Connection
+    'MySQL_Main' => [
+        'driver'   => 'MySQLi',
+        'host'     => Env::get('MYSQL_HOST'),
+        'port'     => Env::get('MYSQL_PORT'),
+        'username' => Env::get('MYSQL_USERNAME'),
+        'password' => Env::get('MYSQL_PASSWORD'),
+        'database' => Env::get('MYSQL_DATABASE'),
+        'charset'  => Env::get('MYSQL_CHARSET', 'utf8mb4')
+    ],
+    
+    // PostgreSQL Connection
+    'PostgreSQL_Main' => [
+        'driver'   => 'PostgreSQL',
+        'host'     => Env::get('POSTGRES_HOST'),
+        'port'     => Env::get('POSTGRES_PORT'),
+        'username' => Env::get('POSTGRES_USERNAME'),
+        'password' => Env::get('POSTGRES_PASSWORD'),
+        'database' => Env::get('POSTGRES_DATABASE')
     ]
-
-```
-
-Each section can contain more than one defined instances, for example, 
-your application can access to more than one Database servers or Redis instance.
-
-It is also possible to define a new section in configuration file and get values in your code.
-
-### HTTP Routing
-
-The HTTP routing file `http-routes.php` in Duktig PHP Framework located in `app/config/` directory.
-
-You're always able to add new route, configure (edit) existing routes in your application.
-
-Example and Explanation of HTTP route configuration:
-
-```php
-<?php
-# Example: Template of Route configuration
-
-# Request method
-# Can be any HTTP Request method such as: GET, POST, PUT, PATCH, DELETE, etc...
-# Each Request method can contain one or more Request responses.
-# i.e. GET: /user, GET: /user/33, GET: /user/33/comments etc...
-'GET' => [
-
-    # Route
-    # Here you can describe route paths for request.
-    # Each route path items can contain exact matching words i.e. /user or variables.
-    # Variables can be:
-    #   {id}  - only ID number
-    #   {num} - only numeric
-    #   {any} - type of string
-    #
-    # For example, this route path accepts only ID integer for second item: /example/123 (correct). /example/something (not correct).
-    # If the route path not matches, the system will response with Error 404 (Resource not found).
-    '/__example/{id}/posts/{any}' => [
-
-        # Middleware
-        # With The middleware option you can set any number of middleware methods before the controller starts.
-        # For instance, you can make middleware methods to: Authorize client, Validate Request data, then continue to controller.
-        # The middleware functionality also can be used to get response data from cache instead of Controller -> Model -> Database.
-        # The format of middleware configuration is: ClassName->methodName where the middleware classes located in /app/middleware directory.
-        # Note: If you not have any middleware functionality for this route, you can just pass this section as empty.
-        'middleware' => [
-            '___ExampleMiddlewareClass->exampleMiddlewareMethod',
-            '___AnotherExampleMiddlewareClass->anotherExampleMiddlewareMethod'
-        ],
-
-        # Controller
-        # Controllers runs as regular controllers in MVC Pattern.
-        # The format of controller configuration is: ClassName->methodName where the controller classes located in /app/controllers directory.
-        # Note: You can put authorization, caching, data validation functionality inside a controller method instead of creating a dedicated middleware for it.
-        'controller' => '___ExampleControllerClass->exampleControllerMethod',
-
-        # Required permission(s) to access this resource. 
-        # Listed as "Microservice->Perm1, Perm2
-        # NOTICE: If this item in array is missed, this will assume any type of User can access to this resource.
-
-        # WARNING !!! The array "permissionsRequired" works paired with middleware you're specified.
-        # So you have to check permissions by yourself as it does middleware: Auth->Authenticate			
-        // @todo
-        // Make permissions functionality
-        'permissionsRequired' => [
-            
-            # Microservice name => Permission Ids
-            'Accounts' => [
-                
-                # Permissions defined in app/config/constants.php
-            //	PERMISSIONS['Accounts']['Account']['patch'],
-                
-                # It is also possible to add more than one permission to requirement list
-                # So the system will check more than one permission to allow access a resource
-            //	PERMISSIONS['Accounts']['Account']['delete']
-            ]
-        ],
-
-        # This Route configured to cache response data by system
-        # Just putting the configuration name here and all will work automatically.
-        # The caching configuration specified in application config file.
-        'cacheConfig' => '___ResponseDataCaching'
-
-    ],
-        
-```
-
-Working example of HTTP Routing configuration:
-
-```php
-<?php    
-    # Example - Validate GET Request data
-    '/examples/validate_get_request_data' => [
-        'middleware' => [
-            'Development\Auth\AuthByDeveloperKey->check'
-        ],
-        'controller' => 'Development\Examples\Validation->validateGetRequestData'
-    ],
-        
-```
-
-### CLI routing
-
-In Duktig PHP Framework it is possible to configure any command line access operation in CLI routing.
-
-For example, if you want to call Databases backup controller to run, you can configure a route in configuration file and access with one command.
-
-CLI routing configuration file `cli-routes.php` located in `app/config/`.
-
-Explanation of CLI routing configuration:
-
-```php
-<?php
     
-# Example: Template of Route configuration
-
-# Route to access in CLI.
-# For instance: php /duktig.solutions.1/cli/exec.php example-route --parameter1name parameter1value
-'example-route' => [
-
-    # Middleware
-    # With The middleware option you can set any number of middleware methods before the controller starts.
-    # For instance, you can make middleware methods to: Check/validate command line parameters then continue to controller.
-    # The format of middleware configuration is: ClassName->methodName where the middleware classes located in /app/middleware directory.
-    # Note: If you not have any middleware functionality for this route, you can just pass this section as empty.
-    'middleware' => [
-        '___ExampleMiddlewareClass->exampleMiddlewareCliMethod'
-    ],
-
-    # Controller
-    # Controllers runs as a regular function like in web MVC Pattern.
-    # The format of controller configuration is: ClassName->methodName where the controller classes located in /app/controllers directory.
-    # Note: You can put caching, data validation and other functionality inside a controller method instead of creating a dedicated middleware for it.
-    'controller' => '___ExampleControllerClass->exampleControllerCliMethod',
-
-    # Execute process as unique and enable to start next process after given time in seconds.
-    # If the value is 0, the next starting process will run immediately without checking if another instance is in process.
-    'executeUniqueProcessLifeTime' => 10
-
-    # Unlike Restful API interface the Command line interface doesn't support authorization/permission checking and caching functionality.
-],
-    
+]
 ```
-Working example of CLI Routing configuration:
+
+### Multiple Database Connections
+
+You can define multiple database connections in the same application:
 
 ```php
 <?php
-    # System - Make logs stats: app/log/stats.json
-	'make-log-stats' => [
-		'controller' => 'System\Logs\StatsMaker->process',
-		'middleware' => [],
-		'executeUniqueProcessLifeTime' => 10
-	],
-
+'Databases' => [
+    'UsersDB' => [
+        'host' => 'users-db.example.com',
+        // ...other settings
+    ],
+    'ProductsDB' => [
+        'host' => 'products-db.example.com',
+        // ...other settings
+    ],
+    'AnalyticsDB' => [
+        'host' => 'analytics-db.example.com',
+        // ...other settings
+    ]
+]
 ```
 
-For more details, see [Routing](../development/routing.md)   
+Each model can specify which connection to use in its constructor.
 
-### Constants
+### Using Database Configuration in Models
 
-You can define your application constants in file `./src/app/config/constants.php`
+```php
+<?php
+namespace App\Models\Users;
 
-### Web server and php functionality
+use System\Config;
 
-Duktig PHP Framework developed and tested under Nginx web server with php-fpm service. 
-It is also possible to run this project with other web server such as Apache with php module.
+class User extends \Lib\Db\MySQLi {
+    
+    public function __construct() {
+        // Load configuration for specific database instance
+        $config = Config::get()['Databases']['MySQL_Main'];
+        parent::__construct($config);
+    }
+}
+```
+
+---
+
+## Constants
+
+### Constants File Location
+
+Application constants: `src/app/config/constants.php`
+
+### Defining Constants
+
+```php
+<?php
+// src/app/config/constants.php
+
+// Application constants
+define('APP_VERSION', '1.0.0');
+
+// User status constants
+define('USER_STATUS_ACTIVE', 1);
+define('USER_STATUS_INACTIVE', 0);
+define('USER_STATUS_BANNED', -1);
+
+// Permission constants
+define('PERMISSION_READ', 1);
+define('PERMISSION_WRITE', 2);
+define('PERMISSION_DELETE', 4);
+
+// API response codes
+define('API_SUCCESS', 200);
+define('API_CREATED', 201);
+define('API_BAD_REQUEST', 400);
+define('API_UNAUTHORIZED', 401);
+define('API_FORBIDDEN', 403);
+define('API_NOT_FOUND', 404);
+```
+
+### Using Constants in Code
+
+```php
+<?php
+// Check user status
+if ($user['status'] == USER_STATUS_ACTIVE) {
+    // User is active
+}
+
+// Return API response
+$response->sendJson($data, API_SUCCESS);
+```
+
+See [Coding Standards](../overview/coding-standards.md) for constant naming conventions.
+
+---
+
+## Configuration Best Practices
+
+### 1. Never Commit Secrets
+
+- Add `.env` to `.gitignore`
+- Use `.env.example` with dummy values as template
+- Never commit passwords, API keys, or tokens
+
+### 2. Use Environment Variables for Sensitive Data
+
+**Good**:
+```php
+'password' => Env::get('DB_PASSWORD')
+```
+
+**Bad**:
+```php
+'password' => 'hardcoded_password_123'
+```
+
+### 3. Provide Default Values
+
+```php
+// Fallback to safe default if environment variable not set
+'debug' => Env::get('APP_DEBUG', false)
+```
+
+### 4. Document Required Variables
+
+Create `.env.example` with all required variables:
+
+```bash
+# .env.example
+APP_ENV=development
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=
+```
+
+### 5. Use Descriptive Names
+
+**Good**:
+```bash
+MYSQL_PRIMARY_HOST=db1.example.com
+REDIS_SESSION_HOST=redis.example.com
+```
+
+**Bad**:
+```bash
+DB1=db1.example.com
+R1=redis.example.com
+```
+
+### 6. Group Related Variables
+
+```bash
+# MySQL Configuration
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USERNAME=root
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+## Related Documentation
+
+- [Local Development Deployment](local-dev-deployment.md) - Setting up development environment
+- [Production Deployment](production-deployment.md) - Production configuration strategies
+- [HTTP and CLI Routing](../development/http-and-cli-routing.md) - Route configuration details
+- [Coding Standards](../overview/coding-standards.md) - Constant naming conventions
+- [Getting Started](../overview/getting-started.md) - Framework overview
 

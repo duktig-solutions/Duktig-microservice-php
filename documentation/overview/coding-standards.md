@@ -1,24 +1,24 @@
-# Duktig PHP Microservice - Development documentation
+# Duktig PHP Microservice - Development Documentation
 
 ## Coding Standards
 
-**Duktig PHP Framework** Project provides preferred coding standards and rules for developers to use.
+The **Duktig PHP Framework** project provides preferred coding standards and rules for developers to use.
 
->NOTE: Your code talks about your skills and quality of work!
+> Note: Your code reflects your technical proficiency and quality of work!
 
-## Files creation rules 
+## Files Creation Rules
 
-- Save with Unicode (UTF-8) encoding without BOM. 
+- Save with Unicode (UTF-8) encoding without BOM
 - Start name with uppercase
 - Write name in Camel Case
-- Name **Not** contains any symbol 
+- Name does not contain any symbols
 
 **Correct**
 
     User.php
     UserNotifications.php
     UserStatsData.php
-    
+
 **Incorrect**
 
     user.php
@@ -28,15 +28,14 @@
     user_stats_data.php
     User.class.php
 
-This rules affects almost to all files, such as `Controllers`, `Middleware classes`, `Models`, `Libraries` and other. 
+These rules apply to almost all files, such as Controllers, Middleware classes, Models, Libraries, and others. 
 
-## PHP Tags creation rules
+## PHP Tags Creation Rules
 
-In Duktig PHP Framework it is very important to follow PHP tags creation rules. 
-Depends on server PHP configuration, the opening tags without `php` can cause an unexpected behavior.  
+In the Duktig PHP Framework, it is very important to follow PHP tags creation rules. Depending on server PHP configuration, opening tags without `php` can cause unexpected behavior.
 
-- Strongly required to start PHP tags containing **"php"**: `<?php`:
-- Recommended to skip PHP closing tags `?>`.
+- Strongly required to start PHP tags with `<?php`
+- Recommended to omit PHP closing tags `?>`
 
 **Correct**
 
@@ -59,17 +58,16 @@ Depends on server PHP configuration, the opening tags without `php` can cause an
 ?>
 ```
 
-## Code Comments creation rules
+## Code Comments Creation Rules
 
-In Duktig PHP Framework it is strongly recommended to comment all parts of code as detailed as possible.
+In the Duktig PHP Framework, it is strongly recommended to comment all parts of code as detailed as possible.
 
-For Files, Classes, methods and other DocBlocks see: [Anatomy of a DocBlock](https://docs.phpdoc.org/guides/docblocks.html).
+For files, classes, methods, and other DocBlocks, see: [Anatomy of a DocBlock](https://docs.phpdoc.org/guides/docblocks.html).
 
-*If you are coding with detailed comments, you respect other developers*
+*If you code with detailed comments, you respect other developers.*
 
- 
-- Classes, Methods and other parts of code should be commented with DocBlock.
-- All Single line comments should start with `#` symbol.
+- Classes, methods, and other parts of code should be commented with DocBlock
+- All single-line comments should start with `#` symbol
 
 **Correct**
 
@@ -182,13 +180,12 @@ class User {
 }
 ```
 
-## Constants definition rules
+## Constants Definition Rules
 
-You can define constants for Duktig PHP Framework project in file: `app/config/constants.php`
+You can define constants for the Duktig PHP Framework project in the file: `app/config/constants.php`
 
-
-- Constants can be defined only in file: `app/config/constants.php`
-- All constants should be defined only in UPPER CASE
+- Constants can be defined only in the file: `app/config/constants.php`
+- All constants should be defined in UPPERCASE only
 - Words in names can be divided by underscore: `_`
 - Names should be defined as readable as possible
 
@@ -216,7 +213,7 @@ define('USCRTARTL', true);
 
 ## Logical Operations
 
-In Duktig PHP Framework there are several rules to follow when creating logical operations.   
+In the Duktig PHP Framework, follow these rules when creating logical operations:
 
 **Correct**
 
@@ -226,7 +223,7 @@ if($a == $b and $k != $b)
 if($a > 0 or $a < 100)
 if(!empty($a))
 if(is_null($a))
-``` 
+```
 
 **Incorrect**
 
@@ -238,19 +235,18 @@ if($a)
 if(!$a)
 ``` 
 
-## Class definition rules 
+## Class Definition Rules
 
-In Duktig PHP Framework all type of classes are almost similar divided by namespaces.
-As an instance, you can have class `User` in Controller namespace as a controller and class `User` in model namespace as a model.
+In the Duktig PHP Framework, all types of classes are organized similarly but divided by namespaces. For instance, you can have a class `User` in the Controller namespace as a controller and a class `User` in the model namespace as a model.
 
-- All class names should be equal to file names
-- Class names should start with upper case 
-- Class names should be written in camel case
-- Each file of class should contain only its own **One** class.
+- All class names should equal the file names
+- Class names should start with uppercase
+- Class names should be written in Camel Case
+- Each class file should contain only **one** class
 
-If the File name defined as `User.php`, than the class inside file should be defined as **User**.
+If the file name is `User.php`, then the class inside the file should be named **User**.
 
-**Correct** 
+**Correct**
 
 File: `User.php`
 
@@ -265,7 +261,6 @@ File: `UserNotifications.php`
 
 ```php
 <?php
-
 class UserNotifications {
     // ...
 }
@@ -277,8 +272,7 @@ File: `User.php`
 
 ```php
 <?php
-
-// Class name should be equal to file name
+// Class name should equal the file name
 class UserClass {
     // ...
 }
@@ -288,42 +282,39 @@ File: `UserNotifications.php`
 
 ```php
 <?php
-
 class UserNotifications {
     // ...
 }
 
-// Another class inside file
+// Another class in the same file
 class AnotherClass {
     // ...
 }
 ```
 
-## Classes methods creation rules
+## Classes Methods Creation Rules
 
-In any project, method names explains the mater of functionality. So they should be more accurate and readable.
+In any project, method names explain the nature of functionality. Therefore, they should be more accurate and readable.
 
-
-- start with lower case
-- written as Camel case
-- Not contain any symbol
-- Name should be readable for other developers
+- Start with lowercase
+- Written in Camel Case
+- Do not contain any symbols
+- Names should be readable for other developers
 - Provide type hints in function definition
-- Default arguments should be on right side
+- Default arguments should be on the right side
 
 **Correct**
-    
+
 ```php
 <?php
 
 function parse()
 function parseNotifications()
 function parseUserNotifications()
-
 ```
-        
+
 **Incorrect**
-    
+
 ```php
 <?php
 
@@ -336,20 +327,20 @@ function parseusernotifications()
 function prsusrntf()
 ```
 
-## Type hints
+## Type Hints
 
-Because this project requires PHP version starting from `7.4`, it is strongly recommended to define methods with type hints for arguments. Example:
+Because this project requires PHP version 7.4 or higher, it is strongly recommended to define methods with type hints for arguments. Example:
 
 ```php
 <?php
 
-// Method requires integer type for first argument, string type for second argument and returns an array.
+// Method requires integer type for first argument, string type for second argument, and returns an array
 function myFunc(int $a, string $b) : array {
     // ...
 }
-``` 
+```
 
-Possible type hints
+Possible type hints:
 
 **array**
 
@@ -528,19 +519,18 @@ function myFunc(int $c = 5, int $d, int $a = 4, int $b) : int {
 }
 ```
 
-## Variables definition rules
+## Variables Definition Rules
 
-In Duktig PHP Framework variable names should be defined much readable as it's possible.
+In the Duktig PHP Framework, variable names should be defined as readable as possible.
 
-
-- Start with lower case
-- Written as Camel case
-- Not contain any symbol
-- Names defined as readable as possible
-- Single letter variables should only be used in for() loops
+- Start with lowercase
+- Written in Camel Case
+- Do not contain any symbols
+- Names should be defined as readable as possible
+- Single-letter variables should only be used in for() loops
 
 **Correct**
-    
+
 ```php
 <?php
 
@@ -550,7 +540,7 @@ $userLastStatus = 0;
 ```
 
 **Incorrect**
-    
+
 ```php
 <?php
 
@@ -566,13 +556,13 @@ $u = 0;
 
 ## IF, ELSE, ELSEIF, FOR, FOREACH, WHILE
 
-Rules for logical operations and loops
+Rules for logical operations and loops:
 
-- Logical operations and loops should be defined with curly braces 
-- Variable names in `foreach()` should be defined readable instead of `$key => $value`
-- Logical operations with more than one condition should be defined with `elseif` and `else` to take control on.
-- Logical operations to except something in method should be defined in top of body
- 
+- Logical operations and loops should be defined with curly braces
+- Variable names in `foreach()` should be defined readably instead of `$key => $value`
+- Logical operations with more than one condition should be defined with `elseif` and `else` for clarity and control
+- Early validation and exit conditions should be placed at the beginning of the method body
+
 **Correct**
 
 ```php
@@ -593,37 +583,34 @@ while($counter < 10) {
 	$counter++;
 }
 
-# Logical operations with more than one condition should be defined with `elseif` and `else` to take control on.
+# Logical operations with more than one condition should be defined with elseif and else
 if($a == 10) {
 	// ...
 } elseif($a == 99) {
-	// ... 
+	// ...
 } elseif($a == 110) {
 	// ...
 } else {
 	// ...
 }
 
-# Variable names in `foreach()` should be defined readable instead of `$key => $value`
+# Variable names in foreach() should be defined readably instead of $key => $value
 foreach($users as $userId => $userRow) {
 	echo $userRow['name'];
 }
 
-# Logical operations to except something in method should be defined in top of body
+# Early validation and exit conditions should be at the beginning of the method body
 function testMethod(string $name, int $age) : bool {
 	
-	# For the first, check all excepted cases in top of body
+	# Check all exceptional cases first
 	if($age < 18) {
 		return false;
 	}
 
-    if($name == '') {
+	if($name == '') {
 		return false;
-    }
-	
-    # This is also possible to do in one line. just for example, we written different conditions
-    # if($name < 18 or $name == '')
-    
+	}
+
 	# Function body here
 	$nameStr = $name . ' ' . $age;
 	
@@ -636,43 +623,39 @@ function testMethod(string $name, int $age) : bool {
 
 ```php
 <?php
-// Logical operations and loops should be defined with curly braces
+# Logical operations and loops should be defined with curly braces
 if($a > 90)
 	echo $a;
 
-for($i = 0; $i <= 10; $i++) 
+for($i = 0; $i <= 10; $i++)
 	echo $i;
 
-
 $counter = 0;
-while($counter < 10) 
+while($counter < 10)
 	$counter++;
 
-// Logical operations with more than one condition should be defined with `elseif` and `else` to take control on.
+# Multiple conditions should use elseif, not multiple if statements
 if($a == 10) {
 	// ...
-} 
+}
 if($a == 99) {
-	// ... 
-} 
+	// ...
+}
 if($a == 110) {
 	// ...
-} 
+}
 
-// Variable names in `foreach()` should be defined readable instead of `$key => $value`
+# Variable names in foreach should be descriptive
 foreach($users as $key => $value)
 	echo $value['name'];
 
-// Logical operations to except something in method should be defined in top of body
-// This is terrible approach to write a whole function body in one logical condition
+# Poor approach: entire function body nested in single condition
 function testMethod(string $name, int $age) : bool {
 	
 	$nameStr = '';
 	
-	// First check the age
 	if($age >= 18 and $name != '') {
 		
-		// Function body here
 		$nameStr = $name . ' ' . $age;
 		
 		// ...
@@ -681,27 +664,26 @@ function testMethod(string $name, int $age) : bool {
 		return false;
 	}	
 }
-
 ```
 
-## Other coding standards
+## Other Coding Standards
 
-Please follow to other coding standards listed bellow: 
+Please follow the additional coding standards listed below:
 
 **Correct**
 
 ```php
 <?php
 /**
- * Example class 
- * 
+ * Example class
+ *
  * @author My Name <myName@example.com>
- * @version 1.0.2 
+ * @version 1.0.2
  */
-class myClass { 
+class MyClass {
     
     /**
-     * @access private 
+     * @access private
      * @var int
      */
     private $level;
@@ -711,11 +693,11 @@ class myClass {
      */
     public function __construct() {
         $this->level = 5;
-    } 
+    }
      
     /**
      * Return incrementation of values
-     * 
+     *
      * @access public
      * @param int $a
      * @param string $b
@@ -724,10 +706,10 @@ class myClass {
      */
     public function myFunc(int $a, string $b, ?string $c) : array {
         
-        # Define result as an empty array.
+        # Define result as an empty array
         $result = [];
         
-        # Increment the array 
+        # Increment the array
         for($i = 0; $i <= $a; $i++) {
             $result[$i] = $b;
         }
@@ -741,7 +723,7 @@ class myClass {
         
     }
      
-}    
+}
 ```
 
 **Incorrect**
@@ -751,19 +733,19 @@ class myClass {
 class myclass {
     var $L;
     // add values
-    function my_func ( int $a,string $b,?string $c):array 
+    function my_func ( int $a,string $b,?string $c):array
     {
         
         // result
         $result = array();
         
-        for($i=0;$i<=$a;$i++) 
+        for($i=0;$i<=$a;$i++)
         {
             $result[ $i ] = $b;
         }
-//if( !empty($c)) {
-//    $result[] = $c;
-//}    
+// if( !empty($c)) {
+//     $result[] = $c;
+// }
         if(!$c)
            $result[] = $c; // not null
                 
@@ -771,10 +753,10 @@ class myclass {
         
     }
     
-    public function __construct() 
+    public function __construct()
     {
         $this->L = 55;
-    } 
-}   
+    }
+}
 ?>
 ```
