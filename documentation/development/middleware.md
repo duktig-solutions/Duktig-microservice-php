@@ -364,4 +364,4 @@ class YourMiddlewareName {
 
 ## Next Steps
 
-For a practical tutorial on creating middleware, see the **Middleware Tutorial** section in the documentation.
+For a practical, step-by-step guide, see the [Middleware Tutorial](../tutorials/middleware.md)

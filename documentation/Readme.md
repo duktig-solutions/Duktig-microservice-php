@@ -26,7 +26,7 @@
     - [HTTP Workflow](development/http-workflow.md)
     - [CLI Workflow](development/cli-workflow.md)
     - [Middleware](development/middleware.md)
-    - Controllers
+    - [Controllers](development/controllers.md)
     - Models
     - Libraries in Application Layer
     - Workers
@@ -75,6 +75,8 @@
 - Tutorials
     - [CRUD Development](tutorials/crud-development.md)
     - [Middleware](tutorials/middleware.md)
+    - [Controllers](tutorials/controllers.md)
+    - Models
     - Authentication and Authorization
     - Validation
     - Caching
