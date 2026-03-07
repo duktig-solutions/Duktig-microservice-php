@@ -6,6 +6,17 @@ Each release of **Duktig PHP Framework** contains detailed explanation about cha
 
 Changes in this file will be described new to old, for instance, you will see on top of this list every latest changes. 
 
+### Version 1.2.1
+
+**Fixed the `Request` Library form data handling**
+
+From Now, the Request library handles requests as `multipart/form-data`.
+
+**Fixed the method `floatRange()` in `Valid` library**
+
+In some cases, string numbers didn't validate well.
+From now, it will validate float numbers received as string. 
+
 ### Version 1.2.0
 
 **New Validation rules in `Validation` library**
@@ -219,7 +230,7 @@ if(Valid::phoneNumberE164($value)) {
 
 This library will provide the functionality to perform operations with PostgreSQL Database.
 
-See [PostgreSQL](libs/db/postgresql.md)
+See [PostgreSQL](../kernel/libraries/db/postgresql.md)
 
 *File: kernel/lib/db/PostgreSQL.php*
 
@@ -248,7 +259,7 @@ The system will automatically load to parse the content of `/.env` file and set 
 
 In case if a variable with the same name exists in the System/Docker container, the last will be used.
 
->NOTE: A Docker container environment variables always will replace values defined in environment file if exist. 
+>NOTE: A Docker container environment variables always will replace values defined in environment file if exists. 
 
 From now, with `Env::get('item');` you can use environment variables in your code, including main application configuration file. 
 

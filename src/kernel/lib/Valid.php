@@ -4,7 +4,7 @@
  *
  * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 1.5.0
+ * @version 1.5.1
  */
 Namespace Lib;
 
@@ -415,13 +415,7 @@ class Valid {
 			return false;
 		}
 
-		# Convert to float or false
-		$number = ($value === (float) $value) ? (float) $value : false;
-
-		# The value is not float
-		if($number === false) {
-			return false;
-		}
+		$number = (float) $value;
 
 		# Less than minimal value
 		if(!is_null($min) and $number < $min) {

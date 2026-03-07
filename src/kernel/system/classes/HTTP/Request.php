@@ -4,7 +4,7 @@
  *
  * @author David A. <support@duktig.solutions>
  * @license see License.md
- * @version 2.1.4
+ * @version 2.1.5
  */
 namespace System\HTTP;
 
@@ -47,7 +47,7 @@ class Request {
      * @access protected
      * @var string
      */
-    protected string $rawInput = '';
+    protected string $rawInput;
 
     /**
      * URI Request path
@@ -141,7 +141,7 @@ class Request {
 
 		Switch ($contentType) {
 			case 'application/json':
-
+                // Json content
                 $isValidJson = Valid::jsonString($this->rawInput);
 
                 if($isValidJson === true) {
@@ -151,7 +151,13 @@ class Request {
                 }
 
                 break;
+			case str_contains($contentType, 'multipart/form-data'):
+				// Multipart/form-data (file uploads)
+				// PHP automatically populates $_POST and $_FILES
+				$this->input = array_merge($_POST, $_FILES);
+				break;
 			default:
+				// URL-encoded form data
 				parse_str(file_get_contents('php://input'), $this->input);
 				break;
 		}
